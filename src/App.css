@@ -1,0 +1,11 @@
+@font-face{
+  font-family: 'Raleway';
+  src: local('Raleway'),url('./fonts/Raleway.ttf');
+  font-weight: 500;
+}
+
+@font-face{
+font-family: 'Inconsolata';
+src:local('Inconsolata'), url('./fonts/Inconsolata.ttf');
+font-weight: 700;
+}
