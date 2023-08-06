@@ -15,13 +15,13 @@ export default function NotFound() {
   return (
     <Page>
       <Stack gap={5} direction="column" minHeight={'100vh'} justifyContent={'center'} alignItems={'center'}>
-        <Typography variant="h4" color={'#FF0800'}>
+        <Typography variant="h4" color={'secondary'}>
           Whooops..........Looks like you are lost!
         </Typography>
 
         <Lottie options={defaultOptions} height={420} width={500} />
       
-      <Button  variant="contained">Go back</Button>
+      <Button color="secondary" variant="contained">Go back</Button>
       </Stack>
     </Page>
   );

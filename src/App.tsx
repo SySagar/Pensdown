@@ -7,6 +7,7 @@ import Home from './app/home/HeroPage'
 import Login from './app/auth/Login'
 import Register from './app/auth/Register'
 import NotFound from './app/misc/NotFound'
+import { Stack } from '@mui/material'
 
 const router = createBrowserRouter([
 	{
@@ -37,11 +38,11 @@ const router = createBrowserRouter([
 function App() {
 
   return (
-    <div style={{background:'#E6E7EB'}}>
+    <Stack sx={{background:'#BDBDBD'}}>
     <RouterProvider 
 				router={router}
 			/>
-     </div>
+     </Stack>
   )
 }
 

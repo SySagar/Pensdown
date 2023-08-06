@@ -18,20 +18,20 @@
  */
 const lightPalette = {
   primary: {
-    main: "#1A2228",
-    light: "#1A2228",
-    dark: "#1A2228",
-    contrastText: "#fff",
+    main: "#BDBDBD",
+    light: "#BDBDBD",
+    dark: "#BDBDBD",
+    contrastText: "#474747"
   },
   secondary: {
-    main: "#1A2228",
-    light: "#1A2228",
-    dark: "#1A2228",
-    contrastText: "#fff",
+    main: "#474747",
+    light: "#474747",
+    dark: "#474747",
+    contrastText: "#FAF7FF"
   },
   text: {
-    primary: "#000000",
-    secondary: "#999",
+    primary: "#474747",
+    secondary: "#474747",
   },
 };
 
