@@ -6,4 +6,9 @@ export  interface LoginTypes{
 export interface RegisterTypes{
     email: string;
     password: string;
+    profile: {
+        name: string;
+        username: string;
+        bio: string;
+    }
 }

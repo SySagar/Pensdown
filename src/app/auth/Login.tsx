@@ -27,12 +27,11 @@ export default function Login() {
     },
     onSubmit: async ({ email, password }) => {
       try {
-       
-        const { accessToken } = (await APIMethods.auth.login({
+        const accessToken  = (await APIMethods.auth.login({
           email,
           password,
         })).data.data as string;
-        localStorage.setItem("accessToken", accessToken as string);
+        localStorage.setItem("accessToken", accessToken );
       } catch (error: any) {
         console.log("erro while login", error);
        
@@ -95,8 +94,8 @@ export default function Login() {
             <Stack width={"100%"} marginTop={"20px"}>
               <Typography variant="body2">Email</Typography>
               <TextField
-                id="outlined-basic"
                 label=""
+                name="email"
                 variant="outlined"
                 fullWidth
                 value={formik.values.email}
@@ -112,17 +111,17 @@ export default function Login() {
             <Stack width={"100%"}>
               <Typography variant="body2">Password</Typography>
               <TextField
-                id="outlined-basic"
+                name="password"
                 label=""
                 variant="outlined"
                 fullWidth
-                value={formik.values.email}
+                value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={
-                  formik.touched.email && formik.errors.email ? true : false
+                  formik.touched.password && formik.errors.password ? true : false
                 }
-                helperText={formik.errors.email}
+                helperText={formik.errors.password}
                 required
                 InputProps={{
                   endAdornment: (<IconButton
@@ -167,7 +166,7 @@ export default function Login() {
               <Typography variant="caption" color={"grey"}>
                 Don't have an account?{" "}
                 <a
-                  href="/"
+                  href="/auth/register"
                   style={{
                     textDecoration: "none",
                     fontWeight: "550",
