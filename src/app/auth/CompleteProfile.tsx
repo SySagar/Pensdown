@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { profileSchema } from "./validation";
 import useRegisterStore from "./hooks/useRegisterStore";
+import toast from 'react-hot-toast';
+import { useNavigate } from "react-router-dom";
 import {
   Alert,
   Button,
@@ -17,6 +19,7 @@ import APIMethods from "../../lib/axios/api";
 export default function CreateAccount() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [setActiveStep, user, profile, setProfile] = useRegisterStore(
     (state) => [
@@ -29,6 +32,9 @@ export default function CreateAccount() {
 
   //console.log("profile", user);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+  const registerNotify  = ()  => toast.success('Successfully created your profile!');
+
   const formik = useFormik({
     initialValues: {
       name: profile.name,
@@ -36,6 +42,7 @@ export default function CreateAccount() {
       bio: profile.bio,
     },
     onSubmit: async (values) => {
+      try {
       const data = {
         email: user!.email,
         password: user!.password,
@@ -43,10 +50,15 @@ export default function CreateAccount() {
       };
       setIsLoading((v) => true);
       console.log("step 2 done");
-      setActiveStep(1);
+
       setProfile(values);
-      try {
-        await APIMethods.auth.register(data);
+      console.log("data", data);
+        await APIMethods.auth.register(data).then((res) => {
+          console.log("res", res.status);
+          setIsLoading(false);
+        });
+        registerNotify();
+        navigate("/auth/login");
         setActiveStep(1);
       } catch (error: any) {
         console.log("error while login", error);
@@ -126,7 +138,7 @@ export default function CreateAccount() {
         <Button
           variant="contained"
           color="secondary"
-          onClick={() => formik.handleSubmit()}
+          onClick={() => {formik.handleSubmit()}}
           sx={{ height: "65px", borderRadius: "100%", scale: "0.8" }}
         >
           {isLoading ? <CircularProgress size={25} /> : <ArrowForwardIcon />}

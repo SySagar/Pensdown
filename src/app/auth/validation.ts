@@ -12,7 +12,7 @@ const registerSchema = yup.object().shape({
 
 const profileSchema = yup.object().shape({
     name : yup.string().required().min(3),
-    userName: yup.string().required().min(3),
+    username: yup.string().required().min(3),
     bio: yup.string().required().min(3),
 });
 

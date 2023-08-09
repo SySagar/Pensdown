@@ -3,11 +3,11 @@ import axios, { AxiosInstance } from "axios";
 import {LoginTypes,RegisterTypes} from "./types";
 
 const APIInstance: AxiosInstance = axios.create({
-    baseURL: import.meta.env.BASE_API as string,
+    baseURL: import.meta.env.VITE_BASE_API as string,
   });
   
   const AuthorizedAPIInstance: AxiosInstance = axios.create({
-    baseURL: import.meta.env.BASE_API as string,
+    baseURL: import.meta.env.VITE_BASE_API as string,
     headers: { "Content-Type": "application/json" },
     withCredentials: true,
   });
@@ -20,8 +20,8 @@ const APIInstance: AxiosInstance = axios.create({
 const APITMethods = {
 
     auth:{
-        login: (data: LoginTypes) => AuthorizedAPIInstance.post("/auth/login", data),
-        register: (data: RegisterTypes) => AuthorizedAPIInstance.post("/auth/register", data),
+        login: async (data: LoginTypes) => await AuthorizedAPIInstance.post("/auth/login", data),
+        register: async (data: RegisterTypes) => {return await APIInstance.post("/auth/register", data)},
     }
 }
 

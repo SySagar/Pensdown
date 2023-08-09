@@ -14,14 +14,11 @@ import CompleteProfile from "./CompleteProfile";
 export default function Register() {
   const [error, setError] = useState("");
 
-  
-  
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return
   const [activeStep] = useRegisterStore((state) => [
     state.activeStep,
   ]);
   
-  console.log(activeStep)
   return (
     <Stack
       minHeight={"100vh"}
