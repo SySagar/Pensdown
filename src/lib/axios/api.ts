@@ -20,8 +20,12 @@ const APIInstance: AxiosInstance = axios.create({
 const APITMethods = {
 
     auth:{
-        login: async (data: LoginTypes) => await AuthorizedAPIInstance.post("/auth/login", data),
+        login: async (data: LoginTypes) => {return await APIInstance.post("/auth/login", data)},
         register: async (data: RegisterTypes) => {return await APIInstance.post("/auth/register", data)},
+    },
+
+    verify:{
+        verifyToken: async (token : string) => {return await APIInstance.post("/verify",token)},
     }
 }
 

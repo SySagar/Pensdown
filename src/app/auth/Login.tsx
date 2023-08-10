@@ -15,10 +15,16 @@ import APIMethods from "../../lib/axios/api";
 import { loginSchema } from "./validation";
 import { useState } from "react";
 import { VisibilityOff } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import toast from 'react-hot-toast';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const [message, setMessage] = useState("");
+
+  const loginNotify  = ()  => toast.success(`${message}`);
 
   const formik = useFormik({
     initialValues: {
@@ -27,11 +33,27 @@ export default function Login() {
     },
     onSubmit: async ({ email, password }) => {
       try {
-        const accessToken  = (await APIMethods.auth.login({
+
+        const data = {
           email,
           password,
-        })).data.data as string;
-        localStorage.setItem("accessToken", accessToken );
+        }
+        // console.log("data", data);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const accessToken  = (await APIMethods.auth.login(data)).data.token;
+        console.log("accessToken", accessToken);
+
+        if(accessToken){
+          setMessage((v) => "Successfully logged in!");
+          localStorage.setItem("accessToken", accessToken as string );
+          loginNotify();
+          navigate("/");
+        }
+        else{
+          setMessage((v) => "Invalid credentials");
+          setError((v) => "Invalid credentials");
+          loginNotify();
+        }
       } catch (error: any) {
         console.log("erro while login", error);
        
