@@ -9,3 +9,24 @@ font-family: 'Inconsolata';
 src:local('Inconsolata'), url('./fonts/Inconsolata.ttf');
 font-weight: 700;
 }
+
+.hero-blog:hover{
+  position: relative;
+}
+
+.hero-blog:before {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.hero-blog:hover:before {
+  height: 100%;
+}
+
+.sidebar-items:hover{
+  background:#9A9A9A;
+}
