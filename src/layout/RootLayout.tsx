@@ -1,7 +1,6 @@
 import { Stack } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./headeroptions/Header";
 
 const RootLayout = () => {
   return (
@@ -10,7 +9,6 @@ const RootLayout = () => {
       <Stack flexGrow={1} className="pages">
         <Outlet />
       </Stack>
-      <Footer />
     </Stack>
   );
 };

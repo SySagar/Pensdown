@@ -1,18 +1,7 @@
-import { Avatar, Chip, Fab, Stack, Typography } from "@mui/material";
-import HeroBlog from "./components/heroBlog";
-import CreateIcon from "@mui/icons-material/Create";
+import { Stack, Typography } from "@mui/material";
+import HeroBlog from "./components/HeroBlog";
 import Blog from "./components/Blog";
-
-const tags = [
-  "technology",
-  "politics",
-  "lifestyle",
-  "food",
-  "travel",
-  "fashion",
-  "sports",
-  "music",
-];
+import Sidebar from "./components/Sidebar";
 
 const blogs = [
   {
@@ -87,7 +76,7 @@ export default function HeroPage() {
       position={"relative"}
       alignItems={"flex-start"}
     >
-      <Stack
+      {/* <Stack
         className="write"
         position={"fixed"}
         right={"3rem"}
@@ -96,18 +85,19 @@ export default function HeroPage() {
         <Fab color="default" aria-label="create">
           <CreateIcon />
         </Fab>
-      </Stack>
+      </Stack> */}
       <Stack
         marginTop={3}
         justifyContent={"center"}
         alignItems={"center"}
-        gap={8}
         borderRight={2}
+        gap={1}
         borderColor={"#A3A0B2"}
       >
         <Typography variant="h2">The best from the week</Typography>
+        <Typography fontSize={'16px'} fontWeight={600}>The latest industry news, interviews, technologies, and resources.</Typography>
 
-        <Stack position={"relative"}>
+        <Stack position={"relative"} marginTop={6}>
           <HeroBlog />
         </Stack>
 
@@ -134,66 +124,15 @@ export default function HeroPage() {
           ))}
         </Stack>
       </Stack>
-      <Stack
-        className="right-sidebar"
-        position={"sticky"}
-        right={0}
-        top={0}
-        padding={3}
-        minWidth={"300px"}
-      >
-        <Stack>
-          <Typography color={"secondary"}>✨Top picks for you</Typography>
-
-          <Stack className="sidebar-items" direction={"column"} gap={1} sx={{ borderRadius:'5px', padding:'5px'}} paddingTop={3} marginY={1}>
-            <Stack direction={"row"} alignItems={"center"} gap={1}>
-              <Avatar
-                sx={{ width: 24, height: 24 }}
-                alt="Remy Sharp"
-                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=464&q=80"
-              />
-              <Typography variant={"caption"}>Naomi Sen · 12 July , 2023</Typography>
-            </Stack>
-            <Typography fontWeight={600} variant={"body1"}>
-              Tech hikes are rampaging.
-            </Typography>
+          <Stack
+              className="right-sidebar"
+              position={"sticky"}
+              right={0}
+              top={0}
+              padding={3}
+              minWidth={"300px"}>
+            <Sidebar />
           </Stack>
-          <Stack className="sidebar-items" direction={"column"} gap={1} sx={{ borderRadius:'5px', padding:'5px'}} marginY={1}>
-            <Stack direction={"row"} alignItems={"center"} gap={1}>
-              <Avatar
-                sx={{ width: 24, height: 24 }}
-                alt="Remy Sharp"
-                src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
-              />
-              <Typography variant={"caption"}>Shirja Chatterjee · 27 June , 2023</Typography>
-            </Stack>
-            <Typography fontWeight={600} variant={"body1"}>
-              LGBTQ community is still fighting for their rights.
-            </Typography>
-          </Stack>
-        </Stack>
-
-        <Stack marginTop={5}>
-          <Typography>
-          🏷️ Recommended topics
-          </Typography>
-
-          <Stack direction={'row'} gap={1} paddingY={2} flexWrap={'wrap'} maxWidth={'300px'}>
-            
-            {tags.map((tag, index) => (
-              <Chip
-                sx={{
-                  color: "#fff",
-                  background: "#474747",
-                  fontWeight: 400,
-                }}
-                key={index}
-                label={tag}
-              />
-            ))}
-          </Stack>
-        </Stack>
-      </Stack>
     </Stack>
   );
 }
