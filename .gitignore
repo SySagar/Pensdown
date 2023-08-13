@@ -24,3 +24,10 @@ dist-ssr
 *.sw?
 
 package-lock.json
+
+#for terraform files
+*.tfplan
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.*
