@@ -12,18 +12,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Check Azure CLI version
-      run: az --version
-
-    - name: Log in to Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: Install Azure CLI
-      run: |
-        curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-
     - name: Login to Azure Container Registry
       uses: azure/docker-login@v1
       with:
@@ -38,6 +26,8 @@ jobs:
       run: docker push pensdowncontainerregistry.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }}
 
     - name: Deploy to Azure Web App
-      run: |
-        az webapp config container set --name pensdown --resource-group ${{ secrets.RESOURCE_GROUP }} --docker-custom-image-name pensdowncontainerregistry.azurecr.io/${{ secrets.APP_NAME }}:${{ github.sha }} --docker-registry-server-url https://pensdowncontainerregistry.azurecr.io --docker-registry-server-user ${{ secrets.REGISTRY_USERNAME }} --docker-registry-server-password ${{ secrets.REGISTRY_PASSWORD }}
-        az webapp deployment slot swap --name ${{ secrets.APP_NAME }} --resource-group ${{ secrets.RESOURCE_GROUP }} --slot ${{ secrets.APP_NAME }} --target-slot production
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: pensdown
+        images: pensdowncontainerregistry.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }}
+     
