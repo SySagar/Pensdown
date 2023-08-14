@@ -20,7 +20,7 @@ jobs:
         password: ${{ secrets.REGISTRY_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.REGISTRY_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }} .
+      run: docker build -t pensdowncontainerregistry.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }} .
 
     - name: Push Docker image
-      run: docker push ${{ secrets.REGISTRY_NAME }}.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }}
+      run: docker push pensdowncontainerregistry.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }}
