@@ -11,6 +11,8 @@ interface BlogTypes {
 }
 
 export default function Blog({author, date, title, tags, image, likes}: BlogTypes) {
+  likes = "10";
+  console.log("likes", likes);
   return (
     <Stack
       className="blog"

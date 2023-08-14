@@ -44,20 +44,20 @@ export default function Login() {
         console.log("accessToken", accessToken);
 
         if(accessToken){
-          setMessage((v) => "Successfully logged in!");
+          setMessage(() => "Successfully logged in!");
           localStorage.setItem("accessToken", accessToken as string );
           loginNotify();
           navigate("/");
         }
         else{
-          setMessage((v) => "Invalid credentials");
-          setError((v) => "Invalid credentials");
+          setMessage(() => "Invalid credentials");
+          setError(() => "Invalid credentials");
           loginNotify();
         }
       } catch (error: any) {
         console.log("erro while login", error);
        
-        setError((v) => error.response.data as string);
+        setError(() => error.response.data as string);
       }
     },
     validationSchema: loginSchema,

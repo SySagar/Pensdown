@@ -47,7 +47,7 @@ export default function CreateAccount() {
         console.log("error while login", error);
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        setError((v) => error.response.data as string);
+        setError(() => error.response.data as string);
       }
     },
     validationSchema: registerSchema,

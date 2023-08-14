@@ -48,7 +48,7 @@ export default function CreateAccount() {
         password: user!.password,
         profile: values,
       };
-      setIsLoading((v) => true);
+      setIsLoading(() => true);
       console.log("step 2 done");
 
       setProfile(values);
@@ -64,7 +64,7 @@ export default function CreateAccount() {
         console.log("error while login", error);
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        setError((v) => error.response.data as string);
+        setError(() => error.response.data as string);
       }
     },
     validationSchema: profileSchema,

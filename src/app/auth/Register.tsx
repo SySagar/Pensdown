@@ -1,18 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import {
-  Alert,
   Box,
-  Collapse,
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 import useRegisterStore from "./hooks/useRegisterStore";
 import CreateAccount from "./CreateAccount";
 import CompleteProfile from "./CompleteProfile";
 
 export default function Register() {
-  const [error, setError] = useState("");
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-return
   const [activeStep] = useRegisterStore((state) => [
@@ -57,9 +53,9 @@ export default function Register() {
               </Typography>
             </Stack>
 
-            <Collapse in={error ? true : false}>
+            {/* <Collapse in={error ? true : false}>
               <Alert severity="error">{error}</Alert>
-            </Collapse>
+            </Collapse> */}
 
 
             <Stack gap={5} alignItems={"center"}>
