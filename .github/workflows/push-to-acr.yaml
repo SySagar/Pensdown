@@ -24,3 +24,8 @@ jobs:
 
     - name: Push Docker image
       run: docker push pensdowncontainerregistry.azurecr.io/${{ secrets.IMAGE_NAME }}:${{ github.sha }}
+
+    - name: Deploy to Azure Web App
+      run: |
+        az webapp config container set --name pensdown --resource-group ${{ secrets.RESOURCE_GROUP }} --docker-custom-image-name pensdowncontainerregistry.azurecr.io/${{ secrets.APP_NAME }}:${{ github.sha }} --docker-registry-server-url https://pensdowncontainerregistry.azurecr.io --docker-registry-server-user ${{ secrets.REGISTRY_USERNAME }} --docker-registry-server-password ${{ secrets.REGISTRY_PASSWORD }}
+        az webapp deployment slot swap --name ${{ secrets.APP_NAME }} --resource-group ${{ secrets.RESOURCE_GROUP }} --slot ${{ secrets.APP_NAME }} --target-slot production
