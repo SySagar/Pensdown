@@ -11,6 +11,7 @@ import { Stack } from "@mui/material";
 import PrivateRoutes from "./lib/utils/protectedRoutes";
 import { useEffect } from "react";
 import APIMethods from "./lib/axios/api";
+import CreateBlog from "./app/blog/CreateBlog";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             path: "/",
             element: <Home />,
           },
+          {
+            path: "/blog/create",
+            element: <CreateBlog />,
+          }
         ],
       },
     ],

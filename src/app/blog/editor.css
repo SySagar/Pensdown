@@ -1,58 +1,12 @@
-@font-face{
-  font-family: 'Raleway';
-  src: local('Raleway'),url('./fonts/Raleway.ttf');
-  font-weight: 500;
-}
-
-@font-face{
-font-family: 'Inconsolata';
-src:local('Inconsolata'), url('./fonts/Inconsolata.ttf');
-font-weight: 700;
-}
-
-.hero-blog:hover{
-  position: relative;
-}
-
-.hero-blog:before {
-  content: '';
-  display: block;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  border-radius: 8px;
-  background-color: rgba(0, 0, 0, 0.2);
-}
-.hero-blog:hover:before {
-  height: 100%;
-}
-
-.sidebar-items:hover{
-  background:#9A9A9A;
-}
-/* 
-.navbar{
-  -webkit-box-shadow: 0px 1px 10px 0px rgba(71,71,71,0.57);
-  -moz-box-shadow: 0px 1px 10px 0px rgba(112, 112, 112, 0.57);
-  box-shadow: 0px 1px 10px 0px rgba(159, 159, 159, 0.57);
-} */
-
-.navbar{
-  border-bottom: 1px solid #a9a9a9;
-}
-
-.footer-link{
-  color: #474747;
-  background-color: transparent;
-  text-decoration: none;
-}
 
 /*For rich text editor*/
 .ProseMirror {
-  padding: 10px;
+  padding: 20px;
   background: white;
   border-radius: 0 0 5px 5px;
-  height: 100%;
+  min-height: 450px;
+  flex-direction: column;
+  flex-grow: 1;
   border: 0;
   overflow-y: scroll;
 }
@@ -86,6 +40,7 @@ font-weight: 700;
 .ProseMirror ul,
 .ProseMirror ol {
   padding: 0 2rem;
+  color: black;
 }
 
 .ProseMirror h1,
@@ -95,6 +50,8 @@ font-weight: 700;
 .ProseMirror h5,
 .ProseMirror h6 {
   line-height: 1.1;
+  font-size: revert!important;
+  font-weight: revert!important;
 }
 
 .ProseMirror code {
@@ -132,11 +89,29 @@ font-weight: 700;
   margin: 2rem 0;
 }
 
+ul , ol {
+  list-style: disc!important;
+}
+
 /* ............................ */
 .textEditor {
   border-radius: 5px;
-  border: 1px solid grey;
 }
+
+.is-active {
+  font-weight: bolder;
+  background: #f4f2f2!important;
+  mix-blend-mode: difference;
+}
+
+.is-h-active{
+  background-color: #999999!important;
+}
+
+.is-h-inactive{
+  background-color: none!important;
+}
+
 .menuBar {
   padding-bottom: 5px;
   display: flex;
@@ -167,8 +142,15 @@ button.is_active {
   border-radius: 2px;
 }
 
+.editor{
+  min-height: 400px;
+  width: 100%;
+  border-radius: 10px;
+}
+
 .text-editor {
   padding: 10px;
+  padding-inline: 55px;
 }
 
 .menubar {
@@ -204,4 +186,11 @@ button.is_active {
 .Checkbox {
   border-radius: 10px;
   color: #3F52E1;
+}
+
+.mark {
+  background-color: #ffe066;
+  border-radius: 0.25em;
+  box-decoration-break: clone;
+  padding: 1px 0;
 }

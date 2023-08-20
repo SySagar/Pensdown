@@ -16,15 +16,25 @@ import { loginSchema } from "./validation";
 import { useState } from "react";
 import { VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
+
+interface userProps {
+  name: string;
+  email: string;
+  _id: string;
+}
+
+interface userResponse {
+  token: string;
+  user: userProps;
+}
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
-
-  const loginNotify  = ()  => toast.success(`${message}`);
+  const loginNotify = () => toast.success(`${message}`);
 
   const formik = useFormik({
     initialValues: {
@@ -33,30 +43,31 @@ export default function Login() {
     },
     onSubmit: async ({ email, password }) => {
       try {
-
         const data = {
           email,
           password,
-        }
+        };
         // console.log("data", data);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const accessToken  = (await APIMethods.auth.login(data)).data.token;
-        console.log("accessToken", accessToken);
+        const { token, user } : userResponse = (await APIMethods.auth.login(data)).data;
+        console.log("accessToken", token);
+        console.log("user", user);
 
-        if(accessToken){
+        if (token && user) {
           setMessage(() => "Successfully logged in!");
-          localStorage.setItem("accessToken", accessToken as string );
+          localStorage.setItem("accessToken", token);
+          localStorage.setItem("user", JSON.stringify(user));
+
           loginNotify();
           navigate("/");
-        }
-        else{
+        } else {
           setMessage(() => "Invalid credentials");
           setError(() => "Invalid credentials");
           loginNotify();
         }
       } catch (error: any) {
         console.log("erro while login", error);
-       
+
         setError(() => error.response.data as string);
       }
     },
@@ -141,16 +152,18 @@ export default function Login() {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={
-                  formik.touched.password && formik.errors.password ? true : false
+                  formik.touched.password && formik.errors.password
+                    ? true
+                    : false
                 }
                 helperText={formik.errors.password}
                 required
                 InputProps={{
-                  endAdornment: (<IconButton
-                    onClick={() => togglePasswordVisibility()}
-                  >
-                    { showPassword ? <VisibilityOff /> : <VisibilityOff /> }							
-                  </IconButton>)
+                  endAdornment: (
+                    <IconButton onClick={() => togglePasswordVisibility()}>
+                      {showPassword ? <VisibilityOff /> : <VisibilityOff />}
+                    </IconButton>
+                  ),
                 }}
               />
             </Stack>

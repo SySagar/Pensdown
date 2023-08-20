@@ -26,7 +26,16 @@ const APITMethods = {
 
     verify:{
         verifyToken: async (token : string) => {return await APIInstance.post("/verify",token)},
+    },
+
+    blog:{
+        getBlogs: async () => {return await AuthorizedAPIInstance.get("/blog")},
+        getBlog: async (id: string) => {return await AuthorizedAPIInstance.get(`/blog/${id}`)},
+        createBlog: async (data: any) => {return await AuthorizedAPIInstance.post("/blog/create", data)},
+        updateBlog: async (id: string, data: any) => {return await AuthorizedAPIInstance.put(`/blog/${id}`, data)},
+        deleteBlog: async (id: string) => {return await AuthorizedAPIInstance.delete(`/blog/${id}`)},
     }
+
 }
 
 export default APITMethods;

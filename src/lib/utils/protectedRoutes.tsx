@@ -1,9 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
 const PrivateRoutes = () => {
-  const token = localStorage.getItem('accessToken');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const token = localStorage.getItem('accessToken') as string;
+    console.log("token", token);
 
-  return token ? <Outlet/> : <Navigate to="/auth/login" />
+
+  return (token!=null || token!=undefined) ? <Outlet/> : <Navigate to="/auth/login" />
 }
 
 export default PrivateRoutes;
