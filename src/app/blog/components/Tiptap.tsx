@@ -38,38 +38,6 @@ const MenuBar = ({ editor }: any) => {
     return null;
   }
 
-  const upload = (file: any) => {
-    // handle upload logic here
-
-    console.log(file);
-
-    // return a promise that resolves the URL of the uploaded image
-    return Promise.resolve("https://picsum.photos/200/300");
-  };
-
-  const handleChange = (e: any) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if (!e?.target?.files?.[0]) return;
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    upload(e.target.files[0])
-      .then((res) => addImage(res))
-      .catch((err) => console.error(err));
-  };
-
-  // const setLink = () => {
-  //   const url = window.prompt("URL");
-
-  //   if (!url) return;
-
-  //   editor.chain().focus().extendMarkRange("link").setLink({ href: url }).run();
-  // };
-
-  const addImage = (url: string) => {
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
-    }
-  };
-
   return (
     <Stack
       className="menu-bar"

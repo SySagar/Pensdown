@@ -7,7 +7,6 @@ import useWriterAction from "../../lib/store/useWriterAction";
 import { useEffect } from "react";
 import APIMethods from "../../lib/axios/api";
 import useEditorContent from "../../lib/store/useEditorContent";
-import { useNavigation } from "react-router-dom";
 
 const AuthorizedActions = () => {
   const location = useLocation();
