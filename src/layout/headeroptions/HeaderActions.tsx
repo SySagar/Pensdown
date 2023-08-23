@@ -7,6 +7,21 @@ import useWriterAction from "../../lib/store/useWriterAction";
 import { useEffect } from "react";
 import APIMethods from "../../lib/axios/api";
 import useEditorContent from "../../lib/store/useEditorContent";
+import { storage } from "../../lib/utils/firebase";
+import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, } from 'firebase/storage';
+
+interface userTypes {
+  _id: string;
+  displayName: string;
+  blogs: [];
+}
+
+interface blogTypes {
+  title: string;
+  content: string;
+  coverImage: string;
+}
 
 const AuthorizedActions = () => {
   const location = useLocation();
@@ -17,6 +32,13 @@ const AuthorizedActions = () => {
     state.setWriting,
     state.setNotWriting
   ]);
+
+  const [blog,setBlog] = useEditorContent((state: any) => [
+    state.blog,
+    state.setBlog,
+  ]);
+
+  console.log(blog);
 
   useEffect(() => {
 
@@ -31,18 +53,71 @@ const AuthorizedActions = () => {
   
   }, [location.pathname, setIsWriting, setNotWriting]);
 
+  const uploadImageToFirebase = async () => {
+    if (blog == null) return;
+
+    const user = JSON.parse(localStorage.getItem("user") as string) as unknown as userTypes;
+    const imageRef = ref(
+      storage,
+      `cover_images/${user._id}/${user.displayName}/${(user.blogs.length + 1) as unknown as string}`
+    );
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    await uploadBytes(imageRef, blog.coverImage);
+  };
   
-  const [blog] = useEditorContent((state:any)=>[state.blog,state.setBlog]);
-  const handleSubmit = async () => {
+  const handleSubmit =  () => {
     console.log("submit");
+    const user = JSON.parse(localStorage.getItem("user") as string) as unknown as userTypes;
+    const DBUser = JSON.parse(localStorage.getItem("user") as string);
 
 
-    console.log(blog);
-    await APIMethods.blog.createBlog(blog).then((res) => {
-      console.log("res", res.status);
-    });
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    // setBlog(
+    //  { ...blog,
+    //   title: "title",
+    //   content: localStorage.getItem("rich-editor") as string,
+    //   authorName : DBUser.name,
+    //   email: DBUser.email,
+    //   id: DBUser._id,
+    //  })
 
-    navigate('/')
+     const data =  { ...blog,
+        title: "title",
+        content: localStorage.getItem("rich-editor") as string,
+        authorName : DBUser.name,
+        email: DBUser.email,
+        authorID: DBUser._id,
+       }
+     
+    // let downloadURL = "";
+    uploadImageToFirebase()
+    .then((uploadSnapshot:any) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/restrict-template-expressions
+      const uploadedImageRef = ref(storage, `cover_images/${user._id}/${user.displayName}/${(user.blogs.length + 1) as unknown as string}`);
+
+      // Get the download URL for the uploaded image reference
+      return getDownloadURL(uploadedImageRef);
+    })
+    .then((downloadURL) => {
+      data.coverImage = downloadURL;
+
+  
+      return APIMethods.blog.createBlog(data);
+    })
+    .then((res) => {
+      console.log("Blog created successfully:", res.status);
+      navigate('/');
+    })
+    .catch((err) => {
+      console.log("Error:", err);
+    })
+
+
+    // // console.log(blog);
+    // await APIMethods.blog.createBlog(blog).then((res) => {
+    //   console.log("res", res.status);
+    // });
+
 
   };
 

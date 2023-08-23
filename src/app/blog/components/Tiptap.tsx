@@ -149,9 +149,6 @@ const MenuBar = ({ editor }: any) => {
 };
 
 export default function Tiptap() {
-  const [setBlog] = useEditorContent((state: any) => [
-    state.setBlog,
-  ]);
   const editor = useEditor({
     extensions: [
       Color.configure({ types: [TextStyle.name, ListItem.name] }),
@@ -192,21 +189,13 @@ export default function Tiptap() {
     ],
   });
 
-  useEffect(() => {
-    const DBUser = JSON.parse(localStorage.getItem("user") as string);
-    const timeout = setTimeout(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-      setBlog({
-        title: "title",
-        content: localStorage.getItem("rich-editor") as string,
-        authorName : DBUser.name,
-        email: DBUser.email,
-        id: DBUser._id,
-      });
-    }, 2000);
+  // useEffect(() => {
+   
+  //     console.log(blog);
+  
 
-    return () => clearTimeout(timeout);
-  }, [ editor, setBlog]);
+
+  // }, [editor, setBlog]);
 
   if (!editor) {
     return null;

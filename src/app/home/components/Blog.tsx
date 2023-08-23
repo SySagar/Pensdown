@@ -10,7 +10,7 @@ interface BlogTypes {
     likes: string;
 }
 
-export default function Blog({author, date, title, tags, image, likes}: BlogTypes) {
+export default function Blog({author, date, title, tags=["india","hello world"], image, likes}: BlogTypes) {
   likes = "10";
   console.log("likes", likes);
   return (

@@ -17,7 +17,7 @@ const APIInstance: AxiosInstance = axios.create({
     return config;
   });
 
-const APITMethods = {
+const APIMethods = {
 
     auth:{
         login: async (data: LoginTypes) => {return await APIInstance.post("/auth/login", data)},
@@ -29,13 +29,13 @@ const APITMethods = {
     },
 
     blog:{
-        getBlogs: async () => {return await AuthorizedAPIInstance.get("/blog")},
+        getBlogs: async () => {return await AuthorizedAPIInstance.get("/blog/getAll")},
         getBlog: async (id: string) => {return await AuthorizedAPIInstance.get(`/blog/${id}`)},
-        createBlog: async (data: any) => {return await AuthorizedAPIInstance.post("/blog/create", data)},
+        createBlog: async (data: any) => {console.log(data);return await AuthorizedAPIInstance.post("/blog/create", data)},
         updateBlog: async (id: string, data: any) => {return await AuthorizedAPIInstance.put(`/blog/${id}`, data)},
         deleteBlog: async (id: string) => {return await AuthorizedAPIInstance.delete(`/blog/${id}`)},
     }
 
 }
 
-export default APITMethods;
+export default APIMethods;

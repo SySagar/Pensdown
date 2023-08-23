@@ -1,7 +1,9 @@
-import { Stack, Typography } from "@mui/material";
+import { CircularProgress, Stack, Typography } from "@mui/material";
 import HeroBlog from "./components/HeroBlog";
 import Blog from "./components/Blog";
 import Sidebar from "./components/Sidebar";
+import { useEffect, useState } from "react";
+import APIMethods from '../../lib/axios/api'
 
 const blogs = [
   {
@@ -66,7 +68,44 @@ const blogs = [
   },
 ];
 
+interface blogTypes {
+  _id: any;
+  title: string;
+  date: string;
+  content: string;
+  authorName: string;
+  likes: string;
+  tags: string[];
+  image: string;
+}
+
 export default function HeroPage() {
+  const [loading,setLoading] = useState(true);
+
+  const [blogs,setBlogs] = useState([] as unknown as blogTypes[]);
+  const fetchBLogs = async () => {
+    await APIMethods.blog.getBlogs().then((res:any) => {
+
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const blogs = res.data.blogs as blogTypes[];
+      setBlogs(blogs);
+    });
+
+  }
+
+  useEffect(() => {
+
+    fetchBLogs().then(() => {
+      console.log("fetching done");
+    }).catch((err) => {
+      console.log(err);
+    }).finally(() => {
+      console.log("finally",blogs);
+      setLoading(false);
+    });
+  
+  }, []);
+
   return (
     <Stack
       className="main"
@@ -101,6 +140,8 @@ export default function HeroPage() {
           <HeroBlog />
         </Stack>
 
+        {
+          loading ?<CircularProgress /> :
         <Stack
           className="daily-blogs"
           padding={2}
@@ -114,7 +155,7 @@ export default function HeroPage() {
           {blogs.map((blog, index) => (
             <Blog
               key={index}
-              author={blog.author}
+              author={blog.authorName}
               date={blog.date}
               title={blog.title}
               tags={blog.tags}
@@ -123,6 +164,7 @@ export default function HeroPage() {
             />
           ))}
         </Stack>
+        }
       </Stack>
           <Stack
               className="right-sidebar"
