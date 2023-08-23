@@ -76,7 +76,7 @@ interface blogTypes {
   authorName: string;
   likes: string;
   tags: string[];
-  image: string;
+  coverImageURL: string;
 }
 
 export default function HeroPage() {
@@ -105,32 +105,23 @@ export default function HeroPage() {
     });
   
   }, []);
-
   return (
     <Stack
       className="main"
       minHeight={"100vh"}
       direction={"row"}
-      justifyContent={"center"}
+      justifyContent={"space-evenly"}
       position={"relative"}
       alignItems={"flex-start"}
     >
-      {/* <Stack
-        className="write"
-        position={"fixed"}
-        right={"3rem"}
-        bottom={"3rem"}
-      >
-        <Fab color="default" aria-label="create">
-          <CreateIcon />
-        </Fab>
-      </Stack> */}
+  
       <Stack
         marginTop={3}
         justifyContent={"center"}
         alignItems={"center"}
         borderRight={2}
         gap={1}
+        paddingX={4}
         borderColor={"#A3A0B2"}
       >
         <Typography variant="h2">The best from the week</Typography>
@@ -159,7 +150,7 @@ export default function HeroPage() {
               date={blog.date}
               title={blog.title}
               tags={blog.tags}
-              image={blog.image}
+              image={blog.coverImageURL}
               likes={blog.likes}
             />
           ))}

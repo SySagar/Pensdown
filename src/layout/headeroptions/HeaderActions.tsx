@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Avatar, Button, IconButton, Stack } from "@mui/material";
+import { Avatar, Button, CircularProgress, IconButton, Stack } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import useWriterAction from "../../lib/store/useWriterAction";
@@ -10,13 +10,14 @@ import useEditorContent from "../../lib/store/useEditorContent";
 import { storage } from "../../lib/utils/firebase";
 import { ref, uploadBytes } from "firebase/storage";
 import { getDownloadURL, } from 'firebase/storage';
+import useLoadingStore from "../../lib/store/useLoading";
+import { toast } from "react-hot-toast";
 
 interface userTypes {
   _id: string;
   displayName: string;
   blogs: [];
 }
-
 
 const AuthorizedActions = () => {
   const location = useLocation();
@@ -27,12 +28,15 @@ const AuthorizedActions = () => {
     state.setWriting,
     state.setNotWriting
   ]);
-
+  const [isLoading,setIsLoading] = useLoadingStore((state: any) => [
+    state.isLoading,
+    state.setIsLoading,
+  ]);
   const [blog] = useEditorContent((state: any) => [
     state.blog,
   ]);
 
-  console.log(blog);
+  const savedNotify  = ()  => toast.success('🎉Yayy, Congrats on adding value to community amigo!');
 
   useEffect(() => {
 
@@ -63,17 +67,8 @@ const AuthorizedActions = () => {
     console.log("submit");
     const user = JSON.parse(localStorage.getItem("user") as string) as unknown as userTypes;
     const DBUser = JSON.parse(localStorage.getItem("user") as string);
-
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    // setBlog(
-    //  { ...blog,
-    //   title: "title",
-    //   content: localStorage.getItem("rich-editor") as string,
-    //   authorName : DBUser.name,
-    //   email: DBUser.email,
-    //   id: DBUser._id,
-    //  })
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    setIsLoading(true);
 
      const data =  { ...blog,
         title: "title",
@@ -83,7 +78,6 @@ const AuthorizedActions = () => {
         authorID: DBUser._id,
        }
      
-    // let downloadURL = "";
     uploadImageToFirebase()
     .then(() => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/restrict-template-expressions
@@ -99,7 +93,10 @@ const AuthorizedActions = () => {
       return APIMethods.blog.createBlog(data);
     })
     .then((res) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      setIsLoading(false);
       console.log("Blog created successfully:", res.status);
+      savedNotify();
       navigate('/');
     })
     .catch((err) => {
@@ -122,6 +119,7 @@ const AuthorizedActions = () => {
           variant="contained"
           sx={{
             height: "30px",
+            position: "relative",
             marginRight: "20px",
             background: "#00A36C",
             color: "white",
@@ -133,6 +131,7 @@ const AuthorizedActions = () => {
           onClick={handleSubmit}
         >
           Publish
+          {isLoading && <CircularProgress size={'20px'} sx={{marginLeft:'10px'}} />}
         </Button>
       )}
       {!isWriting && (

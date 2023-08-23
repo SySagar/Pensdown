@@ -3,10 +3,14 @@ import Tiptap from "./components/Tiptap";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import useEditorContent from "../../lib/store/useEditorContent";
 
+interface BlogImageTypes {
+  coverImage: File | null | Blob | MediaSource;
+}
+
 export default function CreateBlog() {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-  const [setBlog] = useEditorContent((state: any) => [state.setBlog,]);
+  const [blog,setBlog] = useEditorContent((state: any) => [state.blog as BlogImageTypes,state.setBlog,]);
 
   return (
     <Stack
@@ -66,7 +70,11 @@ export default function CreateBlog() {
             <AddPhotoAlternateIcon />
             Add a cover image
           </IconButton>
+          
         </Stack>
+        {blog.coverImage && (
+          <img src={URL.createObjectURL(blog.coverImage)} width={'350px'} />
+        )}
       </Stack>
       <Stack className="editor">
         <Tiptap />
