@@ -17,11 +17,6 @@ interface userTypes {
   blogs: [];
 }
 
-interface blogTypes {
-  title: string;
-  content: string;
-  coverImage: string;
-}
 
 const AuthorizedActions = () => {
   const location = useLocation();
@@ -33,9 +28,8 @@ const AuthorizedActions = () => {
     state.setNotWriting
   ]);
 
-  const [blog,setBlog] = useEditorContent((state: any) => [
+  const [blog] = useEditorContent((state: any) => [
     state.blog,
-    state.setBlog,
   ]);
 
   console.log(blog);
@@ -91,7 +85,7 @@ const AuthorizedActions = () => {
      
     // let downloadURL = "";
     uploadImageToFirebase()
-    .then((uploadSnapshot:any) => {
+    .then(() => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/restrict-template-expressions
       const uploadedImageRef = ref(storage, `cover_images/${user._id}/${user.displayName}/${(user.blogs.length + 1) as unknown as string}`);
 

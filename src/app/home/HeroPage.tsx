@@ -5,68 +5,68 @@ import Sidebar from "./components/Sidebar";
 import { useEffect, useState } from "react";
 import APIMethods from '../../lib/axios/api'
 
-const blogs = [
-  {
-    id: 1,
-    author: "Naomi Sen",
-    date: "1 Oct 2021",
-    title: "Migration to India",
-    tags: ["Migration", "India"],
-    image:
-      "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80",
-    likes: "47",
-  },
-  {
-    id: 2,
-    author: "Naomi Sen",
-    date: "5 Nov 2021",
-    title: "Food Crysis",
-    tags: ["Migration", "India", "Food", "Crysis"],
-    image:
-      "https://images.unsplash.com/photo-1447078806655-40579c2520d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    likes: "203",
-  },
-  {
-    id: 3,
-    author: "Samuel",
-    date: "28 July 2021",
-    title: "Migration to India",
-    tags: ["Migration", "India", "Slavery"],
-    image:
-      "https://images.unsplash.com/photo-1447078806655-40579c2520d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    likes: "61",
-  },
-  {
-    id: 4,
-    author: "Samuel",
-    date: "28 July 2021",
-    title: "Migration to India",
-    tags: ["Migration", "India"],
-    image:
-      "https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=876&q=80",
-    likes: "102",
-  },
-  {
-    id: 5,
-    author: "Samuel",
-    date: "28 July 2021",
-    title: "Migration to India",
-    tags: ["Migration", "India", "People"],
-    image:
-      "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80",
-    likes: "47",
-  },
-  {
-    id: 6,
-    author: "Samuel",
-    date: "28 July 2021",
-    title: "Migration to India",
-    tags: ["Migration", "India"],
-    image:
-      "https://images.unsplash.com/photo-1447078806655-40579c2520d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-    likes: "21",
-  },
-];
+// const blogs = [
+//   {
+//     id: 1,
+//     author: "Naomi Sen",
+//     date: "1 Oct 2021",
+//     title: "Migration to India",
+//     tags: ["Migration", "India"],
+//     image:
+//       "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80",
+//     likes: "47",
+//   },
+//   {
+//     id: 2,
+//     author: "Naomi Sen",
+//     date: "5 Nov 2021",
+//     title: "Food Crysis",
+//     tags: ["Migration", "India", "Food", "Crysis"],
+//     image:
+//       "https://images.unsplash.com/photo-1447078806655-40579c2520d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+//     likes: "203",
+//   },
+//   {
+//     id: 3,
+//     author: "Samuel",
+//     date: "28 July 2021",
+//     title: "Migration to India",
+//     tags: ["Migration", "India", "Slavery"],
+//     image:
+//       "https://images.unsplash.com/photo-1447078806655-40579c2520d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+//     likes: "61",
+//   },
+//   {
+//     id: 4,
+//     author: "Samuel",
+//     date: "28 July 2021",
+//     title: "Migration to India",
+//     tags: ["Migration", "India"],
+//     image:
+//       "https://images.unsplash.com/photo-1548013146-72479768bada?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=876&q=80",
+//     likes: "102",
+//   },
+//   {
+//     id: 5,
+//     author: "Samuel",
+//     date: "28 July 2021",
+//     title: "Migration to India",
+//     tags: ["Migration", "India", "People"],
+//     image:
+//       "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80",
+//     likes: "47",
+//   },
+//   {
+//     id: 6,
+//     author: "Samuel",
+//     date: "28 July 2021",
+//     title: "Migration to India",
+//     tags: ["Migration", "India"],
+//     image:
+//       "https://images.unsplash.com/photo-1447078806655-40579c2520d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
+//     likes: "21",
+//   },
+// ];
 
 interface blogTypes {
   _id: any;
