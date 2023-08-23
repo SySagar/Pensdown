@@ -29,9 +29,7 @@ import {
 } from "react-icons/fa";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
-import Image from "@tiptap/extension-image";
-import { useEffect } from "react";
-import useEditorContent from "../../../lib/store/useEditorContent";
+import Image from "@tiptap/extension-image"; 
 
 const MenuBar = ({ editor }: any) => {
   if (!editor) {
