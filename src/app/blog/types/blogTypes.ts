@@ -5,7 +5,8 @@ export interface blogTypes {
     date: string;
     content: string;
     authorName: string;
-    likes: string;
+    likes: number;
+    comments: number;
     tags: string[];
     coverImageURL: string;
   }
@@ -19,6 +20,9 @@ export interface blogTypes {
           content:string,
           title:string,
           date:string,
+          coverImageURL:string,
+          likes: number;
+          comments: number;
         }
       }
     

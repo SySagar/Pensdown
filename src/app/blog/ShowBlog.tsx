@@ -1,4 +1,4 @@
-import { Avatar, Divider, Stack, Typography } from "@mui/material";
+import { Avatar, Button, Divider, IconButton, Stack, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import APIMethods from "../../lib/axios/api";
@@ -20,6 +20,9 @@ import Highlight from "@tiptap/extension-highlight";
 import { SingleBlogTypes } from "./types/blogTypes";
 import useLoadingStore from "../../lib/store/useLoading";
 import './preview.css'
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import ShareIcon from '@mui/icons-material/Share';
+// import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 export default function ShowBlog() {
     const {blogId} = useParams() as {blogId: string};
@@ -27,6 +30,9 @@ export default function ShowBlog() {
     const [author,setAuthor] = useState('');
     const [date,setDate] = useState('');
     const [title,setTitle] = useState('');
+    const [coverImage,setCoverImage] = useState('');
+    const [likes,setLikes] = useState(0);
+    const [comments,setComments] = useState(0);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const [isLoading,setIsLoading] = useLoadingStore((state: any) => [
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -45,6 +51,9 @@ export default function ShowBlog() {
              setAuthor(res.data.blogs.authorName);
            setDate(res.data.blogs.date);
             setTitle(res.data.blogs.title);
+            setCoverImage(res.data.blogs.coverImageURL);
+            setLikes(res.data.blogs.likes);
+            setComments(res.data.blogs.comments);
         }
         ).catch((e) => {
             console.log(e);
@@ -64,12 +73,13 @@ export default function ShowBlog() {
 
     useEffect(() => {
 
-      if(blog !=null && author !== '' && date !== '' && title !== ''){
+      if(blog !=null && author !== '' && date !== '' && title !== '' && coverImage !== ''){
         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-        setIsLoading(false);
+        {setIsLoading(false);
+        console.log(isLoading);}
       }
 
-    }, [blog,author,date,title]);
+    }, [blog, author, date, title, coverImage, setIsLoading, isLoading]);
 
     const previewEditor = new Editor({
         content: blog,
@@ -117,11 +127,14 @@ export default function ShowBlog() {
     >
       <Stack width={'900px'} justifyContent={'center'} alignItems={'start'} gap={2}>
 
+
       <Stack direction={'column'} gap={1} justifyContent={'center'} alignItems={'center'} width={'100%'}>
+        <img src={coverImage} alt="" style={{width:'900px',maxHeight:'500px',objectFit:'cover'}}/>
         <Typography variant="h3">{title}</Typography>
       </Stack>
 
-      <Stack direction={'row'} gap={1} alignItems={'center'} >
+      <Stack direction={'row'} gap={2} alignItems={'center'} position={'relative'}  width={'100%'}>
+  
                 <Avatar
           src={
             "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
@@ -129,15 +142,52 @@ export default function ShowBlog() {
           alt={"name"}
         />
         <Typography>
-          {author} · {date}
+          {author}
+          <br/> 
+          <Typography variant="caption">{date}</Typography>
         </Typography>
+        <Button sx={{background:'#474747' , position:'absolute',right:0}}>
+            Follow
+          </Button>
         </Stack>
-
+     
       <Stack>
 
-          <Divider />
-      </Stack>
 
+      </Stack>
+          <Divider sx={{width:'100%',background:'#A9A9A9'}}  />
+
+          <Stack direction={'row'} gap={2} paddingY={1} justifyContent={'space-between'} width={'100%'}>
+            <Stack className="left" direction={'row'} gap={3} marginLeft={2}>
+            <Stack direction={'row'} gap={1} alignItems={'center'}>
+            <img src="./png/unclapped.png" alt="" style={{width:'20px'}}/>
+            <Typography>
+              {likes}
+            </Typography>
+            </Stack>
+            <Stack direction={'row'} gap={1} alignItems={'center'}>
+            <img src="./png/comment.png" alt="" style={{width:'20px'}}/>
+            <Typography>
+              {comments}
+            </Typography>
+            </Stack>
+            </Stack>
+
+            <Stack className="right" direction={'row'} gap={1} marginRight={2}>
+
+              <IconButton>
+              <BookmarkBorderIcon/>
+              </IconButton>
+
+              <IconButton>
+              <ShareIcon/>
+              </IconButton>
+
+
+            </Stack>
+          </Stack>
+
+      <Divider  sx={{width:'100%',background:'#A9A9A9'}} />
 
       <EditorContent
         className="previeweditor"

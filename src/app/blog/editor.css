@@ -1,6 +1,6 @@
 
 /*For rich text editor*/
-.ProseMirror {
+.editor .ProseMirror {
   padding: 20px;
   background: white;
   border-radius: 0 0 5px 5px;
