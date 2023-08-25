@@ -12,7 +12,7 @@ interface BlogTypes {
     likes: number;
 }
 
-export default function Blog({author, date, title, tags=["india","hello world"], blogId, image, likes}: BlogTypes) {
+export default function Blog({author, date, title, tags=["india","hello world"], blogId, image}: BlogTypes) {
   const navigate = useNavigate();
 
   const redirectToBlog = () => {
