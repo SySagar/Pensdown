@@ -13,7 +13,7 @@ const APIInstance: AxiosInstance = axios.create({
   });
 
   AuthorizedAPIInstance.interceptors.request.use((config) => {
-    config.headers["Authorization"] = `Bearer ${localStorage.getItem("token") as string}`;
+    config.headers["Authorization"] = `Bearer ${localStorage.getItem("accessToken") as string}`;
     return config;
   });
 
@@ -29,11 +29,12 @@ const APIMethods = {
     },
 
     blog:{
-        getBlogs: async () => {return await AuthorizedAPIInstance.get("/blog/getAll")},
-        getBlog: async (id: string) => {return await AuthorizedAPIInstance.get(`/blog/${id}`)},
+        getBlogs: async () => {return await APIInstance.get("/blog/getAll")},
+        getSingleBlog: async (id: string) => {return await AuthorizedAPIInstance.get(`/blog/${id}`)},
         createBlog: async (data: any) => {console.log(data);return await AuthorizedAPIInstance.post("/blog/create", data)},
         updateBlog: async (id: string, data: any) => {return await AuthorizedAPIInstance.put(`/blog/${id}`, data)},
         deleteBlog: async (id: string) => {return await AuthorizedAPIInstance.delete(`/blog/${id}`)},
+        getUserBlogs: async (email:any) => {return await APIInstance.post("/blog/getUserBlogs",email)},
     }
 
 }

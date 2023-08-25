@@ -4,6 +4,7 @@ import Blog from "./components/Blog";
 import Sidebar from "./components/Sidebar";
 import { useEffect, useState } from "react";
 import APIMethods from '../../lib/axios/api'
+import { blogTypes } from "../blog/types/blogTypes";
 
 // const blogs = [
 //   {
@@ -68,16 +69,6 @@ import APIMethods from '../../lib/axios/api'
 //   },
 // ];
 
-interface blogTypes {
-  _id: any;
-  title: string;
-  date: string;
-  content: string;
-  authorName: string;
-  likes: string;
-  tags: string[];
-  coverImageURL: string;
-}
 
 export default function HeroPage() {
   const [loading,setLoading] = useState(true);
@@ -132,7 +123,11 @@ export default function HeroPage() {
         </Stack>
 
         {
-          loading ?<CircularProgress /> :
+          loading ? 
+          <Stack width={'100%'} justifyContent={'center'} alignItems={'center'} height={'20vh'}>
+            <CircularProgress color="secondary" />
+          </Stack>
+           :
         <Stack
           className="daily-blogs"
           padding={2}
@@ -146,6 +141,7 @@ export default function HeroPage() {
           {blogs.map((blog, index) => (
             <Blog
               key={index}
+              blogId={blog._id}
               author={blog.authorName}
               date={blog.date}
               title={blog.title}

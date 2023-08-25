@@ -33,8 +33,8 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
-  const loginNotify = () => toast.success(`${message}`);
+  const loginNotify = () => toast.success(`Successfully logged in!`);
+  const errorNotify = () => toast.error(`Something went wrong! Try again!`);
 
   const formik = useFormik({
     initialValues: {
@@ -54,16 +54,14 @@ export default function Login() {
         console.log("user", user);
 
         if (token && user) {
-          setMessage(() => "Successfully logged in!");
           localStorage.setItem("accessToken", token);
           localStorage.setItem("user", JSON.stringify(user));
 
           loginNotify();
           navigate("/");
         } else {
-          setMessage(() => "Invalid credentials");
           setError(() => "Invalid credentials");
-          loginNotify();
+          errorNotify();
         }
       } catch (error: any) {
         console.log("erro while login", error);

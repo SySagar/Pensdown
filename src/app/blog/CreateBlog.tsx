@@ -11,6 +11,13 @@ export default function CreateBlog() {
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
   const [blog,setBlog] = useEditorContent((state: any) => [state.blog as BlogImageTypes,state.setBlog,]);
+const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    setBlog({
+      ...blog,
+      title: e.target.value,
+    });
+  }
 
   return (
     <Stack
@@ -36,6 +43,7 @@ export default function CreateBlog() {
           id="title"
           label="Title for your blog"
           fullWidth
+          onChange={onTitleChange}
           variant="standard"
           sx={{
             background: "#F4F4F4",
@@ -77,7 +85,7 @@ export default function CreateBlog() {
         )}
       </Stack>
       <Stack className="editor">
-        <Tiptap />
+        <Tiptap/>
       </Stack>
     </Stack>
   );

@@ -208,6 +208,7 @@ export default function Tiptap() {
   editor.on("create", ({ editor }) => {
     const json = editor.getJSON() || "";
     localStorage.getItem("rich-editor");
+    if (localStorage.getItem("rich-editor") == null) return;
     editor.commands.setContent(
       JSON.parse(localStorage.getItem("rich-editor") as string) as string
     );

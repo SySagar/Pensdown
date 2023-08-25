@@ -1,40 +1,54 @@
 import { Stack, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
+import { useNavigate } from "react-router-dom";
 
 interface BlogTypes {
     author: string;
     date: string;
     title: string;
-    tags: string[]; 
+    tags: string[];
+    blogId: string; 
     image: string;
     likes: string;
 }
 
-export default function Blog({author, date, title, tags=["india","hello world"], image, likes}: BlogTypes) {
+export default function Blog({author, date, title, tags=["india","hello world"], blogId, image, likes}: BlogTypes) {
   likes = "10";
   console.log("likes", likes);
+  const navigate = useNavigate();
+
+  const redirectToBlog = () => {
+    console.log("redirecting to blog");
+    navigate(`/${blogId}`);
+  };
   return (
     <Stack
       className="blog"
       justifyContent={"center"}
       alignItems={"center"}
       position={"relative"}
+      onClick={redirectToBlog}
       sx={{
 
           background:"#474554",
             borderRadius:"5px",
       }}
     >
+      <Stack overflow={'hidden'} 
+      sx={{
+        maxWidth: "300px",
+        maxHeight: "200px",
+      }}>
+
       <img
         style={{
           objectFit: "cover",
-          maxWidth: "300px",
           borderRadius: "4px",
         }}
         src={image}
         alt=""
-      />
-
+        />
+        </Stack>
       <Stack
         className="about"
         direction={"column"}

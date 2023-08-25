@@ -1,7 +1,7 @@
 import "./App.css";
 import "./fonts/Raleway.ttf";
 import "./fonts/Inconsolata.ttf";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, useNavigate } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
 import Home from "./app/home/HeroPage";
 import Login from "./app/auth/Login";
@@ -9,9 +9,8 @@ import Register from "./app/auth/Register";
 import NotFound from "./app/misc/NotFound";
 import { Stack } from "@mui/material";
 import PrivateRoutes from "./lib/utils/protectedRoutes";
-import { useEffect } from "react";
-import APIMethods from "./lib/axios/api";
 import CreateBlog from "./app/blog/CreateBlog";
+import ShowBlog from "./app/blog/ShowBlog";
 
 const router = createBrowserRouter([
   {
@@ -29,12 +28,19 @@ const router = createBrowserRouter([
           {
             path: "/blog/create",
             element: <CreateBlog />,
-          }
+          },
+          {
+            path: "/:blogId",
+            element: <ShowBlog />,
+          },
         ],
       },
     ],
   },
-
+  {
+    path: "/",
+    element: <Home />,
+  },
   {
     path: "/auth/login",
     element: <Login />,
@@ -50,26 +56,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	
-  const verifyToken = async () => {
-    const token = localStorage.getItem("accessToken") as string;
-    const isValidToken = await APIMethods.verify.verifyToken(token);
 
-    if (isValidToken) {
-      localStorage.setItem("accessToken", token);
-    } else {
-      localStorage.removeItem("accessToken");
-    }
-  };
-
-  useEffect(() => {
-    verifyToken()
-      .then(() => console.log("token verified"))
-      .catch((e) => {
-        console.log("token not verified");
-        console.log("error", e);
-      });
-  }, []);
 
   return (
     <Stack sx={{ background: "#BDBDBD" }}>

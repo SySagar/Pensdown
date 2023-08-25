@@ -20,6 +20,14 @@ const useEditorContent = create((set) => ({
   },
  
   setBlog: (blog:blogTypes) => set({ blog: blog }),
+  resetBlog: () => set({ blog: {
+    title: '',
+    body: '',
+    authorName: '',
+    email: '',
+    id: '',
+    coverImage: '',
+  } }),
 }))
 
 export default useEditorContent;

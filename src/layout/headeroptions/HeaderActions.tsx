@@ -32,8 +32,9 @@ const AuthorizedActions = () => {
     state.isLoading,
     state.setIsLoading,
   ]);
-  const [blog] = useEditorContent((state: any) => [
+  const [blog,resetBlog] = useEditorContent((state: any) => [
     state.blog,
+    state.resetBlog,
   ]);
 
   const savedNotify  = ()  => toast.success('🎉Yayy, Congrats on adding value to community amigo!');
@@ -51,13 +52,13 @@ const AuthorizedActions = () => {
   
   }, [location.pathname, setIsWriting, setNotWriting]);
 
-  const uploadImageToFirebase = async () => {
+  const uploadImageToFirebase = async (blogsCount:number) => {
     if (blog == null) return;
 
     const user = JSON.parse(localStorage.getItem("user") as string) as unknown as userTypes;
     const imageRef = ref(
       storage,
-      `cover_images/${user._id}/${user.displayName}/${(user.blogs.length + 1) as unknown as string}`
+      `cover_images/${user._id}/${user.displayName}/${(blogsCount) as unknown as string}`
     );
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     await uploadBytes(imageRef, blog.coverImage);
@@ -67,21 +68,26 @@ const AuthorizedActions = () => {
     console.log("submit");
     const user = JSON.parse(localStorage.getItem("user") as string) as unknown as userTypes;
     const DBUser = JSON.parse(localStorage.getItem("user") as string);
+    const token = localStorage.getItem("accessToken") as string;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     setIsLoading(true);
 
      const data =  { ...blog,
-        title: "title",
         content: localStorage.getItem("rich-editor") as string,
-        authorName : DBUser.name,
+        authorName : DBUser.displayName        ,
         email: DBUser.email,
         authorID: DBUser._id,
        }
+
+       const blogsCount = localStorage.getItem("blogsCount") as unknown as number;
+       if(blogsCount === null || blogsCount === undefined){
+          localStorage.setItem("blogsCount", "1");
+       }
      
-    uploadImageToFirebase()
+    uploadImageToFirebase(blogsCount)
     .then(() => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/restrict-template-expressions
-      const uploadedImageRef = ref(storage, `cover_images/${user._id}/${user.displayName}/${(user.blogs.length + 1) as unknown as string}`);
+      const uploadedImageRef = ref(storage, `cover_images/${user._id}/${user.displayName}/${(blogsCount) as unknown as string}`);
 
       // Get the download URL for the uploaded image reference
       return getDownloadURL(uploadedImageRef);
@@ -91,24 +97,24 @@ const AuthorizedActions = () => {
 
   
       return APIMethods.blog.createBlog(data);
+    }).then((res:any) => {
+      localStorage.setItem("blogsCount", `${(blogsCount as unknown as number) + 1}`);
     })
-    .then((res) => {
+    .then((res:any) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       setIsLoading(false);
-      console.log("Blog created successfully:", res.status);
-      savedNotify();
+      console.log("Blog created successfully:");
+      localStorage.setItem("rich-editor", "");
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      resetBlog();
+       savedNotify();
       navigate('/');
     })
     .catch((err) => {
       console.log("Error:", err);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      setIsLoading(false);
     })
-
-
-    // // console.log(blog);
-    // await APIMethods.blog.createBlog(blog).then((res) => {
-    //   console.log("res", res.status);
-    // });
-
 
   };
 
