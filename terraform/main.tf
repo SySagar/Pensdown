@@ -44,7 +44,7 @@ resource "azurerm_service_plan" "pensdown-sp" {
   resource_group_name = azurerm_resource_group.pensdown-rg.name
   location            = azurerm_resource_group.pensdown-rg.location
   os_type             = "Linux"
-  sku_name            = "P1v2"
+  sku_name            = "B1"
 }
 
 resource "azurerm_linux_web_app" "pensdown-app" {
