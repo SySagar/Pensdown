@@ -9,12 +9,10 @@ interface BlogTypes {
     tags: string[];
     blogId: string; 
     image: string;
-    likes: string;
+    likes: number;
 }
 
 export default function Blog({author, date, title, tags=["india","hello world"], blogId, image, likes}: BlogTypes) {
-  likes = "10";
-  console.log("likes", likes);
   const navigate = useNavigate();
 
   const redirectToBlog = () => {

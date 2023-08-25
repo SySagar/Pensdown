@@ -30,8 +30,33 @@ const PrivateRoutes = () => {
       }
   
     };
+
+    const verifyToken = async () => {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+         const isValidToken = await APIMethods.verify.verifyToken({token});
+         console.log('isValidToken', isValidToken);
+         if(isValidToken.status === 200)
+        localStorage.setItem("accessToken", token);
+      else
+        localStorage.removeItem("accessToken");
+      }
+      catch(e) {
+        console.log("error", e);
+        localStorage.removeItem("accessToken");
+        navigate("/auth/login");
+      }
+    }
   
     useEffect(() => {
+
+      verifyToken().then(() => {
+        console.log("token verified");
+      })
+      .catch((e) => {
+        console.log("token not verified");
+        console.log("error", e);
+      });
   
       updateLocalUser()
         .then(() => {
@@ -42,7 +67,7 @@ const PrivateRoutes = () => {
         });
     }, []);
 
-  return (token!=null || token!=undefined) ? <Outlet/> : <Navigate to="/auth/login" />
+  return (token && token!=null || token!=undefined) ? <Outlet/> : <Navigate to="/auth/login" />
 }
 
 export default PrivateRoutes;

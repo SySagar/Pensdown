@@ -1,7 +1,7 @@
 import "./App.css";
 import "./fonts/Raleway.ttf";
 import "./fonts/Inconsolata.ttf";
-import { RouterProvider, createBrowserRouter, useNavigate } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
 import Home from "./app/home/HeroPage";
 import Login from "./app/auth/Login";

@@ -21,8 +21,8 @@ export interface blogTypes {
           title:string,
           date:string,
           coverImageURL:string,
-          likes: number;
-          comments: number;
+          likes: [];
+          comments: [];
         }
       }
     

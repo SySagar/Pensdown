@@ -25,7 +25,7 @@ const APIMethods = {
     },
 
     verify:{
-        verifyToken: async (token : string) => {return await APIInstance.post("/verify",token)},
+        verifyToken: async (token : any) => {return await APIInstance.post("/verify",token)},
     },
 
     blog:{
@@ -35,6 +35,7 @@ const APIMethods = {
         updateBlog: async (id: string, data: any) => {return await AuthorizedAPIInstance.put(`/blog/${id}`, data)},
         deleteBlog: async (id: string) => {return await AuthorizedAPIInstance.delete(`/blog/${id}`)},
         getUserBlogs: async (email:any) => {return await APIInstance.post("/blog/getUserBlogs",email)},
+        likeBlog: async (data: {userId:string,blogId:string}) => {await AuthorizedAPIInstance.post(`/blog/${data.blogId}`, data)},
     }
 
 }
