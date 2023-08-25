@@ -30,7 +30,7 @@ const APIMethods = {
 
     blog:{
         getBlogs: async () => {return await APIInstance.get("/blog/getAll")},
-        getSingleBlog: async (id: string) => {return await AuthorizedAPIInstance.get(`/blog/${id}`)},
+        getSingleBlog: async (blogId: any) => {return await AuthorizedAPIInstance.post(`/blog/getBlog`,blogId)},
         createBlog: async (data: any) => {console.log(data);return await AuthorizedAPIInstance.post("/blog/create", data)},
         updateBlog: async (id: string, data: any) => {return await AuthorizedAPIInstance.put(`/blog/${id}`, data)},
         deleteBlog: async (id: string) => {return await AuthorizedAPIInstance.delete(`/blog/${id}`)},

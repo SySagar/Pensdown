@@ -12,6 +12,7 @@ import { ref, uploadBytes } from "firebase/storage";
 import { getDownloadURL, } from 'firebase/storage';
 import useLoadingStore from "../../lib/store/useLoading";
 import { toast } from "react-hot-toast";
+import { v4 as uuidv4 } from 'uuid';
 
 interface userTypes {
   _id: string;
@@ -22,6 +23,8 @@ interface userTypes {
 const AuthorizedActions = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  const imageId = uuidv4();
   // console.log(location.pathname);
   const [isWriting, setIsWriting,setNotWriting] = useWriterAction((state: any) => [
     state.isWriting,
@@ -52,13 +55,15 @@ const AuthorizedActions = () => {
   
   }, [location.pathname, setIsWriting, setNotWriting]);
 
-  const uploadImageToFirebase = async (blogsCount:number) => {
+  const uploadImageToFirebase = async () => {
     if (blog == null) return;
 
     const user = JSON.parse(localStorage.getItem("user") as string) as unknown as userTypes;
     const imageRef = ref(
       storage,
-      `cover_images/${user._id}/${user.displayName}/${(blogsCount) as unknown as string}`
+
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      `cover_images/${user._id}/${user.displayName}/${(imageId)}`
     );
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     await uploadBytes(imageRef, blog.coverImage);
@@ -68,7 +73,6 @@ const AuthorizedActions = () => {
     console.log("submit");
     const user = JSON.parse(localStorage.getItem("user") as string) as unknown as userTypes;
     const DBUser = JSON.parse(localStorage.getItem("user") as string);
-    const token = localStorage.getItem("accessToken") as string;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     setIsLoading(true);
 
@@ -79,15 +83,11 @@ const AuthorizedActions = () => {
         authorID: DBUser._id,
        }
 
-       const blogsCount = localStorage.getItem("blogsCount") as unknown as number;
-       if(blogsCount === null || blogsCount === undefined){
-          localStorage.setItem("blogsCount", "1");
-       }
      
-    uploadImageToFirebase(blogsCount)
+    uploadImageToFirebase()
     .then(() => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/restrict-template-expressions
-      const uploadedImageRef = ref(storage, `cover_images/${user._id}/${user.displayName}/${(blogsCount) as unknown as string}`);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-call
+      const uploadedImageRef = ref(storage, `cover_images/${user._id}/${user.displayName}/${(imageId)}`);
 
       // Get the download URL for the uploaded image reference
       return getDownloadURL(uploadedImageRef);
@@ -97,10 +97,7 @@ const AuthorizedActions = () => {
 
   
       return APIMethods.blog.createBlog(data);
-    }).then((res:any) => {
-      localStorage.setItem("blogsCount", `${(blogsCount as unknown as number) + 1}`);
-    })
-    .then((res:any) => {
+    }).then(() => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       setIsLoading(false);
       console.log("Blog created successfully:");

@@ -9,3 +9,17 @@ export interface blogTypes {
     tags: string[];
     coverImageURL: string;
   }
+
+  export interface SingleBlogTypes {
+  data:
+      {
+        blogs:
+        {
+          authorName:string,
+          content:string,
+          title:string,
+          date:string,
+        }
+      }
+    
+  }

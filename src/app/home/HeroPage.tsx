@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import { useEffect, useState } from "react";
 import APIMethods from '../../lib/axios/api'
 import { blogTypes } from "../blog/types/blogTypes";
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 
 // const blogs = [
 //   {
@@ -138,7 +139,7 @@ export default function HeroPage() {
           alignItems={"center"}
           direction={"row"}
         >
-          {blogs.map((blog, index) => (
+          {blogs.length!=0 && blogs.map((blog, index) => (
             <Blog
               key={index}
               blogId={blog._id}
@@ -150,6 +151,13 @@ export default function HeroPage() {
               likes={blog.likes}
             />
           ))}
+          {
+            (blogs.length==0) && 
+            <Stack direction={'row'} gap={2} paddingY={5} alignItems={'center'}>
+            <Typography variant="h4">No Blogs to show</Typography>
+              <SentimentDissatisfiedIcon sx={{fontSize:'3rem',color:'#474747'}} />
+            </Stack>
+          }
         </Stack>
         }
       </Stack>

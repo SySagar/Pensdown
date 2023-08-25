@@ -148,6 +148,13 @@ button.is_active {
   border-radius: 10px;
 }
 
+.previeweditor{
+  background-color: #3F52E1;
+  min-height: 400px;
+  width: 100%;
+  border-radius: 10px;
+}
+
 .text-editor {
   padding: 10px;
   padding-inline: 55px;
