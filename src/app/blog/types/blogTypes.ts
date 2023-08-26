@@ -27,3 +27,20 @@ export interface blogTypes {
       }
     
   }
+
+  export interface BlogCommentTypes {
+    _id: string;
+    blogId: string;
+    comment: string;
+    createdAt: string;
+
+      authorId:{
+        displayName: string;
+    };
+  }
+
+  export interface CommentTypes {
+    comment:string;
+    createdAt: string;
+    author: string;
+  }

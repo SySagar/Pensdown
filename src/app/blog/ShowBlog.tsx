@@ -30,6 +30,7 @@ import useLoadingStore from "../../lib/store/useLoading";
 import "./preview.css";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
+import CommentSection from "./components/CommentSection";
 // import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 export default function ShowBlog() {
@@ -40,7 +41,6 @@ export default function ShowBlog() {
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [likes, setLikes] = useState([]);
-  const [comments, setComments] = useState([]);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [isLoading, setIsLoading] = useLoadingStore((state: any) => [
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -63,7 +63,6 @@ export default function ShowBlog() {
         setTitle(res.data.blogs.title);
         setCoverImage(res.data.blogs.coverImageURL);
         setLikes(res.data.blogs.likes);
-        setComments(res.data.blogs.comments);
       })
       .catch((e) => {
         console.log(e);
@@ -101,13 +100,15 @@ export default function ShowBlog() {
     _id: string;
   }
 
-  async function likeBlog(){
+  async function likeBlog() {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const user = JSON.parse(localStorage.getItem("user") as string) as unknown as LikeBlogTypes;
+    const user = JSON.parse(
+      localStorage.getItem("user") as string
+    ) as unknown as LikeBlogTypes;
     const userId = user._id;
     console.log("userId", userId);
     await APIMethods.blog
-      .likeBlog({ userId,blogId })
+      .likeBlog({ userId, blogId })
       .then((res) => {
         console.log(res);
         fetchBlog()
@@ -235,10 +236,7 @@ export default function ShowBlog() {
               <Typography>{likes.length}</Typography>
             </Stack>
             <Stack direction={"row"} gap={1} alignItems={"center"}>
-              <IconButton>
-                <img src="./png/comment.png" alt="" style={{ width: "20px" }} />
-              </IconButton>
-              <Typography>{comments.length}</Typography>
+              <CommentSection blogId={blogId} />
             </Stack>
           </Stack>
 

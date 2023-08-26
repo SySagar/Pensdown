@@ -36,6 +36,9 @@ const APIMethods = {
         deleteBlog: async (id: string) => {return await AuthorizedAPIInstance.delete(`/blog/${id}`)},
         getUserBlogs: async (email:any) => {return await APIInstance.post("/blog/getUserBlogs",email)},
         likeBlog: async (data: {userId:string,blogId:string}) => {await AuthorizedAPIInstance.post(`/blog/${data.blogId}`, data)},
+        commentOnBlog: async (data: {userId:string,blogId:string,comment:string}) => {await AuthorizedAPIInstance.post(`/blog/comment/${data.blogId}`, data)},
+        getComments: async (data: {blogId:string}) => {return await AuthorizedAPIInstance.get(`/blog/comments/${data.blogId}`)},
+        addComment: async (data: {blogId:string,comment:string,authorId:string}) => {return await AuthorizedAPIInstance.post(`/blog/comment/${data.blogId}`, data)},
     }
 
 }
