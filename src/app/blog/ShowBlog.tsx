@@ -33,6 +33,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import CommentSection from "./components/CommentSection";
 // import BookmarkIcon from '@mui/icons-material/Bookmark';
 
+let authorid = "";
 export default function ShowBlog() {
   const { blogId } = useParams() as { blogId: string };
   const [blog, setBlog] = useState();
@@ -41,6 +42,7 @@ export default function ShowBlog() {
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [likes, setLikes] = useState([]);
+  const [isFollowing,setIsFollowing] = useState(false);
   const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [isLoading, setIsLoading] = useLoadingStore((state: any) => [
@@ -73,6 +75,7 @@ export default function ShowBlog() {
           setTitle(res.data.blogs.title);
           setCoverImage(res.data.blogs.coverImageURL);
           setLikes(res.data.blogs.likes);
+          authorid=res.data.blogs.authorID;
         }
       })
       .catch((e) => {
@@ -89,6 +92,28 @@ export default function ShowBlog() {
         console.log(e);
       });
   }, [blogId]);
+
+  const follow = async () => {
+    const data = {
+      userId:authorid,
+     id: 
+      {
+       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+       id: (JSON.parse(localStorage.getItem('user') as string))._id
+      }
+    }
+    const followRes = await APIMethods.user.isFollowingUser(data)
+    console.log(followRes);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if(followRes.data.followStatus == 'unfollowing')
+    {
+      setIsFollowing(false);
+    }
+    else
+    {
+      setIsFollowing(true);
+    }
+  }
 
   useEffect(() => {
     if (
@@ -236,9 +261,12 @@ export default function ShowBlog() {
             <Typography variant="caption">{date}</Typography>
           </Typography>
           <Button
+          onClick={follow}
             sx={{ background: "#474747", position: "absolute", right: 0 }}
           >
-            Follow
+            {
+              isFollowing ? "Unfollow" : "Follow"
+            }
           </Button>
         </Stack>
 
