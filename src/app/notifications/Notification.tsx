@@ -7,13 +7,6 @@ export default function Notification() {
 
     const [notifications, setNotifications] = useState<string[]>([]) ;
 
-    function reverseString(input:string) {
-        let reversed = '';
-        for (const char of input) {
-          reversed = char + reversed;
-        }
-        return reversed;
-      }
 
     const fetchNotification = async () => {
         try {
