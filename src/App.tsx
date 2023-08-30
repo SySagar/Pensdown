@@ -11,6 +11,7 @@ import { Stack } from "@mui/material";
 import PrivateRoutes from "./lib/utils/protectedRoutes";
 import CreateBlog from "./app/blog/CreateBlog";
 import ShowBlog from "./app/blog/ShowBlog";
+import NotBlog from "./app/misc/NoBlog";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
           {
             path: "/:blogId",
             element: <ShowBlog />,
+          },
+          {
+            path: "/404",
+            element: <NotBlog />,
           },
         ],
       },
@@ -56,8 +61,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
-
   return (
     <Stack sx={{ background: "#BDBDBD" }}>
       <RouterProvider router={router} />

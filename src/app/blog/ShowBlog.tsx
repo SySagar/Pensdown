@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import APIMethods from "../../lib/axios/api";
 import { useState } from "react";
 import { Editor, EditorContent } from "@tiptap/react";
@@ -41,6 +41,7 @@ export default function ShowBlog() {
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [likes, setLikes] = useState([]);
+  const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [isLoading, setIsLoading] = useLoadingStore((state: any) => [
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -56,13 +57,23 @@ export default function ShowBlog() {
       .getSingleBlog({ blogId })
       .then((res: SingleBlogTypes) => {
         console.log(res);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        setBlog(JSON.parse(res.data.blogs.content));
-        setAuthor(res.data.blogs.authorName);
-        setDate(res.data.blogs.date);
-        setTitle(res.data.blogs.title);
-        setCoverImage(res.data.blogs.coverImageURL);
-        setLikes(res.data.blogs.likes);
+        if(res.data.status == 401) {
+          window.location.href = "/auth/login";
+        }
+        if(res.data.status == 404 || res.data.status == 500)
+        {
+          navigate("/404");
+        } 
+        else
+        {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+          setBlog(JSON.parse(res.data.blogs.content));
+          setAuthor(res.data.blogs.authorName);
+          setDate(res.data.blogs.date);
+          setTitle(res.data.blogs.title);
+          setCoverImage(res.data.blogs.coverImageURL);
+          setLikes(res.data.blogs.likes);
+        }
       })
       .catch((e) => {
         console.log(e);
@@ -98,6 +109,7 @@ export default function ShowBlog() {
 
   interface LikeBlogTypes {
     _id: string;
+    displayName: string;
   }
 
   async function likeBlog() {
@@ -109,8 +121,24 @@ export default function ShowBlog() {
     console.log("userId", userId);
     await APIMethods.blog
       .likeBlog({ userId, blogId })
-      .then((res) => {
+      .then(async (res) => {
         console.log(res);
+        const data = {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          userId: JSON.parse(localStorage.getItem("user") as string)._id as string,
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
+          message : `👏 ${JSON.parse(localStorage.getItem("user") as string).displayName} clapped to your post!`
+        }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        await APIMethods.user.addNotification(data)
+          .then((res:any) => {
+            console.log(res);
+          })
+          .catch((e:any) => {
+            console.log(e);
+          });
+
+          
         fetchBlog()
           .then((res) => {
             console.log(res);

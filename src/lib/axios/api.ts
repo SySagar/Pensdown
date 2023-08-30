@@ -39,6 +39,11 @@ const APIMethods = {
         commentOnBlog: async (data: {userId:string,blogId:string,comment:string}) => {await AuthorizedAPIInstance.post(`/blog/comment/${data.blogId}`, data)},
         getComments: async (data: {blogId:string}) => {return await AuthorizedAPIInstance.get(`/blog/comments/${data.blogId}`)},
         addComment: async (data: {blogId:string,comment:string,authorId:string}) => {return await AuthorizedAPIInstance.post(`/blog/comment/${data.blogId}`, data)},
+        },
+    user:{
+      addNotification: async (data: {userId:string,message:string}) => {return await AuthorizedAPIInstance.post(`/notifications/send`, data)},
+      getNotifications: async (data: {userId:string}) => {console.log(data);return await AuthorizedAPIInstance.post(`/notifications/get`,data)},
+  
     }
 
 }

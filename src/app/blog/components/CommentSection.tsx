@@ -10,6 +10,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 import { useState, useEffect } from "react";
 import { BlogCommentTypes, CommentTypes } from "../types/blogTypes";
 import useLoadingStore from "../../../lib/store/useLoading";
@@ -73,7 +74,22 @@ export default function CommentSection({ blogId }: { blogId: string }) {
 
   const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Enter") {
-      addComment().catch((e) => {
+      addComment().then(async (res) => {
+        const data = {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          userId: JSON.parse(localStorage.getItem("user") as string)._id as string,
+          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
+          message : `🎐 ${JSON.parse(localStorage.getItem("user") as string).displayName} commented ${newComment}`
+        }
+        await APIMethods.user.addNotification(data)
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      })
+      .catch((e) => {
         console.log(e);
       });
     }
@@ -112,7 +128,13 @@ export default function CommentSection({ blogId }: { blogId: string }) {
       padding={2}
       role="comments"
     >
-      <Stack>
+      <Stack position={'relative'}>
+        <Stack width={'100%'} direction={'row'} justifyContent={'flex-end'} 
+            onClick={toggleDrawer(anchor, false)}> 
+          <IconButton>
+            <CloseIcon />
+          </IconButton>
+        </Stack>
         <TextField
           variant="outlined"
           value={newComment}
@@ -189,7 +211,6 @@ export default function CommentSection({ blogId }: { blogId: string }) {
           </Stack>
           <Drawer
             anchor={anchor}
-            onClick={toggleDrawer(anchor, false)}
             open={state[anchor]}
           >
             {isLoading ? <Typography>Loading...</Typography> : list(anchor)}

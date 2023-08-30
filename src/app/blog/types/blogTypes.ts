@@ -23,7 +23,8 @@ export interface blogTypes {
           coverImageURL:string,
           likes: [];
           comments: [];
-        }
+        },
+        status: number;
       }
     
   }
