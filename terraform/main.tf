@@ -55,3 +55,12 @@ resource "azurerm_linux_web_app" "pensdown-app" {
 
   site_config {}
 }
+
+resource "azurerm_linux_web_app" "pensdown-service" {
+  name                = "pensdown-service"
+  resource_group_name = azurerm_resource_group.pensdown-rg.name
+  location            = azurerm_service_plan.pensdown-sp.location
+  service_plan_id     = azurerm_service_plan.pensdown-sp.id
+
+  site_config {}
+}
