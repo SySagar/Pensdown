@@ -14,6 +14,15 @@ import ShowBlog from "./app/blog/ShowBlog";
 import NotBlog from "./app/misc/NoBlog";
 
 const router = createBrowserRouter([
+  
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/:blogId",
+    element: <ShowBlog />,
+  },
   {
     path: "/",
     element: <PrivateRoutes />,
@@ -31,20 +40,12 @@ const router = createBrowserRouter([
             element: <CreateBlog />,
           },
           {
-            path: "/:blogId",
-            element: <ShowBlog />,
-          },
-          {
             path: "/404",
             element: <NotBlog />,
           },
         ],
       },
     ],
-  },
-  {
-    path: "/",
-    element: <Home />,
   },
   {
     path: "/auth/login",

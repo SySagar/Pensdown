@@ -15,6 +15,7 @@ import { useState, useEffect } from "react";
 import { BlogCommentTypes, CommentTypes } from "../types/blogTypes";
 import useLoadingStore from "../../../lib/store/useLoading";
 import SendIcon from "@mui/icons-material/Send";
+import { useNavigate } from "react-router-dom";
 
 type Anchor = "right";
 
@@ -24,6 +25,7 @@ export default function CommentSection({ blogId }: { blogId: string }) {
   });
   const [comments, setComments] = useState<CommentTypes[]>([]);
   const [newComment, setNewComment] = useState("");
+  const navigate = useNavigate();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
   const [isLoading, setIsLoading] = useLoadingStore((state: any) => [state.loading,state.setIsLoading,]);
 
@@ -74,13 +76,16 @@ export default function CommentSection({ blogId }: { blogId: string }) {
 
   const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Enter") {
-      addComment().then(async () => {
+      addComment().then(async (res:any) => {
         const data = {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           userId: JSON.parse(localStorage.getItem("user") as string)._id as string,
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
           message : `🎐 ${JSON.parse(localStorage.getItem("user") as string).displayName} commented ${newComment}`
         }
+        if(!data || !data.userId || !data.message) 
+        navigate('/auth/login');
+      
         await APIMethods.user.addNotification(data)
           .then((res) => {
             console.log(res);
@@ -91,6 +96,7 @@ export default function CommentSection({ blogId }: { blogId: string }) {
       })
       .catch((e) => {
         console.log(e);
+        navigate('/auth/login');
       });
     }
   };

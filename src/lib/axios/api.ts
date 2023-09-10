@@ -30,14 +30,14 @@ const APIMethods = {
 
     blog:{
         getBlogs: async () => {return await APIInstance.get("/blog/getAll")},
-        getSingleBlog: async (blogId: any) => {return await AuthorizedAPIInstance.post(`/blog/getBlog`,blogId)},
+        getSingleBlog: async (blogId: any) => {return await APIInstance.post(`/blog/getBlog`,blogId)},
         createBlog: async (data: any) => {console.log(data);return await AuthorizedAPIInstance.post("/blog/create", data)},
         updateBlog: async (id: string, data: any) => {return await AuthorizedAPIInstance.put(`/blog/${id}`, data)},
         deleteBlog: async (id: string) => {return await AuthorizedAPIInstance.delete(`/blog/${id}`)},
         getUserBlogs: async (email:any) => {return await APIInstance.post("/blog/getUserBlogs",email)},
         likeBlog: async (data: {userId:string,blogId:string}) => {await AuthorizedAPIInstance.post(`/blog/${data.blogId}`, data)},
         commentOnBlog: async (data: {userId:string,blogId:string,comment:string}) => {await AuthorizedAPIInstance.post(`/blog/comment/${data.blogId}`, data)},
-        getComments: async (data: {blogId:string}) => {return await AuthorizedAPIInstance.get(`/blog/comments/${data.blogId}`)},
+        getComments: async (data: {blogId:string}) => {return await APIInstance.get(`/blog/comments/${data.blogId}`)},
         addComment: async (data: {blogId:string,comment:string,authorId:string}) => {return await AuthorizedAPIInstance.post(`/blog/comment/${data.blogId}`, data)},
         },
     user:{
