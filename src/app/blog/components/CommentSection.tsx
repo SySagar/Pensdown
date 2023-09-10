@@ -76,7 +76,7 @@ export default function CommentSection({ blogId }: { blogId: string }) {
 
   const handleKeyDown = (event: { key: string }) => {
     if (event.key === "Enter") {
-      addComment().then(async (res:any) => {
+      addComment().then(async () => {
         const data = {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           userId: JSON.parse(localStorage.getItem("user") as string)._id as string,
