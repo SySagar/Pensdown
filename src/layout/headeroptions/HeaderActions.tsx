@@ -205,11 +205,18 @@ const AuthorizedActions = () => {
 
 const UnauthorizedActions = () => {
   return (
-    <Stack direction={"row"} gap={1}>
-      <Button component={Link} to={"/auth/login"} variant={"outlined"}>
+    <Stack direction={"row"} gap={1} paddingY={1}>
+      <Button component={Link} sx={{background:'#474747'}} to={"/auth/login"} variant={"outlined"}>
         Login
       </Button>
-      <Button component={Link} to={"/auth/register"} variant={"contained"}>
+      <Button component={Link}
+       sx={{color:'#474747',variant:'outlined',border:'1px solid #474747',
+      '&:hover' : {
+        background:'rgba(71, 71, 71, 0.3)',
+      }
+    }} 
+      to={"/auth/register"}
+       variant={"contained"}>
         Register
       </Button>
     </Stack>

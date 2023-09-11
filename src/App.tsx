@@ -14,10 +14,15 @@ import ShowBlog from "./app/blog/ShowBlog";
 import NotBlog from "./app/misc/NoBlog";
 
 const router = createBrowserRouter([
-  
+  {
+    path: "/",
+    element: <RootLayout />,
+    children: [
   {
     path: "/",
     element: <Home />,
+  },
+]
   },
   {
     path: "/:blogId",
