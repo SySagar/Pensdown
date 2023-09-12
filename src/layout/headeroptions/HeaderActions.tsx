@@ -22,6 +22,7 @@ import { toast } from "react-hot-toast";
 import { v4 as uuidv4 } from "uuid";
 import Notification from "../../app/notifications/Notification";
 import React from "react";
+import UserProfile from "../../app/user/UserProfile";
 
 interface userTypes {
   _id: string;
@@ -141,6 +142,11 @@ const AuthorizedActions = () => {
     setShowNotification(!showNotification);
   };
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
 
   return (
     <Stack direction={"row"} justifyContent={"center"} alignItems={"center"}>
@@ -178,7 +184,7 @@ const AuthorizedActions = () => {
       <IconButton onClick={handleNotification}>
         <NotificationsIcon />
       </IconButton>
-      <IconButton>
+      <IconButton onClick={toggleSidebar}>
         <Avatar
           src={
             "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
@@ -198,6 +204,8 @@ const AuthorizedActions = () => {
         >
           <Notification />
         </Popover>
+
+        <UserProfile  isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       
     </Stack>
   );
