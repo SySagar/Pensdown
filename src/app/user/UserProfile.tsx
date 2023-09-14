@@ -1,8 +1,45 @@
 import { Button, IconButton, Stack, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import APIMethods from "../../lib/axios/api";
+import {userProfileTypes, userTypes} from './types/userTypes'
+import useLoadingStore from "../../lib/store/useLoading";
+import CircularProgress from '@mui/material/CircularProgress';
+import { useEffect, useState } from "react";
 
-export default function UserProfile({ isOpen , onClose }: any) {
+export default function UserProfile({ isOpen , onClose , authorId}: userProfileTypes) {
+  
+  const [profile, setProfile] = useState<userTypes>({} as userTypes);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const [isLoading,setIsLoading]  = useLoadingStore((state: any) => [
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    state.isLoading, state.setIsLoading,
+  ]);
+  const fetchProfile = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    setIsLoading(true);
+    await APIMethods.user.getAuthorInfo({authorId}).then((res:{data:userTypes}) => {
+      // console.log(res);
+      setProfile(res.data);
+    }).finally(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      setIsLoading(false);
+    }
+    );
+  }
+
+  
+  useEffect(() => {
+
+    fetchProfile().then(() => {
+      console.log('done');
+    }
+    ).catch((err) => {
+      console.log(err);
+    }
+    );
+  },[isOpen])
+
   return (
     <motion.div
       className="sidebar"
@@ -37,7 +74,13 @@ export default function UserProfile({ isOpen , onClose }: any) {
               </IconButton>
             </Stack>
 
-        <Stack
+            {
+              isLoading ? 
+              <Stack justifyContent={'center'} alignItems={'center'} height={'100%'}>
+              <CircularProgress />
+                </Stack>
+                :(
+                <Stack
           margin={4}
           marginTop={8}
           border={2}
@@ -87,33 +130,33 @@ export default function UserProfile({ isOpen , onClose }: any) {
             
 
             <Stack alignItems={"center"}>
-              <Typography fontWeight={500} variant="h5">Soumya Sagar</Typography>
+              <Typography fontWeight={500} variant="h5">{profile.name}</Typography>
 
-              <Typography fontWeight={600} variant={"body2"}>@soumyasagar</Typography>
+              <Typography fontWeight={600} variant={"body2"}>@{profile.displayName}</Typography>
 
             </Stack>
 
             <Stack justifyContent={'center'} alignItems={'center'} paddingX={4}>
 
               <Typography variant={"body2"}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+                {profile.bio}
               </Typography>
             </Stack>
 
             <Stack direction={"row"} gap={3} marginTop={3}>
               <Stack direction={"column"} alignItems={"center"}>
                 <Typography variant={"body1"}>Blogs</Typography>
-                <Typography fontWeight={600}>10k</Typography>
+                <Typography fontWeight={600}>{profile.blogsCount}</Typography>
               </Stack>
 
               <Stack direction={"column"} alignItems={"center"}>
                 <Typography variant={"body1"}>Followers</Typography>
-                <Typography fontWeight={600}>86</Typography>
+                <Typography fontWeight={600}>{profile.followersCount}</Typography>
               </Stack>
 
               <Stack direction={"column"} alignItems={"center"}>
                 <Typography variant={"body1"}>Respect</Typography>
-                <Typography fontWeight={600}>12.5k</Typography>
+                <Typography fontWeight={600}>{profile.respect}</Typography>
               </Stack>
             </Stack>
 
@@ -127,7 +170,10 @@ export default function UserProfile({ isOpen , onClose }: any) {
 
      
 
-        </Stack>
+                  </Stack>)
+            }
+
+
         
         </Stack>
       </Stack>

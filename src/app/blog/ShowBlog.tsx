@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import APIMethods from "../../lib/axios/api";
 import { useState } from "react";
 import { Editor, EditorContent } from "@tiptap/react";
@@ -31,6 +31,7 @@ import "./preview.css";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import CommentSection from "./components/CommentSection";
+import UserProfile from "../user/UserProfile";
 // import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 let authorid = "";
@@ -82,6 +83,14 @@ export default function ShowBlog() {
         console.log(e);
       });
   };
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  // const toggleSidebar = () => {
+  // };
+  const showProfile = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  }
 
   useEffect(() => {
     fetchBlog()
@@ -221,6 +230,7 @@ export default function ShowBlog() {
       alignItems={"center"}
       padding={5}
     >
+       <UserProfile authorId={authorid}  isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       <Stack
         width={"900px"}
         justifyContent={"center"}
@@ -255,11 +265,19 @@ export default function ShowBlog() {
             }
             alt={"name"}
           />
-          <Typography>
+          <Stack justifyContent={'flex-start'} alignItems={'flex-start'} gap={'3px'}>
+          <div style={{cursor:'pointer'}}>
+          <Typography onClick={showProfile} sx={{ 
+            '&:hover' : {
+              color:'#646F76',
+              textDecoration:'underline',
+            }
+          }}>
             {author}
-            <br />
-            <Typography variant="caption">{date}</Typography>
           </Typography>
+          </div>
+            <Typography variant="caption">{date}</Typography>
+          </Stack>
           <Button
           onClick={follow}
             sx={{ background: "#474747", position: "absolute", right: 0 }}

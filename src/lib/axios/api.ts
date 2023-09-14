@@ -44,7 +44,7 @@ const APIMethods = {
       addNotification: async (data: {userId:string,message:string}) => {return await AuthorizedAPIInstance.post(`/notifications/send`, data)},
       getNotifications: async (data: {userId:string}) => {return await AuthorizedAPIInstance.post(`/notifications/get`,data)},
       isFollowingUser: async (data:{userId:string,id:{id:string}})=>{return await AuthorizedAPIInstance.post(`/user/follow/${data.userId}`,data.id)},
-  
+      getAuthorInfo: async (data:{authorId:string})=>{return await APIInstance.get(`/user/${data.authorId}`)},
     }
 
 }

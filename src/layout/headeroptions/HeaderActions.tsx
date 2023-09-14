@@ -205,7 +205,7 @@ const AuthorizedActions = () => {
           <Notification />
         </Popover>
 
-        <UserProfile  isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+        <UserProfile authorId={JSON.parse(localStorage.getItem('user') as string)._id}  isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
       
     </Stack>
   );
