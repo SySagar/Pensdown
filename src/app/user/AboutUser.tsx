@@ -209,7 +209,6 @@ export default function AboutUser() {
         height={"500px"}
         marginRight={'3rem'}
         overflow={'scroll'}
-        border={2}
       >
         {/* <Typography variant="h4">
             Blogs
