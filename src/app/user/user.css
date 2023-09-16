@@ -1,3 +1,22 @@
 .profile-drawer{
     border-radius: 5rem!important;
 }
+
+.blogs{
+
+}
+
+.blogs::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hiding scrollbar for IE, Edge and Firefox */
+.blogs {
+  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.single-blog-container:hover{
+    background-color: #aeaeae;
+    cursor: pointer;
+}

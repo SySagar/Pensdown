@@ -12,6 +12,7 @@ import PrivateRoutes from "./lib/utils/protectedRoutes";
 import CreateBlog from "./app/blog/CreateBlog";
 import ShowBlog from "./app/blog/ShowBlog";
 import NotBlog from "./app/misc/NoBlog";
+import AboutUser from "./app/user/AboutUser";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
     path: "/",
     element: <PrivateRoutes />,
     children: [
+      
+      {
+        path: "/user/:userId",
+        element: <AboutUser />,
+      },
       {
         path: "/",
         element: <RootLayout />,

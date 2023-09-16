@@ -16,6 +16,8 @@ const componentOverrides: any = {
       root: {
         borderRadius: "6px",
         textTransform: "none",
+        backgroundColor: "#474747",
+        color: "#FAF7FF",
         "&:hover": {
           backgroundColor: "#404040",
         },
