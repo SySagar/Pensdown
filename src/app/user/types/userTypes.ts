@@ -12,3 +12,11 @@ export interface userTypes{
     blogsCount:number;
     bio:string;
 }
+
+export interface userBlogTypes{
+  title:string;
+  coverImageURL:string;
+  likes:[];
+  comments:[];
+  date:string;
+}

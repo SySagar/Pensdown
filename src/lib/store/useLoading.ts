@@ -1,6 +1,14 @@
 import { create } from 'zustand'
 
-const useLoadingStore = create((set) => ({
+interface LoadingStoreState {
+  isLoading: boolean;
+}
+
+interface LoadingStoreActions {
+  setIsLoading: (status: boolean) => void;
+}
+
+const useLoadingStore = create<LoadingStoreState & LoadingStoreActions>((set) => ({
   isLoading: false,
   setIsLoading: (status:boolean) => {set({ isLoading:status})},
 }))

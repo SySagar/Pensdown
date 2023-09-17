@@ -1,4 +1,4 @@
-import { Button, IconButton, Stack, Typography } from "@mui/material";
+import { Button, IconButton, Link, Stack, Typography } from "@mui/material";
 import { motion } from "framer-motion";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import APIMethods from "../../lib/axios/api";
@@ -6,6 +6,7 @@ import {userProfileTypes, userTypes} from './types/userTypes'
 import useLoadingStore from "../../lib/store/useLoading";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile({ isOpen , onClose , authorId}: userProfileTypes) {
   
@@ -39,6 +40,14 @@ export default function UserProfile({ isOpen , onClose , authorId}: userProfileT
     }
     );
   },[isOpen])
+
+  const navigate = useNavigate();
+  const navigateToProfile = () => {
+    //console.log(profile);
+    navigate(`/user/${profile.displayName}`,
+    { state: { authorId } }
+    );
+  }
 
   return (
     <motion.div
@@ -130,7 +139,11 @@ export default function UserProfile({ isOpen , onClose , authorId}: userProfileT
             
 
             <Stack alignItems={"center"}>
-              <Typography fontWeight={500} variant="h5">{profile.name}</Typography>
+              <Typography component={Link} onClick={navigateToProfile} underline="hover" 
+              sx={{
+                cursor:'pointer'
+              }}
+              fontWeight={500} variant="h5">{profile.name}</Typography>
 
               <Typography fontWeight={600} variant={"body2"}>@{profile.displayName}</Typography>
 
