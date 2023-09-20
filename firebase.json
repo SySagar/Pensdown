@@ -12,6 +12,18 @@
         "destination": "/index.html"
       }
     ],
-    "predeploy": ["npm run build"]
+    "predeploy": ["npm run build"],
+    "targets": {
+      "staging": {
+        "hosting": {
+          "site": "pensdown-staging"
+        }
+      },
+      "production": {
+        "hosting": {
+          "site": "pensdown-dad2d"
+        }
+      }
+    }
   }
 }

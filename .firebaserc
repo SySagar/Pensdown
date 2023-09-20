@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "pensdown-dad2d"
+    "default": "pensdown-dad2d",
+    "staging": "pensdown-staging",
+    "production": "pensdown-dad2d"
   }
 }
