@@ -21,8 +21,8 @@ jobs:
 
     - name: Set Environment Variables
       run: |
-        echo "VITE_BASE_API=$VITE_BASE_API" >> $GITHUB_ENV
-        echo "FIREBASE_TOKEN=$FIREBASE_TOKEN" >> $GITHUB_ENV
+        echo "VITE_BASE_API=${{secrets.VITE_BASE_API}}" >> $GITHUB_ENV
+        echo "FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}" >> $GITHUB_ENV
 
     - name: Install Dependencies
       run: npm install --force
