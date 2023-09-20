@@ -21,7 +21,7 @@ jobs:
 
     - name: Set Environment Variables
       run: |
-        echo "VITE_BACKEND_URL_PROD=$VITE_BACKEND_URL_PROD" >> $GITHUB_ENV
+        echo "VITE_BASE_API=$VITE_BASE_API" >> $GITHUB_ENV
         echo "FIREBASE_TOKEN=$FIREBASE_TOKEN" >> $GITHUB_ENV
 
     - name: Install Dependencies
