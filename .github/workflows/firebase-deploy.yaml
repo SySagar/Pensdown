@@ -8,7 +8,9 @@ on:
 jobs:
   Staging:
     runs-on: ubuntu-latest
-    environment: Staging
+    environment: 
+        name: Staging
+        url : "https://pensdown-staging.web.app"
 
     steps:
       - name: Checkout code
@@ -40,7 +42,9 @@ jobs:
   deploy_production:
     needs: [Staging]
     runs-on: ubuntu-latest
-    environment: Production
+    environment: 
+       name: Production
+       url : "https://pensdown-staging.web.app"
     
     steps:
       - name: Checkout code
