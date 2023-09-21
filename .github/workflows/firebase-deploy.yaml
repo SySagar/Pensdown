@@ -39,7 +39,7 @@ jobs:
       - name: Deploy to Firebase (Staging)
         run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --only hosting --project ${{ env.FIREBASE_PROJECT_ID }}
 
-  deploy_production:
+  Production:
     needs: [Staging]
     runs-on: ubuntu-latest
     environment: 
