@@ -52,7 +52,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
 
-    needs: [request_approval]
+    needs:
+      - request_approval
+      - deploy_staging
 
     if: github.event.workflow_run.conclusion == 'success'
 
