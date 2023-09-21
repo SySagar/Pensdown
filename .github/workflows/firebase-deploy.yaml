@@ -44,7 +44,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
        name: Production
-       url : "https://pensdown-staging.web.app"
+       url : "https://pensdown-dad2d.firebaseapp.com/"
     
     steps:
       - name: Checkout code
