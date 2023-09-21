@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  deploy_staging:
+  Staging:
     runs-on: ubuntu-latest
     environment: Staging
 
@@ -37,27 +37,11 @@ jobs:
       - name: Deploy to Firebase (Staging)
         run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }} --only hosting --project ${{ env.FIREBASE_PROJECT_ID }}
 
-  request_approval:
-    runs-on: ubuntu-latest
-
-    needs: [deploy_staging]
-
-    if: github.event_name == 'workflow_run' && github.event.workflow_run.event == 'completed' && github.event.workflow_run.conclusion == 'success'
-
-    steps:
-      - name: Request Production Deployment Approval
-        run: echo "Please approve the production deployment in the GitHub Actions interface."
-
   deploy_production:
+    needs: [Staging]
     runs-on: ubuntu-latest
     environment: Production
-
-    needs:
-      - request_approval
-      - deploy_staging
-
-    if: github.event.workflow_run.conclusion == 'success'
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
