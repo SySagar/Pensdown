@@ -86,8 +86,9 @@ export default function Login() {
       <Stack
         minWidth={"60vw"}
         sx={{
-          background: "#fff",
+          background: "#FFF0EA",
           borderRadius: "10px",
+          boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
         }}
       >
         <Stack
