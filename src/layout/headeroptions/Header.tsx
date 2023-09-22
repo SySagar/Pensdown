@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Link, Stack, Typography } from "@mui/material";
 import HeaderActions from "./HeaderActions";
 
 export default function Header() {
@@ -23,7 +23,15 @@ export default function Header() {
             src="/png/mainicon.png"
             alt=""
           />
-          <Typography fontSize={20} fontWeight={500}>
+          <Typography
+            component={Link}
+            href="/"
+            style={{
+              textDecoration: "none",
+            }}
+            fontSize={20}
+            fontWeight={500}
+          >
             Pensdown
           </Typography>
         </Stack>

@@ -7,7 +7,7 @@ export default function Footer() {
       <Typography variant="caption">
         <a style={{
           paddingInline: '5px',
-        }} className="footer-link" href="/" >
+        }} className="footer-link" href="/about" >
           About 
           </a>
           •

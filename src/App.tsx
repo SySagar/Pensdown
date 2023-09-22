@@ -13,17 +13,18 @@ import CreateBlog from "./app/blog/CreateBlog";
 import ShowBlog from "./app/blog/ShowBlog";
 import NotBlog from "./app/misc/NoBlog";
 import AboutUser from "./app/user/AboutUser";
+import About from "./app/platform/About";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: [
-  {
-    path: "/",
-    element: <Home />,
-  },
-]
+      {
+        path: "/",
+        element: <Home />,
+      },
+    ],
   },
   {
     path: "/:blogId",
@@ -33,7 +34,6 @@ const router = createBrowserRouter([
     path: "/",
     element: <PrivateRoutes />,
     children: [
-      
       {
         path: "/user/:userId",
         element: <AboutUser />,
@@ -59,6 +59,16 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/",
+    element: <RootLayout />,
+    children: [
+      {
+        path: "/about",
+        element: <About />,
+      },
+    ],
+  },
+  {
     path: "/auth/login",
     element: <Login />,
   },
@@ -74,7 +84,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Stack sx={{ background: "#BDBDBD" }}>
+    <Stack sx={{ background: "#FAF8FF" }}>
       <RouterProvider router={router} />
     </Stack>
   );
