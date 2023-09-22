@@ -69,7 +69,10 @@ export default function Notification() {
     }, [notifications]);
 
   return (
-    <Stack minWidth={350} minHeight={400} >
+    <Stack minWidth={350} height={400} >
+        <Typography variant='body1'  borderBottom={'3px solid #bfbfbf'} fontWeight={600} paddingLeft={2} paddingY={2} position={'sticky'} top={0} zIndex={2} sx={{background:'#fff'}}>
+            All Notifications
+        </Typography>
         {
         
 
@@ -77,8 +80,8 @@ export default function Notification() {
                 
                 notifications.slice().reverse().map((singleItem,idx) => {
                     return (
-                    <Stack key={idx} className='inNots' width={350} padding={2} paddingY={3} borderBottom={1} borderColor={'grey'}>
-                        <Typography>
+                    <Stack key={idx} className='inNots' width={350} padding={2} paddingY={3} borderBottom={'1px solid #d9d9d9'} >
+                        <Typography variant='body2'>
                         {singleItem}
                         </Typography>
                         </Stack>

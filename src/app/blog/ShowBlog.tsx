@@ -2,6 +2,7 @@
 import {
   Avatar,
   Button,
+  CircularProgress,
   Divider,
   IconButton,
   Stack,
@@ -152,11 +153,14 @@ export default function ShowBlog() {
       localStorage.getItem("user") as string
     ) as unknown as LikeBlogTypes;
     const userId = user._id;
-    console.log("userId", userId);
     await APIMethods.blog
       .likeBlog({ userId, blogId })
-      .then(async (res) => {
+      .then(async (res:any) => {
         console.log(res);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        if(res.data.status == 400) {
+          window.location.href = "/auth/login";
+        }
         const data = {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           userId: JSON.parse(localStorage.getItem("user") as string)._id as string,
@@ -183,6 +187,7 @@ export default function ShowBlog() {
       })
       .catch((e) => {
         console.log(e);
+        navigate("/auth/login");
       });
   }
 
@@ -231,6 +236,12 @@ export default function ShowBlog() {
       padding={5}
     >
        <UserProfile authorId={authorid}  isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      
+      {
+        isLoading? <Stack minHeight={'100vh'}>
+          <CircularProgress />
+        </Stack>:
+      
       <Stack
         width={"900px"}
         justifyContent={"center"}
@@ -336,6 +347,7 @@ export default function ShowBlog() {
           }}
         />
       </Stack>
+      }
     </Stack>
   );
 }
