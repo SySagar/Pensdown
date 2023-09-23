@@ -10,6 +10,11 @@ export default function Header() {
       width={"100%"}
       minHeight={"40px"}
       justifyContent={"center"}
+      sx={
+        {
+          background: "#F5F5F5",
+        }
+      }
     >
       <Stack
         className="navbar-container"

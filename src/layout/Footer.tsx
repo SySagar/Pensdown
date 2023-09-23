@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <Stack direction={'column'} gap={1} justifyContent={'center'} alignItems={'center'}>
       <Stack direction={'row'} gap={1}>
-      <Typography variant="caption">
+      <Typography fontSize={'13px'}>
         <a style={{
           paddingInline: '5px',
         }} className="footer-link" href="/about" >
@@ -13,7 +13,7 @@ export default function Footer() {
           •
           <a style={{
           paddingInline: '5px',
-        }} className="footer-link" href="/" >
+        }} className="footer-link" href="/contact" >
           Contact
           </a>
           •
@@ -30,7 +30,7 @@ export default function Footer() {
           </a>
       </Typography>
       </Stack>
-      <Typography>
+      <Typography variant="caption">
         Pensdown © 2023
       </Typography>
     </Stack>

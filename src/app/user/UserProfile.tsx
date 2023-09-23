@@ -67,7 +67,7 @@ export default function UserProfile({ isOpen , onClose , authorId}: userProfileT
         top={0}
         right={0}
         bottom={0}
-        minWidth={"25rem"}
+        minWidth={"26rem"}
         minHeight={"100vh"}
         sx={{ background: "#fff", borderRadius: "8px 0px 0px 8px" }}
       >

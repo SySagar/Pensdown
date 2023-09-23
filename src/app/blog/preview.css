@@ -2,7 +2,7 @@
 /*For rich text editor*/
 .ProseMirror {
     padding: 20px;
-    background: #BDBDBD;
+    background: #F8FBF8;
     border-radius: 0 0 5px 5px;
     min-height: 450px;
     flex-direction: column;

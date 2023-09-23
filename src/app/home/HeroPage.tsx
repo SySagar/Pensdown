@@ -1,4 +1,4 @@
-import { CircularProgress, Stack, Typography } from "@mui/material";
+import { CircularProgress, Divider, Stack, Typography } from "@mui/material";
 import HeroBlog from "./components/HeroBlog";
 import Blog from "./components/Blog";
 import Sidebar from "./components/Sidebar";
@@ -111,9 +111,7 @@ export default function HeroPage() {
         marginTop={3}
         justifyContent={"center"}
         alignItems={"center"}
-        borderRight={2}
         gap={1}
-        paddingX={4}
         borderColor={"#A3A0B2"}
       >
         <Typography variant="h2">The best from the week</Typography>
@@ -161,14 +159,20 @@ export default function HeroPage() {
         </Stack>
         }
       </Stack>
+      <Stack direction={'row'} gap={2}   position={"sticky"}
+              right={0}
+              top={0}>
+
+      
+      <Divider sx={{marginTop:'25px',width:'1px',background:'#d6d5dd'}} orientation="vertical" flexItem></Divider>
           <Stack
               className="right-sidebar"
-              position={"sticky"}
-              right={0}
-              top={0}
               padding={3}
-              minWidth={"300px"}>
+              justifyContent={"center"}
+              alignItems={"center"}
+              width={"310px"}>
             <Sidebar />
+          </Stack>
           </Stack>
     </Stack>
   );

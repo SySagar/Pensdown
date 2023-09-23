@@ -14,6 +14,7 @@ import ShowBlog from "./app/blog/ShowBlog";
 import NotBlog from "./app/misc/NoBlog";
 import AboutUser from "./app/user/AboutUser";
 import About from "./app/platform/About";
+import Contact from "./app/platform/Contact";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path: "/contact",
+        element: <Contact />,
+      }
     ],
   },
   {
@@ -84,7 +89,7 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <Stack sx={{ background: "#FAF8FF" }}>
+    <Stack sx={{ background: "#F8FBF8" }}>
       <RouterProvider router={router} />
     </Stack>
   );

@@ -227,7 +227,7 @@ export default function AboutUser() {
           </Stack>
 
           <Stack className="followUp" marginTop={3}>
-            <Button variant="contained">Follow</Button>
+            <Button variant="contained" sx={{background:'#474747',color:'white'}}>Follow</Button>
           </Stack>
         </Stack>
       </Stack>

@@ -28,7 +28,9 @@ font-weight: 700;
 }
 
 .sidebar-items:hover{
-  background:#9A9A9A;
+  background:#FFF0EA;
+  cursor: pointer;
+  border-radius: 5px;
 }
 /* 
 .navbar{
@@ -50,7 +52,6 @@ font-weight: 700;
 /*For rich text editor*/
 .ProseMirror {
   padding: 10px;
-  background: white;
   border-radius: 0 0 5px 5px;
   height: 100%;
   border: 0;
