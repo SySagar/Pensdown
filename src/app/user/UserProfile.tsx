@@ -15,11 +15,13 @@ export default function UserProfile({
 }: userProfileTypes) {
   const [profile, setProfile] = useState<userTypes>({} as userTypes);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const [isLoading, setIsLoading] = useLoadingStore((state: any) => [
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    state.isLoading,
-    state.setIsLoading,
-  ]);
+  const [isLoading, setIsLoading] = useLoadingStore(
+    (state: { isLoading: boolean; setIsLoading: (arg0: boolean) => void }) => [
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      state.isLoading,
+      state.setIsLoading,
+    ],
+  );
   const fetchProfile = async () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     setIsLoading(true);
