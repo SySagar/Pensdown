@@ -2,6 +2,7 @@ import { IconButton, Stack, TextField, Typography } from "@mui/material";
 import Tiptap from "./components/Tiptap";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import useEditorContent from "../../lib/store/useEditorContent";
+import TagInput from "./components/TagInput";
 
 interface BlogImageTypes {
   coverImage: File | null | Blob | MediaSource;
@@ -78,12 +79,17 @@ const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             <AddPhotoAlternateIcon />
             Add a cover image
           </IconButton>
+
+            
           
         </Stack>
         {blog.coverImage && (
           <img src={URL.createObjectURL(blog.coverImage)} width={'350px'} />
         )}
       </Stack>
+      <Stack>
+                <TagInput/>
+            </Stack>
       <Stack className="editor">
         <Tiptap/>
       </Stack>

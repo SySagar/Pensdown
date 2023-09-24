@@ -5,8 +5,10 @@ import {
   Button,
   CircularProgress,
   IconButton,
+  InputAdornment,
   Popover,
   Stack,
+  TextField,
 } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -23,6 +25,8 @@ import { v4 as uuidv4 } from "uuid";
 import Notification from "../../app/notifications/Notification";
 import React from "react";
 import UserProfile from "../../app/user/UserProfile";
+import SearchIcon from '@mui/icons-material/Search';
+import useSearchStore from "../../lib/store/useSearchStore";
 
 interface userTypes {
   _id: string;
@@ -148,8 +152,37 @@ const AuthorizedActions = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const [ setSearch] = useSearchStore((state: any) => [state.setSearch]);
+
+  const handleSearch = (e: any) => {
+    if (e.key === 'Enter') {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+      setSearch(e.target.value);
+    }
+  }
+
   return (
     <Stack direction={"row"} justifyContent={"center"} alignItems={"center"}>
+      
+      <Stack height={'100%'}>
+      <TextField id="outlined-basic"
+       placeholder={"Search Pensdown"} 
+       InputProps={{
+        startAdornment: <InputAdornment position="start">
+          <SearchIcon/>
+        </InputAdornment>,
+           style: { height: '40px',  fontSize: '14px' },
+      }}
+       variant="outlined" 
+        onKeyDown={handleSearch}
+       sx={{
+        width: "350px",
+        background: "#FAF8FF",
+        marginRight: "20px",
+       }}
+       />
+      </Stack>
+      
       {isWriting && (
         <Button
           variant="contained"

@@ -7,6 +7,7 @@ interface blogTypes {
     email: string;
     id: string;
     coverImage: string;
+    tags?: string[];
 }
 
 const useEditorContent = create((set) => ({
@@ -17,6 +18,7 @@ const useEditorContent = create((set) => ({
     email: '',
     id: '',
     coverImage: '',
+    tags : [],
   },
  
   setBlog: (blog:blogTypes) => set({ blog: blog }),
@@ -27,6 +29,7 @@ const useEditorContent = create((set) => ({
     email: '',
     id: '',
     coverImage: '',
+    tags : [],
   } }),
 }))
 

@@ -10,6 +10,11 @@ src:local('Inconsolata'), url('./fonts/Inconsolata.ttf');
 font-weight: 700;
 }
 
+*{
+  margin: 0;
+  padding: 0;
+}
+
 .hero-blog:hover{
   position: relative;
 }

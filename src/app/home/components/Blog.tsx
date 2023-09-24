@@ -25,22 +25,25 @@ export default function Blog({author, date, title, tags=["india","hello world"],
       justifyContent={"center"}
       alignItems={"center"}
       position={"relative"}
+      maxWidth={"300px"}
+      maxHeight={"300px"}
       onClick={redirectToBlog}
       sx={{
-
+       
           background:"#474554",
             borderRadius:"5px",
       }}
     >
       <Stack overflow={'hidden'} 
       sx={{
-        maxWidth: "300px",
-        maxHeight: "200px",
+        objectFit: "cover",
       }}>
 
       <img
         style={{
           objectFit: "cover",
+          width: "100%",
+          height: "100%",
           borderRadius: "4px",
         }}
         src={image}

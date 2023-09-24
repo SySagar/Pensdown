@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import APIMethods from '../../lib/axios/api'
 import { blogTypes } from "../blog/types/blogTypes";
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+import useSearchStore from "../../lib/store/useSearchStore";
+import SearchedBlogs from "./components/SearchedBlogs";
 
 // const blogs = [
 //   {
@@ -73,6 +75,10 @@ import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied
 
 export default function HeroPage() {
   const [loading,setLoading] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const [searchItem ] = useSearchStore((
+    state: { searchItem: string; }
+    ) => [state.searchItem]);
 
   const [blogs,setBlogs] = useState([] as unknown as blogTypes[]);
   const fetchBLogs = async () => {
@@ -102,7 +108,7 @@ export default function HeroPage() {
       className="main"
       minHeight={"100vh"}
       direction={"row"}
-      justifyContent={"space-evenly"}
+      justifyContent={( (searchItem.length==0))?"space-evenly":"space-between"}
       position={"relative"}
       alignItems={"flex-start"}
     >
@@ -113,15 +119,27 @@ export default function HeroPage() {
         alignItems={"center"}
         gap={1}
         borderColor={"#A3A0B2"}
+        width={( (searchItem.length==0))?"80vw":"100%"}
       >
+        {
+          (searchItem.length!=0) ? <Stack  position={'relative'} left={20} justifyContent={'start'} alignItems={'start'} width={'100%'}>
+            <Typography variant="h6">Results for <span style={{color:'black'}}>{searchItem}</span></Typography>
+          </Stack> :
+          <Stack justifyContent={'center'} alignItems={'center'}>
         <Typography variant="h2">The best from the week</Typography>
         <Typography fontSize={'16px'} fontWeight={600}>The latest industry news, interviews, technologies, and resources.</Typography>
 
-        <Stack position={"relative"} marginTop={6}>
+          </Stack>
+        }
+        
+        {
+          (searchItem.length!=0) ? <div></div> :
+          <Stack position={"relative"} marginTop={6}>
           <HeroBlog />
         </Stack>
+        }
 
-        {
+        {/* {
           loading ? 
           <Stack width={'100%'} justifyContent={'center'} alignItems={'center'} height={'20vh'}>
             <CircularProgress color="secondary" />
@@ -157,6 +175,58 @@ export default function HeroPage() {
             </Stack>
           }
         </Stack>
+        } */}
+
+        {
+            loading ? 
+            <Stack width={'100%'} justifyContent={'center'} alignItems={'center'} height={'20vh'}>
+              <CircularProgress color="secondary" />
+            </Stack>:(
+              (searchItem.length!=0) ?
+              <Stack
+            className="daily-blogs"
+              justifyContent={"center"}
+              alignItems={"center"}
+              direction={"row"}
+              flexGrow={1}
+              gap={4}
+              flexWrap={"wrap"}
+              width={'100%'}
+              >
+                <SearchedBlogs />
+            </Stack>
+            :
+            <Stack
+            className="daily-blogs"
+            padding={2}
+            maxWidth={"80vw"}
+            gap={4}
+            flexWrap={"wrap"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            direction={"row"}
+          >
+            {blogs.length!=0 && blogs.map((blog, index) => (
+              <Blog
+                key={index}
+                blogId={blog._id}
+                author={blog.authorName}
+                date={blog.date}
+                title={blog.title}
+                tags={blog.tags}
+                image={blog.coverImageURL}
+                likes={blog.likes}
+              />
+            ))}
+            {
+              (blogs.length==0) && 
+              <Stack direction={'row'} gap={2} paddingY={5} alignItems={'center'}>
+              <Typography variant="h4">No Blogs to show</Typography>
+                <SentimentDissatisfiedIcon sx={{fontSize:'3rem',color:'#474747'}} />
+              </Stack>
+            }
+          </Stack>
+              )
         }
       </Stack>
       <Stack direction={'row'} gap={2}   position={"sticky"}
