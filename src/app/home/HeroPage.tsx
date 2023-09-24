@@ -7,7 +7,6 @@ import APIMethods from "../../lib/axios/api";
 import { blogTypes } from "../blog/types/blogTypes";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import useSearchStore from "../../lib/store/useSearchStore";
-import SearchedBlogs from "./components/SearchedBlogs";
 
 // const blogs = [
 //   {
