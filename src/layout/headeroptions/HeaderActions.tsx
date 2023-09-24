@@ -252,8 +252,9 @@ const UnauthorizedActions = () => {
       </Button>
       <Button component={Link}
        sx={{color:'#474747',variant:'outlined',border:'1px solid #474747',
+       background:'rgba(245, 245, 245, 0.5)',
       '&:hover' : {
-        background:'rgba(71, 71, 71, 0.3)',
+        background:'rgba(245, 245, 235, 0.9)',
       }
     }} 
       to={"/auth/register"}

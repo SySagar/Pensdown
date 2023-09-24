@@ -8,7 +8,7 @@ export default function Header() {
     <Stack
       className="navbar"
       width={"100%"}
-      minHeight={"40px"}
+      minHeight={"50px"}
       justifyContent={"center"}
       sx={
         {
@@ -19,6 +19,7 @@ export default function Header() {
       <Stack
         className="navbar-container"
         paddingX={3}
+        paddingY={1}
         direction={"row"}
         alignItems={"center"}
       >
