@@ -1,20 +1,31 @@
 import { Avatar, Chip, Stack, Typography } from "@mui/material";
 import Footer from "../../../layout/Footer";
-
-const tags = [
-  "technology",
-  "politics",
-  "lifestyle",
-  "food",
-  "travel",
-  "fashion",
-  "sports",
-  "music",
-];
+import { useEffect } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import useSearchStore from "../../../lib/store/useSearchStore";
 
 export default function Sidebar() {
+  const [userTags, setUserTags] = useState<string[]>([]);
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") as string) as {
+      tags: string[];
+    };
+    setUserTags(user.tags);
+  }, []);
+
+  const [setSearch] = useSearchStore(
+    (state: { setSearch: (search: string) => void }) => [state.setSearch],
+  );
+
+  const navigate = useNavigate();
+  const tagClicked = (tag: string) => {
+    setSearch(tag);
+    navigate(`/search/${tag}`);
+  };
+
   return (
-    <Stack height={'100vh'}>
+    <Stack height={"100vh"}>
       <Stack>
         <Typography color={"secondary"}>✨Top picks for you</Typography>
 
@@ -73,23 +84,33 @@ export default function Sidebar() {
           flexWrap={"wrap"}
           maxWidth={"300px"}
         >
-          {tags.map((tag, index) => (
+          {userTags.map((tag, index) => (
             <Chip
               sx={{
                 color: "#fff",
                 background: "#474747",
                 fontWeight: 400,
+                "&:hover": {
+                  background: "#474747",
+                },
               }}
               key={index}
               label={tag}
+              onClick={() => tagClicked(tag)}
             />
           ))}
         </Stack>
       </Stack>
 
-      <Stack direction={'column'} flexGrow={1}></Stack>
+      <Stack direction={"column"} flexGrow={1}></Stack>
 
-      <Stack position={'sticky'} bottom={0} paddingY={1} justifyContent={'center'} alignItems={'center'}>
+      <Stack
+        position={"sticky"}
+        bottom={0}
+        paddingY={1}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
         <Footer />
       </Stack>
     </Stack>

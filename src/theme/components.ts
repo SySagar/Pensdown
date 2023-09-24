@@ -19,7 +19,7 @@ const componentOverrides: any = {
         // backgroundColor: "#474747",
         // color: "#FAF7FF",
         "&:hover": {
-          backgroundColor: "#404040",
+          backgroundColor: "#333333",
         },
       },
     },

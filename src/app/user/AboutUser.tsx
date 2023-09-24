@@ -33,6 +33,26 @@ export default function AboutUser() {
       });
   };
 
+  const [isFollowing, setIsFollowing] = useState(false);
+  const follow = async () => {
+    const data = {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      userId: JSON.parse(localStorage.getItem("user") as string)._id,
+      id: {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+        id: JSON.parse(localStorage.getItem("user") as string)._id,
+      },
+    };
+    const followRes = await APIMethods.user.isFollowingUser(data);
+    console.log(followRes);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if (followRes.data.followStatus == "unfollowing") {
+      setIsFollowing(false);
+    } else {
+      setIsFollowing(true);
+    }
+  };
+
   const fetchBlog = async () => {
     const { authorId } = state;
     await APIMethods.blog
@@ -227,7 +247,23 @@ export default function AboutUser() {
           </Stack>
 
           <Stack className="followUp" marginTop={3}>
-            <Button variant="contained" sx={{background:'#474747',color:'white'}}>Follow</Button>
+            <Stack width={"140px"} mt={4}>
+              <Button
+                fullWidth
+                onClick={() => {
+                  follow()
+                    .then(() => {
+                      console.log("done");
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }}
+                sx={{ background: "#474747" }}
+              >
+                {isFollowing ? "Unfollow" : "Follow"}
+              </Button>
+            </Stack>
           </Stack>
         </Stack>
       </Stack>
@@ -279,7 +315,11 @@ export default function AboutUser() {
             {/* <Typography variant="h4">
               Blogs
           </Typography> */}
-
+            {blogs.length == 0 && (
+              <Stack width={"100%"} alignItems={"center"}>
+                <Typography variant="h4">No Blogs Yet</Typography>
+              </Stack>
+            )}
             {blogs.map((blog, idx) => {
               return (
                 <Stack
@@ -288,6 +328,9 @@ export default function AboutUser() {
                   borderRadius={2}
                   color={"#474747"}
                   width={"100%"}
+                  onClick={() => {
+                    window.location.href = `/${blog._id}`;
+                  }}
                 >
                   <Stack
                     className="single-blog"
@@ -329,40 +372,30 @@ export default function AboutUser() {
                       position={"absolute"}
                       right={40}
                     >
-                      <Stack 
-                      direction={'row'}
-                      alignItems={"center"}
-                      gap={1}>
-
-                      <Typography variant="h6">
-                        {(blog.likes as []).length}
-                      </Typography>
-                      <img
-                        src="/png/unclapped.png"
-                        alt=""
-                        style={{ width: "20px", height: "20px" }}
+                      <Stack direction={"row"} alignItems={"center"} gap={1}>
+                        <Typography variant="h6">
+                          {(blog.likes as []).length}
+                        </Typography>
+                        <img
+                          src="/png/unclapped.png"
+                          alt=""
+                          style={{ width: "20px", height: "20px" }}
                         />
-                        </Stack>
-                        <Stack 
-                        direction={'row'}
-                      alignItems={"center"}
-                      gap={1}>
-
-                      <Typography variant="h6">
-                        {(blog.comments as []).length}
-                      </Typography>
-                      <img
-                        src="/png/comment.png"
-                        alt=""
-                        style={{ width: "20px", height: "20px" }}
+                      </Stack>
+                      <Stack direction={"row"} alignItems={"center"} gap={1}>
+                        <Typography variant="h6">
+                          {(blog.comments as []).length}
+                        </Typography>
+                        <img
+                          src="/png/comment.png"
+                          alt=""
+                          style={{ width: "20px", height: "20px" }}
                         />
-                        </Stack>
+                      </Stack>
                     </Stack>
 
-                    <Stack position={'absolute'} top={3} right={40}>
-                        <Typography variant="body2">
-                            {blog.date}
-                        </Typography>
+                    <Stack position={"absolute"} top={3} right={40}>
+                      <Typography variant="body2">{blog.date}</Typography>
                     </Stack>
                   </Stack>
 

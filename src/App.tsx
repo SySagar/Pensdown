@@ -15,6 +15,7 @@ import NotBlog from "./app/misc/NoBlog";
 import AboutUser from "./app/user/AboutUser";
 import About from "./app/platform/About";
 import Contact from "./app/platform/Contact";
+import SearchedBlogs from "./app/home/components/SearchedBlogs";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
             path: "/404",
             element: <NotBlog />,
           },
+          {
+            path: "/search/:blogSearched",
+            element: <SearchedBlogs />,
+          },
         ],
       },
     ],
@@ -70,7 +75,7 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
-      }
+      },
     ],
   },
   {

@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from "uuid";
 import Notification from "../../app/notifications/Notification";
 import React from "react";
 import UserProfile from "../../app/user/UserProfile";
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from "@mui/icons-material/Search";
 import useSearchStore from "../../lib/store/useSearchStore";
 
 interface userTypes {
@@ -42,7 +42,7 @@ const AuthorizedActions = () => {
   const imageId = uuidv4();
   // console.log(location.pathname);
   const [isWriting, setIsWriting, setNotWriting] = useWriterAction(
-    (state: any) => [state.isWriting, state.setWriting, state.setNotWriting]
+    (state: any) => [state.isWriting, state.setWriting, state.setNotWriting],
   );
   const [isLoading, setIsLoading] = useLoadingStore((state: any) => [
     state.isLoading,
@@ -70,13 +70,13 @@ const AuthorizedActions = () => {
     if (blog == null) return;
 
     const user = JSON.parse(
-      localStorage.getItem("user") as string
+      localStorage.getItem("user") as string,
     ) as unknown as userTypes;
     const imageRef = ref(
       storage,
 
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      `cover_images/${user._id}/${user.displayName}/${imageId}`
+      `cover_images/${user._id}/${user.displayName}/${imageId}`,
     );
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     await uploadBytes(imageRef, blog.coverImage);
@@ -85,7 +85,7 @@ const AuthorizedActions = () => {
   const handleSubmit = () => {
     console.log("submit");
     const user = JSON.parse(
-      localStorage.getItem("user") as string
+      localStorage.getItem("user") as string,
     ) as unknown as userTypes;
     const DBUser = JSON.parse(localStorage.getItem("user") as string);
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -104,7 +104,7 @@ const AuthorizedActions = () => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-call
         const uploadedImageRef = ref(
           storage,
-          `cover_images/${user._id}/${user.displayName}/${imageId}`
+          `cover_images/${user._id}/${user.displayName}/${imageId}`,
         );
 
         // Get the download URL for the uploaded image reference
@@ -132,7 +132,9 @@ const AuthorizedActions = () => {
       });
   };
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null,
+  );
 
   const handleNotification = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -140,7 +142,7 @@ const AuthorizedActions = () => {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const id = open ? "simple-popover" : undefined;
   const handleClose = () => {
     setAnchorEl(null);
     setShowNotification(!showNotification);
@@ -152,37 +154,41 @@ const AuthorizedActions = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const [ setSearch] = useSearchStore((state: any) => [state.setSearch]);
+  const [setSearch] = useSearchStore((state: any) => [state.setSearch]);
 
   const handleSearch = (e: any) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       setSearch(e.target.value);
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      navigate(`/search/${e.target.value}`);
     }
-  }
+  };
 
   return (
     <Stack direction={"row"} justifyContent={"center"} alignItems={"center"}>
-      
-      <Stack height={'100%'}>
-      <TextField id="outlined-basic"
-       placeholder={"Search Pensdown"} 
-       InputProps={{
-        startAdornment: <InputAdornment position="start">
-          <SearchIcon/>
-        </InputAdornment>,
-           style: { height: '40px',  fontSize: '14px' },
-      }}
-       variant="outlined" 
-        onKeyDown={handleSearch}
-       sx={{
-        width: "350px",
-        background: "#FAF8FF",
-        marginRight: "20px",
-       }}
-       />
+      <Stack height={"100%"}>
+        <TextField
+          id="outlined-basic"
+          placeholder={"Search Pensdown"}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+            style: { height: "40px", fontSize: "14px" },
+          }}
+          variant="outlined"
+          onKeyDown={handleSearch}
+          sx={{
+            width: "350px",
+            background: "#FAF8FF",
+            marginRight: "20px",
+          }}
+        />
       </Stack>
-      
+
       {isWriting && (
         <Button
           variant="contained"
@@ -225,21 +231,24 @@ const AuthorizedActions = () => {
           alt={"name"}
         />
       </IconButton>
-        <Popover
-          id={id}
-          open={showNotification}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left",
-          }}
-        >
-          <Notification />
-        </Popover>
+      <Popover
+        id={id}
+        open={showNotification}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <Notification />
+      </Popover>
 
-        <UserProfile authorId={JSON.parse(localStorage.getItem('user') as string)._id}  isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-      
+      <UserProfile
+        authorId={JSON.parse(localStorage.getItem("user") as string)._id}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
     </Stack>
   );
 };
@@ -247,18 +256,28 @@ const AuthorizedActions = () => {
 const UnauthorizedActions = () => {
   return (
     <Stack direction={"row"} gap={1} paddingY={1}>
-      <Button component={Link} sx={{background:'#474747'}} to={"/auth/login"} variant={"outlined"}>
+      <Button
+        component={Link}
+        sx={{ background: "#474747" }}
+        to={"/auth/login"}
+        variant={"outlined"}
+      >
         Login
       </Button>
-      <Button component={Link}
-       sx={{color:'#474747',variant:'outlined',border:'1px solid #474747',
-       background:'rgba(245, 245, 245, 0.5)',
-      '&:hover' : {
-        background:'rgba(245, 245, 235, 0.9)',
-      }
-    }} 
-      to={"/auth/register"}
-       variant={"contained"}>
+      <Button
+        component={Link}
+        sx={{
+          color: "#474747",
+          variant: "outlined",
+          border: "1px solid #474747",
+          background: "rgba(245, 245, 245, 0.5)",
+          "&:hover": {
+            background: "rgba(245, 245, 235, 0.9)",
+          },
+        }}
+        to={"/auth/register"}
+        variant={"contained"}
+      >
         Register
       </Button>
     </Stack>
