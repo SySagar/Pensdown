@@ -74,34 +74,35 @@ export default function Sidebar() {
         </Stack>
       </Stack>
 
-      <Stack marginTop={5}>
-        <Typography>🏷️ Recommended topics</Typography>
+      {userTags && (
+        <Stack marginTop={5}>
+          <Typography>🏷️ Recommended topics</Typography>
 
-        <Stack
-          direction={"row"}
-          gap={1}
-          paddingY={2}
-          flexWrap={"wrap"}
-          maxWidth={"300px"}
-        >
-          {userTags.map((tag, index) => (
-            <Chip
-              sx={{
-                color: "#fff",
-                background: "#474747",
-                fontWeight: 400,
-                "&:hover": {
+          <Stack
+            direction={"row"}
+            gap={1}
+            paddingY={2}
+            flexWrap={"wrap"}
+            maxWidth={"300px"}
+          >
+            {userTags.map((tag, index) => (
+              <Chip
+                sx={{
+                  color: "#fff",
                   background: "#474747",
-                },
-              }}
-              key={index}
-              label={tag}
-              onClick={() => tagClicked(tag)}
-            />
-          ))}
+                  fontWeight: 400,
+                  "&:hover": {
+                    background: "#474747",
+                  },
+                }}
+                key={index}
+                label={tag}
+                onClick={() => tagClicked(tag)}
+              />
+            ))}
+          </Stack>
         </Stack>
-      </Stack>
-
+      )}
       <Stack direction={"column"} flexGrow={1}></Stack>
 
       <Stack

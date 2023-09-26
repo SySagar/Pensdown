@@ -28,7 +28,7 @@ export default function UserProfile({
     await APIMethods.user
       .getAuthorInfo({ authorId })
       .then((res: { data: userTypes }) => {
-        // console.log(res);
+        console.log(res);
         setProfile(res.data);
       })
       .finally(() => {
