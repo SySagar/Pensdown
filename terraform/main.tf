@@ -10,6 +10,7 @@ terraform {
 provider "azurerm" {
   skip_provider_registration = true # This is only required when the User, Service Principal, or Identity running Terraform lacks the permissions to register Azure Resource Providers.
   features {}
+   tenant_id = "1a4e6809-7f8d-4910-bcaa-628405bff3b8"
 }
 
 resource "azurerm_resource_group" "pensdown-rg" {
@@ -56,8 +57,8 @@ resource "azurerm_linux_web_app" "pensdown-app" {
   site_config {}
 }
 
-resource "azurerm_linux_web_app" "pensdown-service" {
-  name                = "pensdown-service"
+resource "azurerm_linux_web_app" "pensdown-backend" {
+  name                = "pensdown-backend"
   resource_group_name = azurerm_resource_group.pensdown-rg.name
   location            = azurerm_service_plan.pensdown-sp.location
   service_plan_id     = azurerm_service_plan.pensdown-sp.id
