@@ -1,6 +1,7 @@
 import { Stack, Typography } from "@mui/material";
 import moment from "moment";
 import Chip from "@mui/material/Chip";
+import "../home.css";
 
 const associatedTags = ["women", "workplace", "hostility", "work"];
 
@@ -13,6 +14,7 @@ export default function HeroBlog() {
       position={"relative"}
     >
       <img
+        className="hero-blog-image"
         style={{
           objectFit: "cover",
           minHeight: "100px",

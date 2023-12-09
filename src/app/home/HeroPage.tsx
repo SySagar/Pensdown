@@ -7,6 +7,7 @@ import APIMethods from "../../lib/axios/api";
 import { blogTypes } from "../blog/types/blogTypes";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 import useSearchStore from "../../lib/store/useSearchStore";
+import "./home.css";
 
 // const blogs = [
 //   {
@@ -110,6 +111,7 @@ export default function HeroPage() {
       alignItems={"flex-start"}
     >
       <Stack
+        className="hero-content"
         marginTop={3}
         justifyContent={"center"}
         alignItems={"center"}
@@ -124,7 +126,12 @@ export default function HeroPage() {
           </Typography>
         </Stack>
 
-        <Stack position={"relative"} marginTop={6}>
+        <Stack
+          position={"relative"}
+          marginTop={6}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
           <HeroBlog />
         </Stack>
 

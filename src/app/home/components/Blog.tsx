@@ -1,18 +1,26 @@
-import { Stack, Typography } from "@mui/material";
+import { Divider, Stack, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { useNavigate } from "react-router-dom";
+import "../home.css";
 
 interface BlogTypes {
-    author: string;
-    date: string;
-    title: string;
-    tags: string[];
-    blogId: string; 
-    image: string;
-    likes: number;
+  author: string;
+  date: string;
+  title: string;
+  tags: string[];
+  blogId: string;
+  image: string;
+  likes: number;
 }
 
-export default function Blog({author, date, title, tags=["india","hello world"], blogId, image}: BlogTypes) {
+export default function Blog({
+  author,
+  date,
+  title,
+  tags = ["india", "hello world"],
+  blogId,
+  image,
+}: BlogTypes) {
   const navigate = useNavigate();
 
   const redirectToBlog = () => {
@@ -29,34 +37,51 @@ export default function Blog({author, date, title, tags=["india","hello world"],
       maxHeight={"300px"}
       onClick={redirectToBlog}
       sx={{
-       
-          background:"#474554",
-            borderRadius:"5px",
+        background: "#474554",
+        borderRadius: "5px",
       }}
     >
-      <Stack overflow={'hidden'} 
-      sx={{
-        objectFit: "cover",
-      }}>
-
-      <img
-        style={{
+      <Stack
+        overflow={"hidden"}
+        className="laptop-image"
+        sx={{
           objectFit: "cover",
-          width: "100%",
-          height: "100%",
-          borderRadius: "4px",
         }}
-        src={image}
-        alt=""
+      >
+        <img
+          style={{
+            objectFit: "cover",
+            width: "100%",
+            height: "100%",
+            borderRadius: "4px",
+          }}
+          src={image}
+          alt=""
         />
-        </Stack>
+      </Stack>
+      <Stack
+        sx={{
+          objectFit: "cover",
+        }}
+      >
+        <img
+          style={{
+            objectFit: "cover",
+            width: "140px",
+            height: "140px",
+            borderRadius: "4px",
+          }}
+          src={image}
+          alt=""
+        />
+      </Stack>
       <Stack
         className="about"
         direction={"column"}
         width={"80%"}
-        justifyContent={'flex-start'}
-        alignItems={'flex-start'}
-        padding={3} 
+        justifyContent={"flex-start"}
+        alignItems={"flex-start"}
+        padding={3}
       >
         <Typography variant="caption" fontWeight={600} color={"#fff"}>
           {author} · {date}
@@ -68,7 +93,7 @@ export default function Blog({author, date, title, tags=["india","hello world"],
           className="tags"
           direction={"row"}
           marginY={1}
-          flexWrap={'wrap'}
+          flexWrap={"wrap"}
           gap={1}
         >
           {tags.map((tag, index) => (
@@ -77,7 +102,7 @@ export default function Blog({author, date, title, tags=["india","hello world"],
                 height: "15px",
                 color: "#fff",
                 fontWeight: 400,
-                fontSize: '0.7rem',
+                fontSize: "0.7rem",
               }}
               key={index}
               label={tag}
@@ -86,6 +111,16 @@ export default function Blog({author, date, title, tags=["india","hello world"],
           ))}
         </Stack>
       </Stack>
+
+      <Divider
+        className="mobile-divider"
+        sx={{
+          position: "absolute",
+          bottom: "0",
+          width: "100%",
+          background: "grey",
+        }}
+      />
     </Stack>
   );
 }

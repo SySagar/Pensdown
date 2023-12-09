@@ -1,0 +1,48 @@
+@media only screen and (max-width: 1290px) {
+    .right-sidebar {
+        display: none!important;
+    }
+
+    .hero-content{
+        width: 100%!important;
+    }
+
+  }
+
+  @media only screen and (max-width: 930px) {
+  .hero-blog-image{
+        width: 100%!important;
+  }
+
+  .hero-blog{
+    width: 85%!important;
+}
+  }
+  
+
+  .mobile-divider{
+    display: none;
+  }
+
+  
+  @media only screen and (max-width: 800px) {
+    .blog{
+        width: 600px!important;
+        max-width: 100%!important;
+        flex-direction: row!important;
+        background-color: #F8FBF8!important;
+        padding-bottom: 30px!important;
+    }
+
+    .laptop-image{
+        display: none!important;
+    }
+
+    .mobile-divider{
+        display: block!important;
+    }
+
+    .about{
+        color: black!important;
+    }
+  }
