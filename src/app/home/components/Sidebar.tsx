@@ -11,7 +11,7 @@ export default function Sidebar() {
     const user = JSON.parse(localStorage.getItem("user") as string) as {
       tags: string[];
     };
-    setUserTags(user.tags);
+    if (user) setUserTags(user.tags);
   }, []);
 
   const [setSearch] = useSearchStore(
@@ -74,7 +74,7 @@ export default function Sidebar() {
         </Stack>
       </Stack>
 
-      {userTags && (
+      {userTags && userTags.length > 0 && (
         <Stack marginTop={5}>
           <Typography>🏷️ Recommended topics</Typography>
 
