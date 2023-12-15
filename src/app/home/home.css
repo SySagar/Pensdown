@@ -45,4 +45,14 @@
     .about{
         color: black!important;
     }
+
+    .mobile-image{
+      display: block!important;
+    }
   }
+
+  @media only screen and (min-width: 800px) {
+  .mobile-image{
+    display: none!important;
+  }
+}

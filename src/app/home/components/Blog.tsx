@@ -2,6 +2,7 @@ import { Divider, Stack, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
 import { useNavigate } from "react-router-dom";
 import "../home.css";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface BlogTypes {
   author: string;
@@ -22,6 +23,7 @@ export default function Blog({
   image,
 }: BlogTypes) {
   const navigate = useNavigate();
+  const isPhone = useMediaQuery("(max-width:800px)");
 
   const redirectToBlog = () => {
     console.log("redirecting to blog");
@@ -60,6 +62,7 @@ export default function Blog({
         />
       </Stack>
       <Stack
+        className="mobile-image"
         sx={{
           objectFit: "cover",
         }}
@@ -83,10 +86,18 @@ export default function Blog({
         alignItems={"flex-start"}
         padding={3}
       >
-        <Typography variant="caption" fontWeight={600} color={"#fff"}>
+        <Typography
+          variant="caption"
+          fontWeight={600}
+          color={isPhone ? "#474747" : "#fff"}
+        >
           {author} · {date}
         </Typography>
-        <Typography variant="h6" fontWeight={550} color={"#fff"}>
+        <Typography
+          variant="h6"
+          fontWeight={550}
+          color={isPhone ? "#000" : "#fff"}
+        >
           {title}
         </Typography>
         <Stack
@@ -100,7 +111,7 @@ export default function Blog({
             <Chip
               sx={{
                 height: "15px",
-                color: "#fff",
+                color: isPhone ? "#474747" : "#fff",
                 fontWeight: 400,
                 fontSize: "0.7rem",
               }}
