@@ -1,5 +1,6 @@
 import { Divider, Stack, Typography } from "@mui/material";
 import Chip from "@mui/material/Chip";
+import { useResponsive } from "../../../hooks/useResponsive";
 import { useNavigate } from "react-router-dom";
 import "../home.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -24,6 +25,7 @@ export default function Blog({
 }: BlogTypes) {
   const navigate = useNavigate();
   const isPhone = useMediaQuery("(max-width:800px)");
+  const { isTablet } = useResponsive();
 
   const redirectToBlog = () => {
     console.log("redirecting to blog");
@@ -36,20 +38,14 @@ export default function Blog({
       alignItems={"center"}
       position={"relative"}
       maxWidth={"300px"}
-      maxHeight={"300px"}
+      maxHeight={isTablet ? "80px" : "300px"}
       onClick={redirectToBlog}
       sx={{
         background: "#474554",
         borderRadius: "5px",
       }}
     >
-      <Stack
-        overflow={"hidden"}
-        className="laptop-image"
-        sx={{
-          objectFit: "cover",
-        }}
-      >
+      <Stack overflow={"hidden"} className="laptop-image">
         <img
           style={{
             objectFit: "cover",
@@ -70,8 +66,8 @@ export default function Blog({
         <img
           style={{
             objectFit: "cover",
-            width: "140px",
-            height: "140px",
+            width: isTablet ? "90px" : "140px",
+            height: isTablet ? "90px" : "140px",
             borderRadius: "4px",
           }}
           src={image}

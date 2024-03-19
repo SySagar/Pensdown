@@ -51,7 +51,16 @@
     }
   }
 
-  @media only screen and (min-width: 800px) {
+  @media only screen and (max-width: 800px) {
+
+  .tagChip{
+    height: 12px!important;
+    font-size: 10px!important;
+    padding-block: 2px!important;
+  }
+}
+
+@media only screen and (min-width: 800px) {
   .mobile-image{
     display: none!important;
   }

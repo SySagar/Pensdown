@@ -1,8 +1,11 @@
 import { Link, Stack, Typography } from "@mui/material";
 import HeaderActions from "./HeaderActions";
+import styles from "./header.module.css";
+import { useResponsive } from "../../hooks/useResponsive";
 
 export default function Header() {
   const token = localStorage.getItem("accessToken");
+  const { isTablet } = useResponsive();
 
   return (
     <Stack
@@ -10,11 +13,9 @@ export default function Header() {
       width={"100%"}
       minHeight={"50px"}
       justifyContent={"center"}
-      sx={
-        {
-          background: "#F5F5F5",
-        }
-      }
+      sx={{
+        background: "#F5F5F5",
+      }}
     >
       <Stack
         className="navbar-container"
@@ -30,12 +31,13 @@ export default function Header() {
             alt=""
           />
           <Typography
+            className={styles.logo}
             component={Link}
             href="/"
             style={{
               textDecoration: "none",
             }}
-            fontSize={20}
+            fontSize={isTablet ? "15px" : "20px"}
             fontWeight={500}
           >
             Pensdown

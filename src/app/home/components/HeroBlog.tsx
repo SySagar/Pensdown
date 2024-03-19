@@ -1,11 +1,13 @@
 import { Stack, Typography } from "@mui/material";
 import moment from "moment";
 import Chip from "@mui/material/Chip";
+import { useResponsive } from "../../../hooks/useResponsive";
 import "../home.css";
 
 const associatedTags = ["women", "workplace", "hostility", "work"];
 
 export default function HeroBlog() {
+  const { isTablet, isMobile } = useResponsive();
   return (
     <Stack
       className="hero-blog"
@@ -18,7 +20,6 @@ export default function HeroBlog() {
         style={{
           objectFit: "cover",
           minHeight: "100px",
-          minWidth: "600px",
           borderRadius: "8px",
         }}
         src="https://images.unsplash.com/photo-1520960858461-ac671067213e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=897&q=80"
@@ -33,21 +34,24 @@ export default function HeroBlog() {
         bottom={0}
         left={0}
       >
-        <Typography variant="body2" fontWeight={600} color={"#fff"}>
+        <Typography
+          variant={isMobile ? "caption" : "body1"}
+          fontWeight={600}
+          color={"#fff"}
+        >
           Oyleve Rhye · {moment().format(" MMMM Do ")}
         </Typography>
-        <Typography variant="h4" fontWeight={550} color={"#fff"}>
+        <Typography
+          variant={isMobile ? "h6" : isTablet ? "h5" : "h4"}
+          fontWeight={550}
+          color={"#fff"}
+        >
           Women hostility in the workplace
         </Typography>
-        <Stack
-          className="tags"
-          direction={"row"}
-          marginY={1}
-          maxWidth={"100px"}
-          gap={1}
-        >
+        <Stack className="tags" direction={"row"} marginY={1} gap={1}>
           {associatedTags.map((tag, index) => (
             <Chip
+              className="tagChip"
               sx={{
                 height: "20px",
                 color: "#fff",

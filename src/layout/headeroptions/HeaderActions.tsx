@@ -27,6 +27,8 @@ import React from "react";
 import UserProfile from "../../app/user/UserProfile";
 import SearchIcon from "@mui/icons-material/Search";
 import useSearchStore from "../../lib/store/useSearchStore";
+import styles from "./header.module.css";
+import { useResponsive } from "../../hooks/useResponsive";
 
 interface userTypes {
   _id: string;
@@ -37,6 +39,7 @@ interface userTypes {
 const AuthorizedActions = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isTablet } = useResponsive();
   const [showNotification, setShowNotification] = useState(false);
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const imageId = uuidv4();
@@ -167,7 +170,7 @@ const AuthorizedActions = () => {
 
   return (
     <Stack direction={"row"} justifyContent={"center"} alignItems={"center"}>
-      <Stack height={"100%"}>
+      <Stack display={isTablet ? "none" : "flex"} height={"100%"}>
         <TextField
           id="outlined-basic"
           placeholder={"Search Pensdown"}
