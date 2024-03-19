@@ -27,7 +27,6 @@ import React from "react";
 import UserProfile from "../../app/user/UserProfile";
 import SearchIcon from "@mui/icons-material/Search";
 import useSearchStore from "../../lib/store/useSearchStore";
-import styles from "./header.module.css";
 import { useResponsive } from "../../hooks/useResponsive";
 
 interface userTypes {
