@@ -42,7 +42,6 @@ const APIMethods = {
       return await APIInstance.post(`/blog/getBlog`, blogId);
     },
     createBlog: async (data: any) => {
-      console.log(data);
       return await AuthorizedAPIInstance.post("/blog/create", data);
     },
     updateBlog: async (id: string, data: any) => {

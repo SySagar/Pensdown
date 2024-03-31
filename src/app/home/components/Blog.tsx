@@ -49,8 +49,8 @@ export default function Blog({
         <img
           style={{
             objectFit: "cover",
-            width: "100%",
-            height: "100%",
+            width: "300px",
+            height: "200px",
             borderRadius: "4px",
           }}
           src={image}

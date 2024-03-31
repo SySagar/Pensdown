@@ -93,7 +93,7 @@ export default function HeroPage() {
           <Stack
             className="daily-blogs"
             padding={2}
-            paddingTop={isTablet ? "40px" : "0"}
+            paddingTop={isTablet ? "40px" : "60px"}
             maxWidth={isTablet ? "90%" : "80vw"}
             gap={4}
             flexWrap={"wrap"}

@@ -58,6 +58,9 @@ const AuthorizedActions = () => {
   const savedNotify = () =>
     toast.success("🎉Yayy, Congrats on adding value to community amigo!");
 
+  const noImageNotify = () =>
+    toast.error("Please add a cover image to your blog!");
+
   useEffect(() => {
     if (location.pathname !== "/blog/create") {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -70,6 +73,11 @@ const AuthorizedActions = () => {
 
   const uploadImageToFirebase = async () => {
     if (blog == null) return;
+
+    if (blog.coverImage == null || blog.coverImage == "") {
+      noImageNotify();
+      return;
+    }
 
     const user = JSON.parse(
       localStorage.getItem("user") as string,

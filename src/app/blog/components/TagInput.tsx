@@ -15,7 +15,10 @@ const TagInput: React.FC = () => {
   const [tagInput, setTagInput] = useState<string>("");
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-  const [blog, setBlog] = useEditorContent((state: any) => [ state.blog as BlogTagTypes,state.setBlog,]);
+  const [blog, setBlog] = useEditorContent((state: any) => [
+    state.blog as BlogTagTypes,
+    state.setBlog,
+  ]);
   // const onTagsChnage = (e: React.ChangeEvent<HTMLInputElement>) => {
 
   // }
@@ -24,7 +27,6 @@ const TagInput: React.FC = () => {
     setTagInput(event.target.value);
   };
 
-  console.log("tags", tags);
   const handleAddTag = () => {
     if (tagInput.trim() !== "" && !tags.includes(tagInput)) {
       setTags([...tags, tagInput]);
@@ -34,9 +36,8 @@ const TagInput: React.FC = () => {
 
   const handleAutocompleteChange = (
     event: React.SyntheticEvent,
-    value: string | null
+    value: string | null,
   ) => {
-    console.log("value", event);
     if (value) {
       setTags([...tags, value]);
     }
