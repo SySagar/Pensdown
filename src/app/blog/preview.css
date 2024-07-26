@@ -1,5 +1,14 @@
 
 /*For rich text editor*/
+
+.showblog::selection {
+  color: green; 
+}
+
+.showblog *::selection {
+  color: green; 
+}
+
 .ProseMirror {
     padding: 20px;
     background: #EFECDC;

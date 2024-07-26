@@ -36,6 +36,7 @@ import UserProfile from "../user/UserProfile";
 import AnimatePage from "../../layout/AnimatePage";
 import { Skeleton } from "@mui/material";
 import ImageWithLoading from "./components/ImageWitLoading";
+import { toast } from "react-hot-toast";
 
 let authorid = "";
 export default function ShowBlog() {
@@ -54,6 +55,7 @@ export default function ShowBlog() {
   ]);
 
   const fetchBlog = async () => {
+    console.log("fetching blog");
     setIsLoading(true);
     await APIMethods.blog
       .getSingleBlog({ blogId })
@@ -82,8 +84,7 @@ export default function ShowBlog() {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // const toggleSidebar = () => {
-  // };
+  console.log("likes", likes);
   const showProfile = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
@@ -138,17 +139,23 @@ export default function ShowBlog() {
     const user = JSON.parse(
       localStorage.getItem("user") as string,
     ) as unknown as LikeBlogTypes;
+    if (!user || user == null) {
+      toast.error("Please login to like the blog");
+    }
+
     const userId = user._id;
+    if (userId == authorid) {
+      toast.error("You can't like your own blog");
+      return;
+    }
     await APIMethods.blog
       .likeBlog({ userId, blogId })
       .then(async (res: any) => {
         console.log(res);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (res.data.status == 400) {
           window.location.href = "/auth/login";
         }
         const data = {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           userId: JSON.parse(localStorage.getItem("user") as string)
             ._id as string,
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
@@ -156,23 +163,19 @@ export default function ShowBlog() {
             JSON.parse(localStorage.getItem("user") as string).displayName
           } clapped to your post!`,
         };
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        await APIMethods.user
-          .addNotification(data)
-          .then((res: any) => {
-            console.log(res);
-          })
-          .catch((e: any) => {
-            console.log(e);
-          });
-
-        fetchBlog()
-          .then((res) => {
-            console.log(res);
-          })
-          .catch((e) => {
-            console.log(e);
-          });
+        // await APIMethods.user
+        //   .addNotification(data)
+        //   .then((res: any) => {
+        //     console.log(res);
+        //   })
+        //   .catch((e: any) => {
+        //     console.log(e);
+        //   })
+      })
+      .then(() => {
+        fetchBlog().then((res) => {
+          console.log(res);
+        });
       })
       .catch((e) => {
         console.log(e);
@@ -219,6 +222,7 @@ export default function ShowBlog() {
 
   return (
     <Stack
+      className="showblog"
       minHeight={"100vh"}
       justifyContent={"start"}
       alignItems={"center"}
@@ -264,7 +268,7 @@ export default function ShowBlog() {
                   height={"400px"}
                   style={{
                     width: "900px",
-                    maxHeight: "500px",
+                    height: "500px",
                     objectFit: "cover",
                   }}
                 />

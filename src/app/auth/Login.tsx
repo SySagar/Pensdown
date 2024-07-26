@@ -14,7 +14,7 @@ import { useFormik } from "formik";
 import APIMethods from "../../lib/axios/api";
 import { loginSchema } from "./validation";
 import { useState } from "react";
-import { VisibilityOff } from "@mui/icons-material";
+import { VisibilityOff, VisibilityRounded } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import AnimatePage from "../../layout/AnimatePage";
@@ -76,9 +76,9 @@ export default function Login() {
   });
 
   const togglePasswordVisibility = () => {
-    setShowPassword((v) => !v);
+    setShowPassword((showPassword) => !showPassword);
   };
-
+  console.log("formik", showPassword);
   return (
     <Stack
       minHeight={"100vh"}
@@ -157,6 +157,7 @@ export default function Login() {
                   name="password"
                   label=""
                   variant="outlined"
+                  type={showPassword ? "text" : "password"}
                   fullWidth
                   value={formik.values.password}
                   onChange={formik.handleChange}
@@ -171,7 +172,11 @@ export default function Login() {
                   InputProps={{
                     endAdornment: (
                       <IconButton onClick={() => togglePasswordVisibility()}>
-                        {showPassword ? <VisibilityOff /> : <VisibilityOff />}
+                        {showPassword ? (
+                          <VisibilityRounded />
+                        ) : (
+                          <VisibilityOff />
+                        )}
                       </IconButton>
                     ),
                   }}
@@ -180,31 +185,12 @@ export default function Login() {
 
               <Button
                 variant="contained"
-                color="secondary"
+                color="primary"
                 fullWidth
                 onClick={() => formik.handleSubmit()}
                 sx={{ marginTop: "20px" }}
               >
                 Sign in
-              </Button>
-              <Button
-                sx={{
-                  "&:hover": {
-                    background: "#fff",
-                  },
-                }}
-                startIcon={
-                  <Avatar
-                    src={"/png/google.png"}
-                    sx={{ width: 24, height: 24 }}
-                  />
-                }
-                variant="outlined"
-                color="primary"
-                fullWidth
-              >
-                <img src="./png/google.png" alt="" />
-                Sign in with Google
               </Button>
 
               <Stack width={"100%"} alignItems={"center"}>
@@ -214,7 +200,7 @@ export default function Login() {
                     href="/auth/register"
                     style={{
                       textDecoration: "none",
-                      fontWeight: "550",
+                      fontWeight: "700",
                       color: "#478585",
                     }}
                   >
