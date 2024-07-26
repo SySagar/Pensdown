@@ -17,6 +17,7 @@
 }
 
 .single-blog-container:hover{
-    background-color: #aeaeae;
+    background-color: #BFDBBD;
     cursor: pointer;
+    transition: 0.5s ease;
 }

@@ -27,13 +27,13 @@ export default function Sidebar() {
   return (
     <Stack height={"100vh"}>
       <Stack>
-        <Typography color={"secondary"}>✨Top picks for you</Typography>
+        <Typography color={"primary.main"}>✨Top picks for you</Typography>
 
         <Stack
           className="sidebar-items"
           direction={"column"}
           gap={1}
-          sx={{ borderRadius: "5px", padding: "5px" }}
+          sx={{ borderRadius: "5px", padding: "10px" }}
           paddingTop={3}
           marginY={1}
         >
@@ -47,7 +47,11 @@ export default function Sidebar() {
               Naomi Sen · 12 July , 2023
             </Typography>
           </Stack>
-          <Typography fontWeight={600} variant={"body1"}>
+          <Typography
+            fontWeight={600}
+            variant={"body1"}
+            color={"text.secondary"}
+          >
             Tech hikes are rampaging.
           </Typography>
         </Stack>
@@ -55,7 +59,7 @@ export default function Sidebar() {
           className="sidebar-items"
           direction={"column"}
           gap={1}
-          sx={{ borderRadius: "5px", padding: "5px" }}
+          sx={{ borderRadius: "5px", padding: "10px" }}
           marginY={1}
         >
           <Stack direction={"row"} alignItems={"center"} gap={1}>
@@ -68,7 +72,11 @@ export default function Sidebar() {
               Shirja Chatterjee · 27 June , 2023
             </Typography>
           </Stack>
-          <Typography fontWeight={600} variant={"body1"}>
+          <Typography
+            fontWeight={600}
+            variant={"body1"}
+            color={"text.secondary"}
+          >
             LGBTQ community is still fighting for their rights.
           </Typography>
         </Stack>
@@ -89,10 +97,11 @@ export default function Sidebar() {
               <Chip
                 sx={{
                   color: "#fff",
-                  background: "#474747",
+                  backgroundColor: "primary.main",
                   fontWeight: 400,
                   "&:hover": {
-                    background: "#474747",
+                    backgroundColor: "primary.main",
+                    opacity: "0.9",
                   },
                 }}
                 key={index}

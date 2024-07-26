@@ -7,6 +7,8 @@ import useLoadingStore from "../../lib/store/useLoading";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { toast } from "react-hot-toast";
 
 export default function UserProfile({
   isOpen,
@@ -23,7 +25,6 @@ export default function UserProfile({
     ],
   );
   const fetchProfile = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     setIsLoading(true);
     await APIMethods.user
       .getAuthorInfo({ authorId })
@@ -42,19 +43,24 @@ export default function UserProfile({
     const data = {
       userId: authorId,
       id: {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
         id: JSON.parse(localStorage.getItem("user") as string)._id,
       },
     };
 
     const followRes = await APIMethods.user.isFollowingUser(data);
     console.log(followRes);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (followRes.data.followStatus == "unfollowing") {
       setIsFollowing(false);
     } else {
       setIsFollowing(true);
     }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("accessToken");
+    window.location.reload();
+    toast.error("You have been logged ");
   };
 
   useEffect(() => {
@@ -93,16 +99,44 @@ export default function UserProfile({
         bottom={0}
         minWidth={"26rem"}
         minHeight={"100vh"}
-        sx={{ background: "#fff", borderRadius: "8px 0px 0px 8px" }}
+        sx={{
+          background: "#fff",
+          borderRadius: "8px 0px 0px 8px",
+          borderColor: "secondary.main",
+        }}
       >
         <Stack height={"100%"} position={"relative"}>
-          <Stack position={"absolute"} top={10} left={10}>
+          <Stack
+            position={"absolute"}
+            top={10}
+            left={10}
+            flexDirection={"row"}
+            justifyContent={"space-between"}
+            width={"100%"}
+          >
             <IconButton
               // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               onClick={onClose}
             >
               <ArrowBackIcon />
             </IconButton>
+
+            <Button
+              onClick={handleLogout}
+              variant="text"
+              sx={{
+                marginRight: "2rem",
+                display: "flex",
+                gap: "4px",
+                "&:hover": {
+                  opacity: 0.8,
+                  color: "#FF0051",
+                },
+              }}
+            >
+              <LogoutIcon />
+              Logout
+            </Button>
           </Stack>
 
           {isLoading ? (
@@ -185,27 +219,34 @@ export default function UserProfile({
                   justifyContent={"center"}
                   alignItems={"center"}
                   paddingX={4}
+                  color={"text.secondary"}
                 >
                   <Typography variant={"body2"}>{profile.bio}</Typography>
                 </Stack>
 
                 <Stack direction={"row"} gap={3} marginTop={3}>
                   <Stack direction={"column"} alignItems={"center"}>
-                    <Typography variant={"body1"}>Blogs</Typography>
+                    <Typography variant={"body1"} color={"text.secondary"}>
+                      Blogs
+                    </Typography>
                     <Typography fontWeight={600}>
                       {profile.blogsCount}
                     </Typography>
                   </Stack>
 
                   <Stack direction={"column"} alignItems={"center"}>
-                    <Typography variant={"body1"}>Followers</Typography>
+                    <Typography variant={"body1"} color={"text.secondary"}>
+                      Followers
+                    </Typography>
                     <Typography fontWeight={600}>
                       {profile.followersCount}
                     </Typography>
                   </Stack>
 
                   <Stack direction={"column"} alignItems={"center"}>
-                    <Typography variant={"body1"}>Respect</Typography>
+                    <Typography variant={"body1"} color={"text.secondary"}>
+                      Respect
+                    </Typography>
                     <Typography fontWeight={600}>{profile.respect}</Typography>
                   </Stack>
                 </Stack>
@@ -222,7 +263,12 @@ export default function UserProfile({
                           console.log(err);
                         });
                     }}
-                    sx={{ background: "#474747" }}
+                    sx={{
+                      backgroundColor: "secondary.main",
+                      "&:hover": {
+                        backgroundColor: "secondary.main",
+                      },
+                    }}
                   >
                     {isFollowing ? "Unfollow" : "Follow"}
                   </Button>

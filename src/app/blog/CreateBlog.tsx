@@ -9,16 +9,18 @@ interface BlogImageTypes {
 }
 
 export default function CreateBlog() {
-
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment
-  const [blog,setBlog] = useEditorContent((state: any) => [state.blog as BlogImageTypes,state.setBlog,]);
-const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const [blog, setBlog] = useEditorContent((state: any) => [
+    state.blog as BlogImageTypes,
+    state.setBlog,
+  ]);
+  const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     setBlog({
       ...blog,
       title: e.target.value,
     });
-  }
+  };
 
   return (
     <Stack
@@ -27,9 +29,12 @@ const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       justifyContent={"flex-start"}
       position={"relative"}
       gap={5}
+      sx={{
+        backgroundColor: "background.main",
+      }}
       paddingBottom={5}
     >
-      <Typography variant="h2" sx={{ opacity: "0.5" }}>
+      <Typography variant="h2" color={"text.primary"} sx={{ opacity: "0.5" }}>
         Create your blog here...
       </Typography>
       <Stack
@@ -47,7 +52,6 @@ const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           onChange={onTitleChange}
           variant="standard"
           sx={{
-            background: "#F4F4F4",
             borderRadius: "5px",
             padding: "10px",
           }}
@@ -58,40 +62,33 @@ const onTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           alignItems={"center"}
           sx={{ cursor: "pointer" }}
         >
-          <IconButton
-          component="label">
+          <IconButton component="label">
             <input
-            hidden
+              hidden
               type="file"
               accept=".jpg,.png,.jpeg"
               onChange={(e) => {
                 const selectedFile = e.target.files && e.target.files[0]; // Check if files is not null
                 if (selectedFile) {
-                  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-                  setBlog(
-                    {
-                      coverImage: selectedFile,
-                    }
-                    )
+                  setBlog({
+                    coverImage: selectedFile,
+                  });
                 }
               }}
             />
             <AddPhotoAlternateIcon />
             Add a cover image
           </IconButton>
-
-            
-          
         </Stack>
         {blog.coverImage && (
-          <img src={URL.createObjectURL(blog.coverImage)} width={'350px'} />
+          <img src={URL.createObjectURL(blog.coverImage)} width={"350px"} />
         )}
       </Stack>
       <Stack>
-                <TagInput/>
-            </Stack>
+        <TagInput />
+      </Stack>
       <Stack className="editor">
-        <Tiptap/>
+        <Tiptap />
       </Stack>
     </Stack>
   );

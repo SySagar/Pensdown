@@ -14,7 +14,7 @@ export default function Header() {
       minHeight={"50px"}
       justifyContent={"center"}
       sx={{
-        background: "#F5F5F5",
+        backgroundColor: "background.main",
       }}
     >
       <Stack
@@ -39,6 +39,7 @@ export default function Header() {
             }}
             fontSize={isTablet ? "15px" : "20px"}
             fontWeight={500}
+            color={"text.secondary"}
           >
             Pensdown
           </Typography>

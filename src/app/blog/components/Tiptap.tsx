@@ -29,7 +29,7 @@ import {
 } from "react-icons/fa";
 import Underline from "@tiptap/extension-underline";
 import Placeholder from "@tiptap/extension-placeholder";
-import Image from "@tiptap/extension-image"; 
+import Image from "@tiptap/extension-image";
 
 const MenuBar = ({ editor }: any) => {
   if (!editor) {
@@ -188,10 +188,8 @@ export default function Tiptap() {
   });
 
   // useEffect(() => {
-   
-  //     console.log(blog);
-  
 
+  //     console.log(blog);
 
   // }, [editor, setBlog]);
 
@@ -210,7 +208,7 @@ export default function Tiptap() {
     localStorage.getItem("rich-editor");
     if (localStorage.getItem("rich-editor") == null) return;
     editor.commands.setContent(
-      JSON.parse(localStorage.getItem("rich-editor") as string) as string
+      JSON.parse(localStorage.getItem("rich-editor") as string) as string,
     );
     console.log(json);
   });
@@ -233,6 +231,7 @@ export default function Tiptap() {
         style={{
           overflow: "scroll",
           minHeight: "450px",
+          border: "1px solid #BFDBBD",
         }}
       />
     </Stack>

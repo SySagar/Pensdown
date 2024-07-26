@@ -54,12 +54,15 @@ const TagInput: React.FC = () => {
 
   return (
     <Stack gap={3} justifyContent={"center"} alignItems={"center"}>
-      <Typography>Select category/categories</Typography>
+      <Typography color={"text.secondary"}>
+        Select category/categories
+      </Typography>
       <Stack direction={"row"} gap={1}>
         <Autocomplete
           freeSolo
           sx={{
             width: "400px",
+            background: "#fff",
           }}
           options={[...tags, ...TAGS]}
           renderInput={(params) => (
@@ -82,7 +85,12 @@ const TagInput: React.FC = () => {
         />
         <Button
           variant="contained"
-          sx={{ color: "white", background: "#474747" }}
+          sx={{
+            "&:hover": {
+              backgroundColor: "primary.main",
+              opacity: 0.9,
+            },
+          }}
           onClick={handleAddTag}
         >
           Add Tag
@@ -95,12 +103,15 @@ const TagInput: React.FC = () => {
             label={tag}
             onDelete={() => handleDeleteTag(tag)}
             sx={{
-              background: "#474747",
+              backgroundColor: "primary.main",
               color: "white",
               borderRadius: "14px",
               padding: "5px 10px",
               "& .MuiChip-deleteIcon": {
                 color: "white", // Change this to the desired color for the delete icon
+                "&:hover": {
+                  color: "white", // Change this to the desired hover color for the delete icon
+                },
               },
             }}
           />

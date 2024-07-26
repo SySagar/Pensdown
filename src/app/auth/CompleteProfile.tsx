@@ -53,19 +53,22 @@ export default function CreateAccount() {
     <>
       <Stack
         alignItems={"center"}
+        justifyContent={"center"}
         gap={"20px"}
         onSubmit={(e) => {
           e.preventDefault();
           formik.handleSubmit();
         }}
       >
-        <Typography variant="h5">Complete your profile</Typography>
+        <Typography variant="h5" color={"text.secondary"}>
+          Complete your profile
+        </Typography>
 
         <Collapse in={error ? true : false}>
           <Alert severity="error">{error}</Alert>
         </Collapse>
 
-        <Stack width={"100%"} marginTop={"20px"}>
+        <Stack width={"100%"} color={"primary.main"} gap={1}>
           <Typography variant="body2">Username</Typography>
           <TextField
             label=""
@@ -82,7 +85,7 @@ export default function CreateAccount() {
             required
           />
         </Stack>
-        <Stack width={"100%"} marginTop={"20px"}>
+        <Stack width={"100%"} color={"primary.main"} gap={1}>
           <Typography variant="body2">Name</Typography>
           <TextField
             label=""
@@ -97,7 +100,7 @@ export default function CreateAccount() {
             required
           />
         </Stack>
-        <Stack width={"100%"}>
+        <Stack width={"100%"} color={"primary.main"} gap={1}>
           <Typography variant="body2">Bio</Typography>
           <TextField
             name="bio"
@@ -105,6 +108,7 @@ export default function CreateAccount() {
             variant="outlined"
             fullWidth
             multiline
+            rows={4}
             value={formik.values.bio}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

@@ -4,6 +4,7 @@ import { useResponsive } from "../../../hooks/useResponsive";
 import { useNavigate } from "react-router-dom";
 import "../home.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import ImageWithLoading from "../../blog/components/ImageWitLoading";
 
 interface BlogTypes {
   author: string;
@@ -40,13 +41,15 @@ export default function Blog({
       maxWidth={"300px"}
       maxHeight={isTablet ? "80px" : "300px"}
       onClick={redirectToBlog}
+      color={"primary.main"}
       sx={{
-        background: "#474554",
+        backgroundColor: "#FBFCFA",
+        boxShadow: "3px 3px 10px rgba(214, 208, 174,0.7)",
         borderRadius: "5px",
       }}
     >
       <Stack overflow={"hidden"} className="laptop-image">
-        <img
+        {/* <img
           style={{
             objectFit: "cover",
             width: "300px",
@@ -55,6 +58,18 @@ export default function Blog({
           }}
           src={image}
           alt=""
+        /> */}
+        <ImageWithLoading
+          width={"300px"}
+          height={"200px"}
+          style={{
+            objectFit: "cover",
+            width: "300px",
+            height: "200px",
+            borderRadius: "4px",
+          }}
+          src={image}
+          alt={title}
         />
       </Stack>
       <Stack
@@ -85,14 +100,14 @@ export default function Blog({
         <Typography
           variant="caption"
           fontWeight={600}
-          color={isPhone ? "#474747" : "#fff"}
+          color={isPhone ? "text.secondary" : "primary.main"}
         >
           {author} · {date}
         </Typography>
         <Typography
           variant="h6"
           fontWeight={550}
-          color={isPhone ? "#000" : "#fff"}
+          color={isPhone ? "#000" : "text.primary"}
         >
           {title}
         </Typography>
@@ -101,15 +116,17 @@ export default function Blog({
           direction={"row"}
           marginY={1}
           flexWrap={"wrap"}
+          paddingTop={1}
           gap={1}
         >
           {tags.map((tag, index) => (
             <Chip
               sx={{
                 height: "15px",
-                color: isPhone ? "#474747" : "#fff",
-                fontWeight: 400,
+                color: "text.secondary",
+                fontWeight: 500,
                 fontSize: "0.7rem",
+                backgroundColor: "secondary.light",
               }}
               key={index}
               label={tag}

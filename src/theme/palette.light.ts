@@ -17,21 +17,26 @@
  * @type {import("@mui/material").PaletteOptions & CustomPalette}
  */
 const lightPalette = {
-  primary: {
-    main: "#BDBDBD",
-    light: "#BDBDBD",
-    dark: "#BDBDBD",
-    contrastText: "#474747"
-  },
   secondary: {
-    main: "#474747",
-    light: "#474747",
-    dark: "#474747",
-    contrastText: "#FAF7FF"
+    main: "#BFDBBD",
+    light: "#BFDBBD",
+    dark: "#BFDBBD",
+    contrastText: "#478585",
+  },
+  primary: {
+    main: "#478585",
+    light: "#478585",
+    dark: "#478585",
+    contrastText: "#FAF7FF",
+  },
+  background: {
+    default: "#EFECDC",
+    main: "#EFECDC",
+    paper: "#EFECDC",
   },
   text: {
-    primary: "#474747",
-    secondary: "#474747",
+    primary: "#478585",
+    secondary: "#4D4D4D",
   },
 };
 

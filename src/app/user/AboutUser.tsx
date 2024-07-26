@@ -10,6 +10,7 @@ import APIMethods from "../../lib/axios/api";
 import { useLocation } from "react-router-dom";
 import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 import Loaders from "./components/Loaders";
+import AnimatePage from "../../layout/AnimatePage";
 
 interface LocationState {
   authorId: string;
@@ -91,6 +92,9 @@ export default function AboutUser() {
       minHeight={"130vh"}
       justifyContent={"start"}
       alignItems={"end"}
+      sx={{
+        backgroundColor: "background.main",
+      }}
       gap={5}
     >
       <Stack position={"absolute"} top={20} right={20} zIndex={5}>
@@ -100,7 +104,6 @@ export default function AboutUser() {
             window.location.href = "/";
           }}
           sx={{
-            background: "#474747",
             color: "#fff",
             borderRadius: "8px",
             padding: "5px 10px",
@@ -113,6 +116,7 @@ export default function AboutUser() {
           Back to home
         </Button>
       </Stack>
+
       <Stack
         className="user-card-profile"
         paddingBottom={5}
@@ -126,7 +130,7 @@ export default function AboutUser() {
         top={30}
         left={50}
         sx={{
-          background: "#fff",
+          background: "#FBFCFA",
           boxShadow: "0px 0px 3px rgba(0, 0, 0, 0.7)",
         }}
       >
@@ -152,7 +156,9 @@ export default function AboutUser() {
             justifyContent={"start"}
             height={"fit-content"}
           >
-            <Typography variant="h4">{profile.displayName}</Typography>
+            <Typography variant="h4" color={"primary.main"}>
+              {profile.displayName}
+            </Typography>
 
             <Typography color={"#91A3B0"}>{profile.bio}</Typography>
           </Stack>
@@ -164,7 +170,7 @@ export default function AboutUser() {
               alignItems={"center"}
               gap={1}
             >
-              <LocationOnIcon sx={{ color: "#474747" }} />
+              <LocationOnIcon sx={{ color: "primary.main" }} />
               <Typography variant="body2">Jajpur Road , Odisha</Typography>
             </Stack>
 
@@ -174,7 +180,7 @@ export default function AboutUser() {
               alignItems={"center"}
               gap={1}
             >
-              <FlagIcon sx={{ color: "#474747" }} />
+              <FlagIcon sx={{ color: "primary.main" }} />
               <Typography variant="body2">India</Typography>
             </Stack>
           </Stack>
@@ -248,17 +254,17 @@ export default function AboutUser() {
             width={"100%"}
             justifyContent={"center"}
           >
-            <Typography textAlign={"center"}>
+            <Typography textAlign={"center"} color={"text.secondary"}>
               Followers <br />
               <p style={{ fontWeight: "600" }}>{profile.followersCount}</p>
             </Typography>
 
-            <Typography textAlign={"center"}>
+            <Typography textAlign={"center"} color={"text.secondary"}>
               Blogs <br />
               <p style={{ fontWeight: "600" }}>{profile.blogsCount}</p>
             </Typography>
 
-            <Typography textAlign={"center"}>
+            <Typography textAlign={"center"} color={"text.secondary"}>
               Respect <br />
               <p style={{ fontWeight: "600" }}>{profile.respect}</p>
             </Typography>
@@ -268,6 +274,7 @@ export default function AboutUser() {
             <Stack width={"140px"} mt={4}>
               <Button
                 fullWidth
+                variant="contained"
                 onClick={() => {
                   follow()
                     .then(() => {
@@ -277,7 +284,14 @@ export default function AboutUser() {
                       console.log(err);
                     });
                 }}
-                sx={{ background: "#474747" }}
+                sx={{
+                  backgroundColor: "secondary.main",
+                  color: "text.primary",
+                  fontWeight: 600,
+                  "&:hover": {
+                    backgroundColor: "secondary.main",
+                  },
+                }}
               >
                 {isFollowing ? "Unfollow" : "Follow"}
               </Button>
@@ -286,143 +300,147 @@ export default function AboutUser() {
         </Stack>
       </Stack>
 
-      <Stack
-        height={"130vh"}
-        justifyContent={"start"}
-        alignItems={"end"}
-        gap={5}
-        position={"relative"}
-      >
+      <AnimatePage>
         <Stack
-          className="data"
-          maxWidth={"100%"}
-          sx={{
-            background: "#fff",
-          }}
+          height={"130vh"}
+          justifyContent={"start"}
+          alignItems={"end"}
+          gap={5}
           position={"relative"}
         >
-          <Stack
-            className="background-image"
-            maxHeight={"260px"}
-            justifyContent={"center"}
-            alignItems={"center"}
-            overflow={"hidden"}
-          >
-            <img
-              src="https://images.unsplash.com/photo-1604871000636-074fa5117945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
-              alt=""
-              style={{
-                objectFit: "cover",
-                borderRadius: 18,
-              }}
-            />
+          <Stack className="data" maxWidth={"100%"} position={"relative"}>
+            <Stack
+              className="background-image"
+              maxHeight={"260px"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              overflow={"hidden"}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1604871000636-074fa5117945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80"
+                alt=""
+                style={{
+                  objectFit: "cover",
+                  borderRadius: 18,
+                }}
+              />
+            </Stack>
           </Stack>
-        </Stack>
-        <Stack
-          className="blogs"
-          width={"1000px"}
-          height={"500px"}
-          marginRight={"3rem"}
-          overflow={"scroll"}
-        >
-          {isLoading == false && blogs.length == 0 && (
-            <Stack width={"100%"} alignItems={"center"}>
-              <Typography variant="h4">No Blogs Yet</Typography>
-            </Stack>
-          )}
-          {isLoading ? (
-            <Stack>
-              <Loaders />
-            </Stack>
-          ) : (
-            <>
-              {blogs.map((blog, idx) => {
-                return (
-                  <Stack
-                    key={idx}
-                    className="single-blog-container"
-                    borderRadius={2}
-                    color={"#474747"}
-                    width={"100%"}
-                    onClick={() => {
-                      window.location.href = `/${blog._id}`;
-                    }}
-                  >
+          <Stack
+            className="blogs"
+            width={"1000px"}
+            height={"500px"}
+            marginRight={"3rem"}
+            overflow={"scroll"}
+          >
+            {isLoading == false && blogs.length == 0 && (
+              <Stack width={"100%"} alignItems={"center"}>
+                <Typography variant="h4">No Blogs Yet</Typography>
+              </Stack>
+            )}
+            {isLoading ? (
+              <Stack>
+                <Loaders />
+              </Stack>
+            ) : (
+              <>
+                {blogs.map((blog, idx) => {
+                  return (
                     <Stack
-                      className="single-blog"
-                      padding={3}
-                      height={"4rem"}
-                      direction={"row"}
-                      alignItems={"center"}
-                      gap={5}
-                      position={"relative"}
+                      key={idx}
+                      className="single-blog-container"
+                      borderRadius={2}
+                      color={"text.secondary"}
+                      width={"100%"}
+                      onClick={() => {
+                        window.location.href = `/${blog._id}`;
+                      }}
                     >
                       <Stack
-                        sx={{ borderColor: "white", objectFit: "cover" }}
-                        overflow={"hidden"}
-                        maxHeight={"300px"}
-                        width={"9rem"}
-                        height={"100%"}
-                        minHeight={"90px"}
-                      >
-                        <img
-                          style={{
-                            objectFit: "cover",
-                            width: "100%",
-                            minHeight: "100%",
-                          }}
-                          src={blog.coverImageURL}
-                          alt=""
-                        />
-                      </Stack>
-
-                      <Stack justifyContent={"center"} flexGrow={1}>
-                        <Typography variant="h5">{blog.title}</Typography>
-                      </Stack>
-
-                      <Stack
+                        className="single-blog"
+                        paddingY={4}
+                        padding={3}
+                        height={"4.5rem"}
                         direction={"row"}
                         alignItems={"center"}
-                        gap={3}
-                        className="likes&comment"
-                        position={"absolute"}
-                        right={40}
+                        gap={5}
+                        position={"relative"}
                       >
-                        <Stack direction={"row"} alignItems={"center"} gap={1}>
-                          <Typography variant="h6">
-                            {(blog.likes as []).length}
-                          </Typography>
+                        <Stack
+                          sx={{ borderColor: "white", objectFit: "cover" }}
+                          overflow={"hidden"}
+                          maxHeight={"300px"}
+                          width={"9rem"}
+                          height={"100%"}
+                          minHeight={"90px"}
+                        >
                           <img
-                            src="/png/unclapped.png"
+                            style={{
+                              objectFit: "cover",
+                              width: "100%",
+                              minHeight: "100%",
+                            }}
+                            src={blog.coverImageURL}
                             alt=""
-                            style={{ width: "20px", height: "20px" }}
                           />
                         </Stack>
-                        <Stack direction={"row"} alignItems={"center"} gap={1}>
-                          <Typography variant="h6">
-                            {(blog.comments as []).length}
-                          </Typography>
-                          <img
-                            src="/png/comment.png"
-                            alt=""
-                            style={{ width: "20px", height: "20px" }}
-                          />
+
+                        <Stack justifyContent={"center"} flexGrow={1}>
+                          <Typography variant="h5">{blog.title}</Typography>
+                        </Stack>
+
+                        <Stack
+                          direction={"row"}
+                          alignItems={"center"}
+                          gap={3}
+                          className="likes&comment"
+                          position={"absolute"}
+                          right={40}
+                        >
+                          <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            gap={1}
+                          >
+                            <Typography variant="h6">
+                              {(blog.likes as []).length}
+                            </Typography>
+                            <img
+                              src="/png/unclapped.png"
+                              alt=""
+                              style={{ width: "20px", height: "20px" }}
+                            />
+                          </Stack>
+                          <Stack
+                            direction={"row"}
+                            alignItems={"center"}
+                            gap={1}
+                          >
+                            <Typography variant="h6">
+                              {(blog.comments as []).length}
+                            </Typography>
+                            <img
+                              src="/png/comment.png"
+                              alt=""
+                              style={{ width: "20px", height: "20px" }}
+                            />
+                          </Stack>
+                        </Stack>
+
+                        <Stack position={"absolute"} top={15} right={40}>
+                          <Typography variant="body2">{blog.date}</Typography>
                         </Stack>
                       </Stack>
 
-                      <Stack position={"absolute"} top={3} right={40}>
-                        <Typography variant="body2">{blog.date}</Typography>
-                      </Stack>
+                      <Divider />
                     </Stack>
-
-                    <Divider />
-                  </Stack>
-                );
-              })}
-            </>
-          )}
+                  );
+                })}
+              </>
+            )}
+          </Stack>
         </Stack>
-      </Stack>
+      </AnimatePage>
     </Stack>
   );
 }

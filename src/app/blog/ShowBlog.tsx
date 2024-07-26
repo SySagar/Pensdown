@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect } from "react";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import APIMethods from "../../lib/axios/api";
 import { useState } from "react";
 import { Editor, EditorContent } from "@tiptap/react";
@@ -33,7 +33,9 @@ import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import CommentSection from "./components/CommentSection";
 import UserProfile from "../user/UserProfile";
-// import BookmarkIcon from '@mui/icons-material/Bookmark';
+import AnimatePage from "../../layout/AnimatePage";
+import { Skeleton } from "@mui/material";
+import ImageWithLoading from "./components/ImageWitLoading";
 
 let authorid = "";
 export default function ShowBlog() {
@@ -44,32 +46,25 @@ export default function ShowBlog() {
   const [title, setTitle] = useState("");
   const [coverImage, setCoverImage] = useState("");
   const [likes, setLikes] = useState([]);
-  const [isFollowing,setIsFollowing] = useState(false);
+  const [isFollowing, setIsFollowing] = useState(false);
   const navigate = useNavigate();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const [isLoading, setIsLoading] = useLoadingStore((state: any) => [
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     state.loading,
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     state.setIsLoading,
   ]);
 
   const fetchBlog = async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     setIsLoading(true);
     await APIMethods.blog
       .getSingleBlog({ blogId })
       .then((res: SingleBlogTypes) => {
         console.log(res);
-        if(res.data.status == 401) {
+        if (res.data.status == 401) {
           window.location.href = "/auth/login";
         }
-        if(res.data.status == 404 || res.data.status == 500)
-        {
+        if (res.data.status == 404 || res.data.status == 500) {
           navigate("/404");
-        } 
-        else
-        {
+        } else {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           setBlog(JSON.parse(res.data.blogs.content));
           setAuthor(res.data.blogs.authorName);
@@ -77,7 +72,7 @@ export default function ShowBlog() {
           setTitle(res.data.blogs.title);
           setCoverImage(res.data.blogs.coverImageURL);
           setLikes(res.data.blogs.likes);
-          authorid=res.data.blogs.authorID;
+          authorid = res.data.blogs.authorID;
         }
       })
       .catch((e) => {
@@ -91,7 +86,7 @@ export default function ShowBlog() {
   // };
   const showProfile = () => {
     setIsSidebarOpen(!isSidebarOpen);
-  }
+  };
 
   useEffect(() => {
     fetchBlog()
@@ -105,25 +100,19 @@ export default function ShowBlog() {
 
   const follow = async () => {
     const data = {
-      userId:authorid,
-     id: 
-      {
-       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-       id: (JSON.parse(localStorage.getItem('user') as string))._id
-      }
-    }
-    const followRes = await APIMethods.user.isFollowingUser(data)
+      userId: authorid,
+      id: {
+        id: JSON.parse(localStorage.getItem("user") as string)._id,
+      },
+    };
+    const followRes = await APIMethods.user.isFollowingUser(data);
     console.log(followRes);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    if(followRes.data.followStatus == 'unfollowing')
-    {
+    if (followRes.data.followStatus == "unfollowing") {
       setIsFollowing(false);
-    }
-    else
-    {
+    } else {
       setIsFollowing(true);
     }
-  }
+  };
 
   useEffect(() => {
     if (
@@ -133,9 +122,7 @@ export default function ShowBlog() {
       title !== "" &&
       coverImage !== ""
     ) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         setIsLoading(false);
         console.log(isLoading);
       }
@@ -148,35 +135,37 @@ export default function ShowBlog() {
   }
 
   async function likeBlog() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const user = JSON.parse(
-      localStorage.getItem("user") as string
+      localStorage.getItem("user") as string,
     ) as unknown as LikeBlogTypes;
     const userId = user._id;
     await APIMethods.blog
       .likeBlog({ userId, blogId })
-      .then(async (res:any) => {
+      .then(async (res: any) => {
         console.log(res);
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if(res.data.status == 400) {
+        if (res.data.status == 400) {
           window.location.href = "/auth/login";
         }
         const data = {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          userId: JSON.parse(localStorage.getItem("user") as string)._id as string,
+          userId: JSON.parse(localStorage.getItem("user") as string)
+            ._id as string,
           // eslint-disable-next-line @typescript-eslint/restrict-template-expressions, @typescript-eslint/no-unsafe-member-access
-          message : `👏 ${JSON.parse(localStorage.getItem("user") as string).displayName} clapped to your post!`
-        }
+          message: `👏 ${
+            JSON.parse(localStorage.getItem("user") as string).displayName
+          } clapped to your post!`,
+        };
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
-        await APIMethods.user.addNotification(data)
-          .then((res:any) => {
+        await APIMethods.user
+          .addNotification(data)
+          .then((res: any) => {
             console.log(res);
           })
-          .catch((e:any) => {
+          .catch((e: any) => {
             console.log(e);
           });
 
-          
         fetchBlog()
           .then((res) => {
             console.log(res);
@@ -234,120 +223,163 @@ export default function ShowBlog() {
       justifyContent={"start"}
       alignItems={"center"}
       padding={5}
+      sx={{
+        backgroundColor: "background.main",
+      }}
     >
-       <UserProfile authorId={authorid}  isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
-      
-      {
-        isLoading? <Stack minHeight={'100vh'}>
+      <UserProfile
+        authorId={authorid}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
+
+      {isLoading ? (
+        <Stack minHeight={"100vh"}>
           <CircularProgress />
-        </Stack>:
-      
-      <Stack
-        width={"900px"}
-        justifyContent={"center"}
-        alignItems={"start"}
-        gap={2}
-      >
-        <Stack
-          direction={"column"}
-          gap={1}
-          justifyContent={"center"}
-          alignItems={"center"}
-          width={"100%"}
-        >
-          <img
-            src={coverImage}
-            alt=""
-            style={{ width: "900px", maxHeight: "500px", objectFit: "cover" }}
-          />
-          <Typography variant="h3">{title}</Typography>
         </Stack>
-
-        <Stack
-          direction={"row"}
-          gap={2}
-          alignItems={"center"}
-          position={"relative"}
-          width={"100%"}
-        >
-          <Avatar
-            src={
-              "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
-            }
-            alt={"name"}
-          />
-          <Stack justifyContent={'flex-start'} alignItems={'flex-start'} gap={'3px'}>
-          <div style={{cursor:'pointer'}}>
-          <Typography onClick={showProfile} sx={{ 
-            '&:hover' : {
-              color:'#646F76',
-              textDecoration:'underline',
-            }
-          }}>
-            {author}
-          </Typography>
-          </div>
-            <Typography variant="caption">{date}</Typography>
-          </Stack>
-          <Button
-          onClick={follow}
-            sx={{ background: "#474747", position: "absolute", right: 0 }}
+      ) : (
+        <AnimatePage>
+          <Stack
+            width={"900px"}
+            justifyContent={"center"}
+            alignItems={"start"}
+            gap={2}
           >
-            {
-              isFollowing ? "Unfollow" : "Follow"
-            }
-          </Button>
-        </Stack>
-
-        <Stack></Stack>
-        <Divider sx={{ width: "100%", background: "#A9A9A9" }} />
-
-        <Stack
-          direction={"row"}
-          gap={2}
-          paddingY={1}
-          justifyContent={"space-between"}
-          width={"100%"}
-        >
-          <Stack className="left" direction={"row"} gap={3} marginLeft={2}>
-            <Stack direction={"row"} gap={1} alignItems={"center"}>
-              <IconButton onClick={likeBlog}>
-                <img
-                  src="./png/unclapped.png"
-                  alt=""
-                  style={{ width: "20px" }}
+            {isLoading ? (
+              <>
+                <Skeleton variant="rectangular" width={400} height={60} />
+              </>
+            ) : (
+              <Stack
+                direction={"column"}
+                gap={1}
+                justifyContent={"center"}
+                alignItems={"center"}
+                width={"100%"}
+              >
+                <ImageWithLoading
+                  src={coverImage}
+                  alt={title}
+                  width={"800px"}
+                  height={"400px"}
+                  style={{
+                    width: "900px",
+                    maxHeight: "500px",
+                    objectFit: "cover",
+                  }}
                 />
-              </IconButton>
-              <Typography>{likes.length}</Typography>
+                <Typography variant="h3" color={"text.primary"}>
+                  {title}
+                </Typography>
+              </Stack>
+            )}
+
+            <Stack
+              direction={"row"}
+              gap={2}
+              alignItems={"center"}
+              position={"relative"}
+              width={"100%"}
+            >
+              <Avatar
+                src={
+                  "https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
+                }
+                alt={"name"}
+              />
+              <Stack
+                justifyContent={"flex-start"}
+                alignItems={"flex-start"}
+                gap={"3px"}
+              >
+                <div style={{ cursor: "pointer" }}>
+                  <Typography
+                    onClick={showProfile}
+                    color={"text.secondary"}
+                    sx={{
+                      "&:hover": {
+                        color: "primary.main",
+                      },
+                    }}
+                  >
+                    {author}
+                  </Typography>
+                </div>
+                <Typography variant="caption">{date}</Typography>
+              </Stack>
+              <Button
+                onClick={follow}
+                sx={{
+                  backgroundColor: "primary.main",
+                  color: "#fff",
+                  position: "absolute",
+                  right: 0,
+                  "&:hover": {
+                    backgroundColor: "secondary.main",
+                    opacity: 0.9,
+                  },
+                }}
+              >
+                {isFollowing ? "Unfollow" : "Follow"}
+              </Button>
             </Stack>
-            <Stack direction={"row"} gap={1} alignItems={"center"}>
-              <CommentSection blogId={blogId} />
+
+            <Stack></Stack>
+            <Divider sx={{ width: "100%", background: "#A9A9A9" }} />
+
+            <Stack
+              direction={"row"}
+              gap={2}
+              paddingY={1}
+              justifyContent={"space-between"}
+              width={"100%"}
+            >
+              <Stack className="left" direction={"row"} gap={3} marginLeft={2}>
+                <Stack direction={"row"} gap={1} alignItems={"center"}>
+                  <IconButton onClick={likeBlog}>
+                    <img
+                      src="./png/unclapped.png"
+                      alt=""
+                      style={{ width: "20px" }}
+                    />
+                  </IconButton>
+                  <Typography>{likes.length}</Typography>
+                </Stack>
+                <Stack direction={"row"} gap={1} alignItems={"center"}>
+                  <CommentSection blogId={blogId} />
+                </Stack>
+              </Stack>
+
+              <Stack
+                className="right"
+                direction={"row"}
+                gap={1}
+                marginRight={2}
+              >
+                <IconButton>
+                  <BookmarkBorderIcon />
+                </IconButton>
+
+                <IconButton>
+                  <ShareIcon />
+                </IconButton>
+              </Stack>
             </Stack>
+
+            <Divider sx={{ width: "100%", background: "#A9A9A9" }} />
+
+            <EditorContent
+              className="previeweditor"
+              editor={previewEditor}
+              style={{
+                overflow: "scroll",
+                minHeight: "450px",
+                backgroundColor: "transparent",
+              }}
+            />
           </Stack>
-
-          <Stack className="right" direction={"row"} gap={1} marginRight={2}>
-            <IconButton>
-              <BookmarkBorderIcon />
-            </IconButton>
-
-            <IconButton>
-              <ShareIcon />
-            </IconButton>
-          </Stack>
-        </Stack>
-
-        <Divider sx={{ width: "100%", background: "#A9A9A9" }} />
-
-        <EditorContent
-          className="previeweditor"
-          editor={previewEditor}
-          style={{
-            overflow: "scroll",
-            minHeight: "450px",
-          }}
-        />
-      </Stack>
-      }
+        </AnimatePage>
+      )}
     </Stack>
   );
 }

@@ -61,20 +61,26 @@ export default function CreateAccount() {
     <>
       <Stack
         alignItems={"center"}
+        justifyContent={"center"}
         gap={"20px"}
+        marginTop={"20px"}
         onSubmit={(e) => {
           e.preventDefault();
           formik.handleSubmit();
         }}
       >
-        <Typography variant="h5">Create your account</Typography>
+        <Typography variant="h5" color={"text.secondary"}>
+          Create your account
+        </Typography>
 
         <Collapse in={error ? true : false}>
           <Alert severity="error">{error}</Alert>
         </Collapse>
 
-        <Stack width={"100%"} marginTop={"20px"}>
-          <Typography variant="body2">Email</Typography>
+        <Stack width={"100%"} marginTop={"10px"} gap={1}>
+          <Typography variant="body2" color={"primary.main"}>
+            Email
+          </Typography>
           <TextField
             label=""
             name="email"
@@ -88,8 +94,10 @@ export default function CreateAccount() {
             required
           />
         </Stack>
-        <Stack width={"100%"}>
-          <Typography variant="body2">Password</Typography>
+        <Stack width={"100%"} gap={1}>
+          <Typography variant="body2" color={"primary.main"}>
+            Password
+          </Typography>
           <TextField
             name="password"
             label=""

@@ -14,14 +14,22 @@ export default function NotFound() {
   };
   return (
     <Page>
-      <Stack gap={5} direction="column" minHeight={'100vh'} justifyContent={'center'} alignItems={'center'}>
-        <Typography variant="h4" color={'secondary'}>
+      <Stack
+        gap={5}
+        direction="column"
+        minHeight={"100vh"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <Typography variant="h4" color={"primary.main"}>
           Whooops..........Looks like you are lost!
         </Typography>
 
         <Lottie options={defaultOptions} height={420} width={500} />
-      
-      <Button color="secondary" variant="contained">Go back</Button>
+
+        <Button color="secondary" variant="contained">
+          Go back
+        </Button>
       </Stack>
     </Page>
   );

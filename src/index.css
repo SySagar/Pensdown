@@ -6,3 +6,7 @@
 body{
   font-family: 'Raleway';
 }
+
+::selection {
+  color: green; 
+}

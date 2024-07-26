@@ -59,19 +59,26 @@ export default function Suggestion() {
 
   return (
     <Stack maxWidth={"50vw"} gap={5}>
-      <Stack className="topics" direction={"row"} flexWrap={"wrap"} gap={2}>
+      <Stack
+        className="topics"
+        direction={"row"}
+        flexWrap={"wrap"}
+        gap={2}
+        paddingY={3}
+      >
         {TAGS.map((tag) => (
           <Chip
             key={tag}
             label={tag}
             onClick={() => handleAddTag(tag)}
             sx={{
-              background: "#474747",
+              backgroundColor: "primary.main",
               color: "white",
               borderRadius: "14px",
               padding: "5px 10px",
               "&:hover": {
-                background: "#333333",
+                backgroundColor: "primary.main",
+                opacity: 0.9,
               },
             }}
           />
@@ -80,14 +87,14 @@ export default function Suggestion() {
 
       <Stack>
         <Typography variant={"h6"}>Selected Topics</Typography>
-        <Stack direction={"row"} flexWrap={"wrap"} gap={2}>
+        <Stack direction={"row"} flexWrap={"wrap"} gap={2} paddingTop={3}>
           {tags.map((tag) => (
             <Chip
               key={tag}
               label={tag}
               onDelete={() => handleDeleteTag(tag)}
               sx={{
-                background: "#474747",
+                backgroundColor: "primary.main",
                 color: "white",
                 borderRadius: "14px",
                 padding: "5px 10px",

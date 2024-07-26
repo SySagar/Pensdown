@@ -33,16 +33,11 @@ font-weight: 700;
 }
 
 .sidebar-items:hover{
-  background:#FFF0EA;
+  background:#BFDBBD;
   cursor: pointer;
   border-radius: 5px;
 }
-/* 
-.navbar{
-  -webkit-box-shadow: 0px 1px 10px 0px rgba(71,71,71,0.57);
-  -moz-box-shadow: 0px 1px 10px 0px rgba(112, 112, 112, 0.57);
-  box-shadow: 0px 1px 10px 0px rgba(159, 159, 159, 0.57);
-} */
+
 
 .navbar{
   border-bottom: 1px solid #a9a9a9;

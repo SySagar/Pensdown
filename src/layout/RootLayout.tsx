@@ -6,7 +6,7 @@ const RootLayout = () => {
   return (
     <Stack flexGrow={1}>
       <Header />
-      <Stack flexGrow={1} className="pages">
+      <Stack flexGrow={1} className="pages" sx={{ backgroundColor: "#EFECDC" }}>
         <Outlet />
       </Stack>
     </Stack>

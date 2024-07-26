@@ -10,7 +10,7 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, redirect, useLocation, useNavigate } from "react-router-dom";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import useWriterAction from "../../lib/store/useWriterAction";
 import { useEffect, useState } from "react";
@@ -71,6 +71,11 @@ const AuthorizedActions = () => {
     }
   }, [location.pathname, setIsWriting, setNotWriting]);
 
+  console.log("user", localStorage.getItem("user"));
+  if (!localStorage.getItem("user") || localStorage.getItem("user") == null) {
+    navigate("/auth/login");
+  }
+
   const uploadImageToFirebase = async () => {
     if (blog == null) return;
 
@@ -84,11 +89,8 @@ const AuthorizedActions = () => {
     ) as unknown as userTypes;
     const imageRef = ref(
       storage,
-
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       `cover_images/${user._id}/${user.displayName}/${imageId}`,
     );
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     await uploadBytes(imageRef, blog.coverImage);
   };
 
@@ -98,7 +100,6 @@ const AuthorizedActions = () => {
       localStorage.getItem("user") as string,
     ) as unknown as userTypes;
     const DBUser = JSON.parse(localStorage.getItem("user") as string);
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     setIsLoading(true);
 
     const data = {
@@ -126,18 +127,15 @@ const AuthorizedActions = () => {
         return APIMethods.blog.createBlog(data);
       })
       .then(() => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         setIsLoading(false);
         console.log("Blog created successfully:");
         localStorage.setItem("rich-editor", "");
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         resetBlog();
         savedNotify();
         navigate("/");
       })
       .catch((err) => {
         console.log("Error:", err);
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         setIsLoading(false);
       });
   };
@@ -168,9 +166,7 @@ const AuthorizedActions = () => {
 
   const handleSearch = (e: any) => {
     if (e.key === "Enter") {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       setSearch(e.target.value);
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       navigate(`/search/${e.target.value}`);
     }
   };
@@ -194,6 +190,7 @@ const AuthorizedActions = () => {
           sx={{
             width: "350px",
             background: "#FAF8FF",
+            borderRadius: "6px",
             marginRight: "20px",
           }}
         />
@@ -268,21 +265,25 @@ const UnauthorizedActions = () => {
     <Stack direction={"row"} gap={1} paddingY={1}>
       <Button
         component={Link}
-        sx={{ background: "#474747" }}
+        sx={{
+          backgroundColor: "secondary.main",
+          color: "text.primary",
+          "&:hover": {
+            backgroundColor: "secondary.main",
+            opacity: "0.9",
+          },
+        }}
         to={"/auth/login"}
-        variant={"outlined"}
+        variant={"contained"}
       >
         Login
       </Button>
       <Button
         component={Link}
         sx={{
-          color: "#474747",
-          variant: "outlined",
-          border: "1px solid #474747",
-          background: "rgba(245, 245, 245, 0.5)",
+          color: "#fff",
           "&:hover": {
-            background: "rgba(245, 245, 235, 0.9)",
+            opacity: "0.95",
           },
         }}
         to={"/auth/register"}
