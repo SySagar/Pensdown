@@ -14,6 +14,8 @@ interface BlogTypes {
   blogId: string;
   image: string;
   likes: number;
+  onMouseMove: any;
+  onMouseLeave: any;
 }
 
 export default function Blog({
@@ -23,6 +25,8 @@ export default function Blog({
   tags = ["india", "hello world"],
   blogId,
   image,
+  onMouseMove,
+  onMouseLeave,
 }: BlogTypes) {
   const navigate = useNavigate();
   const isPhone = useMediaQuery("(max-width:800px)");
@@ -39,6 +43,8 @@ export default function Blog({
       alignItems={"center"}
       position={"relative"}
       maxWidth={"300px"}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
       maxHeight={isTablet ? "80px" : "300px"}
       onClick={redirectToBlog}
       color={"primary.main"}
@@ -46,6 +52,7 @@ export default function Blog({
         backgroundColor: "#FBFCFA",
         boxShadow: "3px 3px 10px rgba(214, 208, 174,0.7)",
         borderRadius: "5px",
+        cursor: "pointer",
       }}
     >
       <Stack overflow={"hidden"} className="laptop-image">

@@ -2,7 +2,7 @@ import { Skeleton, Divider, Stack, Typography } from "@mui/material";
 import HeroBlog from "./components/HeroBlog";
 import Blog from "./components/Blog";
 import Sidebar from "./components/Sidebar";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import APIMethods from "../../lib/axios/api";
 import { blogTypes } from "../blog/types/blogTypes";
 import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
@@ -10,6 +10,8 @@ import useSearchStore from "../../lib/store/useSearchStore";
 import "./home.css";
 import { useResponsive } from "../../hooks/useResponsive";
 import AnimatePage from "../../layout/AnimatePage";
+import { useCursor } from "../../hooks/useCursor";
+import { Chip, Avatar } from "@mui/material";
 
 export default function HeroPage() {
   const [loading, setLoading] = useState(true);
@@ -27,6 +29,33 @@ export default function HeroPage() {
       setBlogs(blogs);
     });
   };
+
+  const { cursorData, handleMouseMove, handleMouseLeave, isFadingOut } =
+    useCursor();
+
+  const getRandomName = useMemo(
+    (nameList = ["Diksha", "Aman", "Ayushii", "Sagar", "Kartik"]) => {
+      const randomIndex = Math.floor(Math.random() * nameList.length);
+      return nameList[randomIndex];
+    },
+    [cursorData.visible],
+  );
+
+  const getRandomUrl = useMemo(
+    (
+      nameList = [
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?q=80&w=1966&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1526510747491-58f928ec870f?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      ],
+    ) => {
+      const randomIndex = Math.floor(Math.random() * nameList.length);
+      return nameList[randomIndex];
+    },
+    [cursorData.visible],
+  );
 
   useEffect(() => {
     fetchBLogs()
@@ -59,9 +88,38 @@ export default function HeroPage() {
           marginTop={3}
           justifyContent={"center"}
           alignItems={"center"}
+          position={"relative"}
           gap={1}
           borderColor={"#A3A0B2"}
         >
+          {cursorData.visible && (
+            <Chip
+              className={`chip-popup ${isFadingOut ? "fade-out" : "fade-in"}`}
+              label={
+                <Typography fontWeight={600} fontSize={13} color={"#424242"}>
+                  {getRandomName}
+                </Typography>
+              }
+              avatar={
+                <Avatar
+                  sx={{ minWidth: 30, minHeight: 30 }}
+                  alt={getRandomName}
+                  src={getRandomUrl}
+                />
+              }
+              style={{
+                position: "fixed",
+                zIndex: 100,
+                backgroundColor: "#87dcf1",
+                top: cursorData.y,
+                left: cursorData.x,
+                height: "40px",
+                width: "auto",
+                transform: "translate(20%, 20%)",
+                pointerEvents: "none",
+              }}
+            />
+          )}
           <Stack
             justifyContent={"center"}
             alignItems={"center"}
@@ -128,6 +186,10 @@ export default function HeroPage() {
                     key={index}
                     blogId={blog._id}
                     author={blog.authorName}
+                    onMouseMove={(e: any) =>
+                      handleMouseMove(e, blog.title, blog.title)
+                    }
+                    onMouseLeave={handleMouseLeave}
                     date={blog.date}
                     title={blog.title}
                     tags={blog.tags}
